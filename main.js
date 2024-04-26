@@ -2,17 +2,24 @@ import { updateUi } from './ui.js'
 
 export let dollars = 100
 let gameOver = false
-let headsChance = 0.5
+export let headsChance = 0.5
 
 const checkRandom = (percent) => {
     return Math.random() < percent
 }
 
-export const flipCoin = () => {
+export const flipCoin = (side) => {
     checkIsBroke();
+    if (side !== 'heads' && side !== 'tails') {
+        throw 'Bad coin choice'
+    }
 
     const isHeads = checkRandom(headsChance)
-    updateScore(isHeads ? 1 : -1)
+    if (side === 'heads' && isHeads || side === 'tails' && !isHeads) {
+        updateScore(1, side, 'coin-flip')
+    } else {
+        updateScore(-1, side, 'coin-flip')
+    }
 }
 
 const updateScore = (val) => {
@@ -23,6 +30,7 @@ const updateScore = (val) => {
     } else if (dollars < 0) {
         alert('shouldnt be here')
     }
+
     console.log(dollars, headsChance)
 }
 
@@ -38,11 +46,11 @@ setInterval(updateUi, 1000 / 60)
 
 // tests
 // const testGuess = () => {
-//     flipCoin()
+//     flipCoin('heads')
 // }
 
 // const increaseHeadsChance = () => {
-//     headsChance -= 0.01
+//     headsChance += 0.01
 // }
 
 // setInterval(increaseHeadsChance, 300)

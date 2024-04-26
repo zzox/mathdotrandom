@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="./main.css">
     <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
-    <h1 id="score"></h1>
-    <label for="#flip-button">Heads or tails</label>
-    <button id="flip-button">Flip</button>
-    <p id="flip-percent"></p>
-    <script type="module" src="./main.js"></script>
+    <div class="container">
+        <div class="column">
+            <h1 id="score"></h1>
+            <p>Flip a Coin</p>
+            <button id="heads-button">Heads</button>
+            <button id="tails-button">Tails</button>
+            <p id="flip-percent"></p>
+            <script type="module" src="./main.js"></script>
+        </div>
+        <div class="column"></div>
+        <div class="column">
+            Scroll box
+        </div>
+    </div>
 </body>
 </html>
