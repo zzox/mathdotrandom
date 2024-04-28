@@ -7,7 +7,6 @@ export const checkRandom = (percent) => {
 export default class State {
     static gameOver = false
     static dollars = 100
-    static headsChance = 0.5
 
     static updateScore = (val, scoreData) => {
         State.dollars += val
