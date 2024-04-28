@@ -8,16 +8,23 @@
 <body>
     <div class="container">
         <div class="column">
-            <h1 id="score"></h1>
-            <p>Flip a Coin</p>
-            <button id="heads-button">Heads</button>
-            <button id="tails-button">Tails</button>
-            <p id="flip-percent"></p>
-            <script type="module" src="./main.js"></script>
+            <fieldset>
+                <legend>Score</legend>
+                <h1 id="score">$100</h1>
+            </fieldset>
+            <fieldset>
+                <legend>Coin flip</legend>
+                <button id="heads-button">Heads</button>
+                <button id="tails-button">Tails</button>
+                <p id="flip-percent"></p>
+                <script type="module" src="./main.js"></script>
+            </fieldset>
         </div>
         <div class="column"></div>
         <div class="column">
-            Scroll box
+            <fieldset id="results">
+                <legend>Results</legend>
+            </fieldset>
         </div>
     </div>
 </body>

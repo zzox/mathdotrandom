@@ -1,4 +1,4 @@
-import { updateUi } from './ui.js'
+import { pushEvent, updateUi } from './ui.js'
 
 export let dollars = 100
 let gameOver = false
@@ -16,13 +16,13 @@ export const flipCoin = (side) => {
 
     const isHeads = checkRandom(headsChance)
     if (side === 'heads' && isHeads || side === 'tails' && !isHeads) {
-        updateScore(1, side, 'coin-flip')
+        updateScore(1, { choice: side, game: 'coin-flip' })
     } else {
-        updateScore(-1, side, 'coin-flip')
+        updateScore(-1, { choice: side, game: 'coin-flip' })
     }
 }
 
-const updateScore = (val) => {
+const updateScore = (val, scoreData) => {
     dollars += val
     if (dollars === 0) {
         gameOver = true
@@ -30,6 +30,8 @@ const updateScore = (val) => {
     } else if (dollars < 0) {
         alert('shouldnt be here')
     }
+
+    pushEvent(val, scoreData)
 
     console.log(dollars, headsChance)
 }

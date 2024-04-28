@@ -1,8 +1,43 @@
+body {
+    margin: 0;
+}
+
+legend {
+    font-size: 1.5rem;
+}
+
+legend:hover {
+    cursor: pointer;
+}
+
+fieldset {
+    margin: 1rem 0;
+    border-style: inset;
+}
+
 .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
 
-.column {
+fieldset.minimize {
+    height: auto;
+}
 
+fieldset.minimize > :not(legend) {
+    display: none;
+}
+
+.column {
+    padding: 1rem;
+}
+
+/* TODO: stretch this out via grid or flexbox? */
+#results:not(.minimize) {
+    height: calc(100vh - 6rem);
+    overflow-y: scroll;
+}
+
+.result-item {
+    margin: 1px 0px;
 }
