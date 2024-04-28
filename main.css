@@ -1,5 +1,11 @@
 body {
     margin: 0;
+    font-family: monospace;
+}
+
+p {
+    white-space: pre-wrap;
+    margin: 1px 0px;
 }
 
 legend {
@@ -38,6 +44,4 @@ fieldset.minimize > :not(legend) {
     overflow-y: scroll;
 }
 
-.result-item {
-    margin: 1px 0px;
-}
+.result-item {}

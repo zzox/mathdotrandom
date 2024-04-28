@@ -24,7 +24,6 @@ export const flipCoin = (side, isAuto = false) => {
 export const updateCoinAuto = (delta) => {
     if (coinGuessOn) {
         coinGuessTimer += delta
-        console.log(coinGuessTime, coinGuessTimer)
         if (coinGuessTimer >= coinGuessTime) {
             flipCoin(coinGuessChoice, true)
             coinGuessTimer -= coinGuessTime

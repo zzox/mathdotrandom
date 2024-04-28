@@ -1,4 +1,6 @@
 import { pushEvent } from './ui.js'
+import { pushStat } from './stats.js'
+import { checkStoreUpgrades } from './store.js'
 
 export const checkRandom = (percent) => {
     return Math.random() < percent
@@ -18,8 +20,8 @@ export default class State {
         }
     
         pushEvent(val, scoreData)
-    
-        console.log(State.dollars, State.headsChance)
+        pushStat(val, scoreData)
+        checkStoreUpgrades()
     }
 
     static checkIsBroke = () => {

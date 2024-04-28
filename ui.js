@@ -1,5 +1,6 @@
 import State from './state.js'
 import { flipCoin } from './coin-flip.js'
+import { doUpgrade } from './store.js'
 
 // minimize fieldsets
 document.querySelectorAll('legend').forEach(item => {
@@ -18,6 +19,7 @@ const $create = (el) => document.createElement(el)
 
 const score = $id('score')
 const resultBox = $id('results')
+const storeBox = $id('store')
 const headsButton = $id('heads-button')
 const tailsButton = $id('tails-button')
 
@@ -33,6 +35,26 @@ export const updateUi = () => {
 export const pushEvent = (result, scoreData) => {
     const p = $create('p')
     p.className = 'result-item'
-    p.innerText = `You chose ${scoreData.choice} on a ${scoreData.game} and ${result < 0 ? 'lost' : 'won'} ${formatDollars(Math.abs(result))}`
+    p.innerText = `You chose ${scoreData.choice} on a ${scoreData.game}` +
+    ` and ${result < 0 ? 'lost' : 'won '} ${formatDollars(Math.abs(result))}` +
+    (scoreData.isAuto ? ' [AUTO]' : '')
     resultBox.appendChild(p)
+}
+
+export const pushStoreItem = (item) => {
+    const div = $create('div')
+    div.className = 'store-item'
+    const text = $create('p')
+    text.innerText = item.text
+    const description = $create('p')
+    description.innerText = item.info
+    const button = $create('button')
+    button.innerText = 'Buy'
+    button.onclick = () => doUpgrade(item.name)
+    // const errorText = $create('p')
+    div.appendChild(text)
+    div.appendChild(description)
+    div.appendChild(button)
+
+    storeBox.appendChild(div)
 }
