@@ -1,4 +1,5 @@
-import { flipCoin, dollars, headsChance } from './main.js'
+import State from './state.js'
+import { flipCoin } from './coin-flip.js'
 
 // minimize fieldsets
 document.querySelectorAll('legend').forEach(item => {
@@ -26,7 +27,7 @@ headsButton.onclick = () => flipCoin('heads')
 tailsButton.onclick = () => flipCoin('tails')
 
 export const updateUi = () => {
-    score.innerText = formatDollars(dollars)
+    score.innerText = formatDollars(State.dollars)
 }
 
 export const pushEvent = (result, scoreData) => {
