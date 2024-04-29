@@ -79,7 +79,7 @@ export const updateCoinFlip = (delta) => {
 
     if (coinBet.value > State.dollars) {
         coinBet.value = State.dollars
-        $id('coin-auto-guess').checked = false
+        $id('coin-auto-guess-box').checked = false
         throw 'Cannot bet money you dont have'
     }
 }

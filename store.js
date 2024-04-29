@@ -24,9 +24,9 @@ const showUpgrade = (name) => {
 }
 
 export const checkStoreUpgrades = () => {
-    if (totalFlips === 10) {
+    if (totalFlips === 1) {
         showUpgrade('coin-10')
-    } else if (totalFlips === 25) {
+    } else if (totalFlips === 2) {
         showUpgrade('auto-1')
     } else if (totalFlips === 100) {
         showUpgrade('coin-3')
@@ -76,5 +76,5 @@ export const updateStore = (delta) => {
 
 let possibleUpgrades = [
     { name: 'coin-10', price: 50, text: 'Weighted coin', info: 'Increase heads chance by 10%' },
-    { name: 'auto-1', price: 50, text: 'Autoflip', info: 'Choose heads on coin flip every second' }
+    { name: 'auto-1', price: 100, text: 'Autoflip', info: 'Choose heads on coin flip every second' }
 ]
