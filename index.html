@@ -43,7 +43,21 @@
                 </div>
                 <button id="heads-button">Heads</button>
                 <button id="tails-button">Tails</button>
+                <label>Bet: $</label><input id="coin-bet" type="number" value="1" min="1"></input> <p id="coin-auto-max"></p>
                 <p id="coin-chances"></p>
+                <div id="coin-auto-guess" class="auto-guess display-none">
+                    <div class="input-label">
+                        <label>Auto-guess:&nbsp;</label>
+                        <input type="checkbox" id="coin-auto-guess-box">
+                        <p id="coin-auto-guess-rate"> (1/sec)</p>
+                    </div>
+                    <div id="coin-auto-guess-choices" class="input-label">
+                        <label>Heads</label>
+                        <input type="radio" name="coin-auto-guess" id="coin-auto-guess-heads" checked>&nbsp;
+                        <label>Tails</label>
+                        <input type="radio" name="coin-auto-guess" id="coin-auto-guess-tails">
+                    </div>
+                </div>
             </fieldset>
         </div>
         <div class="column">

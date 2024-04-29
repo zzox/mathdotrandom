@@ -1,6 +1,6 @@
 import { totalFlips } from './stats.js'
 import { $id, $query, $queryAll, pushStoreItem, removeStoreItem } from './ui.js'
-import { upgradeHeadsChance } from './games/coin-flip.js'
+import { upgradeAutoFlip, upgradeHeadsChance } from './games/coin-flip.js'
 import State from './state.js'
 
 let upgrades = []
@@ -55,6 +55,8 @@ export const doUpgrade = (name) => {
     console.log(name)
     if (name === 'coin-10') {
         upgradeHeadsChance(0.1)
+    } else if (name === 'auto-1') {
+        upgradeAutoFlip(1000)
     }
 
     // remove from upgrades array

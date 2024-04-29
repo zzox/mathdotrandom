@@ -1,5 +1,5 @@
 import { updateUi } from './ui.js'
-import { updateCoinFlip } from './games/coin-flip.js'
+import { createCoinFlip, updateCoinFlip } from './games/coin-flip.js'
 import { updateStore } from './store.js'
 
 // randomness
@@ -13,5 +13,8 @@ const mainLoop = () => {
     updateStore(1000 / 60)
 }
 
-// TODO: request anim frame?
-setInterval(mainLoop, 1000 / 60)
+window.onload = () => {
+    createCoinFlip()
+    // TODO: request anim frame?
+    setInterval(mainLoop, 1000 / 60)
+}

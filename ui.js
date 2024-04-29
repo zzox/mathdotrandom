@@ -27,6 +27,7 @@ const tailsButton = $id('tails-button')
 
 const formatPrice = (amount) => `$${amount}`
 export const formatPercent = (percent) => Math.round(percent * 100).toFixed(0) + '%'
+export const formatRate = (time) => `${Math.round(1 / time / 1000)}/sec`
 
 headsButton.onclick = () => flipCoin('heads')
 tailsButton.onclick = () => flipCoin('tails')
