@@ -23,8 +23,11 @@ fieldset {
 }
 
 .container {
+    /* TODO: consider flexbox */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    /* display: flex;
+    justify-content: center; */
 }
 
 fieldset.minimize {
@@ -37,6 +40,7 @@ fieldset.minimize > :not(legend) {
 
 .column {
     padding: 1rem;
+    width: 424px;
 }
 
 /* TODO: stretch this out via grid or flexbox? */
@@ -46,6 +50,14 @@ fieldset.minimize > :not(legend) {
 }
 
 .result-item {}
+
+.store-item + .store-item {
+    padding-top: 1rem;
+}
+
+.bold {
+    font-weight: bold;
+}
 
 .display-none {
     display: none;

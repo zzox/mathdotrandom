@@ -1,5 +1,5 @@
-import { pushEvent, updateUi } from './ui.js'
-import { updateCoinAuto } from './coin-flip.js'
+import { updateUi } from './ui.js'
+import { updateCoinFlip } from './games/coin-flip.js'
 
 // randomness
 export const checkRandom = (percent) => {
@@ -8,20 +8,8 @@ export const checkRandom = (percent) => {
 
 const mainLoop = () => {
     updateUi()
-    updateCoinAuto(1000 / 60)
+    updateCoinFlip(1000 / 60)
 }
 
 // TODO: request anim frame?
 setInterval(mainLoop, 1000 / 60)
-
-// tests
-// const testGuess = () => {
-//     flipCoin('heads')
-// }
-
-// const increaseHeadsChance = () => {
-//     headsChance += 0.01
-// }
-
-// setInterval(increaseHeadsChance, 300)
-// setInterval(testGuess, 1000 / 60 * 3)
