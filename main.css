@@ -46,3 +46,7 @@ fieldset.minimize > :not(legend) {
 }
 
 .result-item {}
+
+.display-none {
+    display: none;
+}

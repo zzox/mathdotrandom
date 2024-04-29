@@ -1,18 +1,20 @@
 import { totalFlips } from './stats.js'
-import { pushStoreItem, removeStoreItem } from './ui.js'
+import { $id, pushStoreItem, removeStoreItem } from './ui.js'
 import { upgradeHeadsChance } from './coin-flip.js'
 import State from './state.js'
 
-let numUnlocked = 0
 let upgrades = []
 let upgradesMade = []
 
 const showUpgrade = (name) => {
     const upgrade = possibleUpgrades.find((u) => u.name === name)
-
     if (!upgrade) {
         throw 'No upgrade found'
     }
+
+    const storeBox = $id('store')
+    storeBox.classList.remove('display-none')
+    storeBox.classList.remove('minimize')
 
     pushStoreItem(upgrade)
     possibleUpgrades = possibleUpgrades.filter((u) => u.name !== name)
