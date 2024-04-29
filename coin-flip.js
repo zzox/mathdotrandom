@@ -1,11 +1,13 @@
 import State from './state.js'
 import { checkRandom } from './main.js'
+import { $id, formatPercent } from './ui.js'
+
+let headsChance = 0.5
 
 let coinGuessOn = true
+let coinGuessChoice = 'heads'
 let coinGuessTimer = 0
 let coinGuessTime = 1000
-let coinGuessChoice = 'heads'
-let headsChance = 0.5
 
 export const flipCoin = (side, isAuto = false) => {
     State.checkIsBroke();
@@ -29,4 +31,12 @@ export const updateCoinAuto = (delta) => {
             coinGuessTimer -= coinGuessTime
         }
     }
+}
+
+export const upgradeHeadsChance = (percent) => {
+    coinGuessOn = true
+    headsChance += percent
+    const coinChance = $id('coin-chances')
+    // coinChance.classList.remove('none')
+    coinChance.innerText = `Heads chance: ${formatPercent(headsChance)} Tails chance: ${formatPercent(1 - headsChance)}`
 }

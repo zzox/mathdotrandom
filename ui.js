@@ -14,7 +14,7 @@ document.querySelectorAll('legend').forEach(item => {
     }
 })
 
-const $id = (id) => document.getElementById(id)
+export const $id = (id) => document.getElementById(id)
 const $create = (el) => document.createElement(el)
 
 const score = $id('score')
@@ -24,6 +24,7 @@ const headsButton = $id('heads-button')
 const tailsButton = $id('tails-button')
 
 const formatDollars = (amount) => `$${amount}`
+export const formatPercent = (percent) => Math.round(percent * 100).toFixed(0) + '%'
 
 headsButton.onclick = () => flipCoin('heads')
 tailsButton.onclick = () => flipCoin('tails')
@@ -44,6 +45,7 @@ export const pushEvent = (result, scoreData) => {
 export const pushStoreItem = (item) => {
     const div = $create('div')
     div.className = 'store-item'
+    div.id = `store-item_${item.name}`
     const text = $create('p')
     text.innerText = item.text
     const description = $create('p')
@@ -57,4 +59,12 @@ export const pushStoreItem = (item) => {
     div.appendChild(button)
 
     storeBox.appendChild(div)
+}
+
+export const removeStoreItem = (name) => {
+    const item = $id(`store-item_${name}`)
+    if (!item) {
+        throw 'Cannot find store item to remove'
+    }
+    item.remove()
 }

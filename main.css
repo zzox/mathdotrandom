@@ -6,6 +6,7 @@ body {
 p {
     white-space: pre-wrap;
     margin: 1px 0px;
+    font-size: 13px;
 }
 
 legend {
