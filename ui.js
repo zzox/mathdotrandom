@@ -16,6 +16,8 @@ document.querySelectorAll('legend').forEach(item => {
 
 export const $id = (id) => document.getElementById(id)
 const $create = (el) => document.createElement(el)
+export const $query = (q) => document.querySelector(q)
+export const $queryAll = (q) => Array.from(document.querySelectorAll(q))
 
 const score = $id('score')
 const resultBox = $id('results')
@@ -47,7 +49,6 @@ export const pushStoreItem = (item) => {
     div.className = 'store-item'
     div.id = `store-item_${item.name}`
 
-
     const textWidth = 50
     const priceString = formatPrice(item.price)
     let spaces = ''
@@ -65,10 +66,14 @@ export const pushStoreItem = (item) => {
     const button = $create('button')
     button.innerText = 'Buy'
     button.onclick = () => doUpgrade(item.name)
-    // const errorText = $create('p')
+
+    const errorText = $create('p')
+    errorText.className = 'error-text'
+
     div.appendChild(text)
     div.appendChild(description)
     div.appendChild(button)
+    div.appendChild(errorText)
 
     storeBox.appendChild(div)
 }

@@ -1,3 +1,7 @@
+:root {
+    --error-red: darkred;
+}
+
 body {
     margin: 0;
     font-family: monospace;
@@ -50,6 +54,10 @@ fieldset.minimize > :not(legend) {
 }
 
 .result-item {}
+
+.error-text {
+    color: var(--error-red);
+}
 
 .store-item + .store-item {
     padding-top: 1rem;

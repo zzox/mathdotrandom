@@ -1,10 +1,12 @@
 import { totalFlips } from './stats.js'
-import { $id, pushStoreItem, removeStoreItem } from './ui.js'
+import { $id, $query, $queryAll, pushStoreItem, removeStoreItem } from './ui.js'
 import { upgradeHeadsChance } from './games/coin-flip.js'
 import State from './state.js'
 
 let upgrades = []
 let upgradesMade = []
+let errorTimer = 3000
+const errorTime = 3000
 
 const showUpgrade = (name) => {
     const upgrade = possibleUpgrades.find((u) => u.name === name)
@@ -42,6 +44,8 @@ export const doUpgrade = (name) => {
     }
 
     if (State.dollars < upgrade.price) {
+        $query(`#store-item_${name} > .error-text`).innerText = 'Not enough money'
+        errorTimer = 0
         throw 'Too expensive'
     }
 
@@ -59,7 +63,16 @@ export const doUpgrade = (name) => {
     removeStoreItem(name)
 }
 
+export const updateStore = (delta) => {
+    if (errorTimer < errorTime) {
+        errorTimer += delta
+        if (errorTimer > errorTime) {
+            $queryAll('.error-text').map((item) => { item.innerText = '' })
+        }
+    }
+}
+
 let possibleUpgrades = [
     { name: 'coin-10', price: 50, text: 'Weighted coin', info: 'Increase heads chance by 10%' },
-    { name: 'auto-1', price: 75, text: 'Autoflip', info: 'Choose heads on coin flip every second' }
+    { name: 'auto-1', price: 50, text: 'Autoflip', info: 'Choose heads on coin flip every second' }
 ]
