@@ -1,7 +1,8 @@
 import { updateUi } from './ui.js'
-import { updateStore } from './store.js'
+import { createStore, updateStore } from './store.js'
 import { createCoinFlip, updateCoinFlip } from './games/coin-flip.js'
 import { createWar, updateWar } from './games/war.js'
+import { createResults } from './results.js'
 
 // randomness
 export const checkRandom = (percent) => {
@@ -16,6 +17,8 @@ const mainLoop = () => {
 }
 
 window.onload = () => {
+    createResults()
+    createStore()
     createCoinFlip()
     createWar()
     // TODO: request anim frame?

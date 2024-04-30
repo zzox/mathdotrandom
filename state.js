@@ -1,6 +1,6 @@
-import { pushEvent } from './ui.js'
 import { pushStat } from './stats.js'
 import { checkStoreUpgrades } from './store.js'
+import { pushEvent } from './results.js'
 
 export const checkRandom = (percent) => {
     return Math.random() < percent

@@ -1,10 +1,11 @@
 import { totalFlips } from './stats.js'
-import { $id, $query, $queryAll, pushStoreItem, removeStoreItem } from './ui.js'
+import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance } from './games/coin-flip.js'
 import State from './state.js'
 
 let upgrades = []
 let upgradesMade = []
+let storeBox
 
 const showUpgrade = (name) => {
     const upgrade = possibleUpgrades.find((u) => u.name === name)
@@ -61,6 +62,10 @@ export const doUpgrade = (name) => {
     removeStoreItem(name)
 }
 
+export const createStore = () => {
+    storeBox = $id('store')
+}
+
 export const updateStore = (delta) => {
     // if (errorTimer < errorTime) {
     //     errorTimer += delta
@@ -79,3 +84,46 @@ let possibleUpgrades = [
     { name: 'coin-10', price: 50, text: 'Weighted coin', info: 'Increase heads chance by 10%' },
     { name: 'auto-1', price: 100, text: 'Autoflip', info: 'Flip a coin every second' }
 ]
+
+export const pushStoreItem = (item) => {
+    const div = $create('div')
+    div.className = 'store-item'
+    div.id = `store-item_${item.name}`
+
+    const textWidth = 50
+    const priceString = formatPrice(item.price)
+    let spaces = ''
+    for (let i = 0; i < textWidth - item.text.length - priceString.length; i++) {
+        spaces += ' '
+    }
+
+    const text = $create('p')
+    text.className = 'bold'
+    text.innerText = item.text + spaces + priceString
+
+    const description = $create('p')
+    description.innerText = item.info
+
+    const button = $create('button')
+    button.innerText = 'Buy'
+    button.disabled = true
+    button.onclick = () => doUpgrade(item.name)
+
+    const errorText = $create('p')
+    errorText.className = 'error-text'
+
+    div.appendChild(text)
+    div.appendChild(description)
+    div.appendChild(button)
+    div.appendChild(errorText)
+
+    storeBox.appendChild(div)
+}
+
+export const removeStoreItem = (name) => {
+    const item = $id(`store-item_${name}`)
+    if (!item) {
+        throw 'Cannot find store item to remove'
+    }
+    item.remove()
+}

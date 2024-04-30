@@ -16,6 +16,9 @@ const resultShowTime = 1000
 let coinBet
 
 export const createCoinFlip = () => {
+    $id('heads-button').onclick = () => flipCoin('heads')
+    $id('tails-button').onclick = () => flipCoin('tails')
+
     const coinGuessBox = $id('coin-auto-guess-box')
     const coinGuessHeads = $id('coin-auto-guess-heads')
     const coinGuessTails = $id('coin-auto-guess-tails')
