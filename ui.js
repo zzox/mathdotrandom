@@ -24,6 +24,12 @@ const formatPrice = (amount) => `$${amount}`
 export const formatPercent = (percent) => Math.round(percent * 100).toFixed(0) + '%'
 export const formatRate = (time) => `${Math.round(1000 / time)}/sec`
 
+export const loseWinTie = {
+    win: 'WIN!',
+    lose: 'Loss',
+    tie: 'TIE!'
+}
+
 headsButton.onclick = () => flipCoin('heads')
 tailsButton.onclick = () => flipCoin('tails')
 
@@ -34,9 +40,16 @@ export const updateUi = () => {
 export const pushEvent = (result, scoreData) => {
     const p = $create('p')
     p.className = 'result-item'
-    p.innerText = `You chose ${scoreData.choice} on a ${scoreData.game}` +
-        ` and ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
+
+    if (scoreData.game === 'coin-flip') {
+        p.innerText = `Coin flip |  ${scoreData.choice}  ` +
+        ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
         (scoreData.isAuto ? ' [AUTO]' : '')
+    } else if (scoreData.game === 'war') {
+        p.innerText = `War       | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
+        ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
+        (scoreData.isAuto ? ' [AUTO]' : '')
+    }
     resultBox.insertBefore(p, resultBox.querySelector('p'))
 }
 

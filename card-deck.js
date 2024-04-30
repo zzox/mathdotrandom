@@ -22,19 +22,19 @@ const ace = 'A'
 const cards = [two, three, four, five, six, seven, eight, nine, ten, jack, queen, king, ace]
 
 export const warCardValue = {
-    two: 0,
-    three: 1,
-    four: 2,
-    five: 3,
-    six: 4,
-    seven: 5,
-    eight: 6,
-    nine: 7,
-    ten: 8,
-    jack: 9,
-    queen: 10,
-    king: 11,
-    ace: 12
+    '2': 0,
+    '3': 1,
+    '4': 2,
+    '5': 3,
+    '6': 4,
+    '7': 5,
+    '8': 6,
+    '9': 7,
+    'T': 8,
+    'J': 9,
+    'Q': 10,
+    'K': 11,
+    'A': 12
 }
 
 export const makeDeck = () => {

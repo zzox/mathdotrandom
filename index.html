@@ -47,7 +47,7 @@
                 <p id="coin-chances"></p>
                 <div id="coin-auto-guess" class="auto-guess display-none">
                     <div class="input-label">
-                        <label>Auto-guess:&nbsp;</label>
+                        <label>Auto-flip:&nbsp;</label>
                         <input type="checkbox" id="coin-auto-guess-box">
                         <p id="coin-auto-guess-rate"> (1/sec)</p>
                     </div>
@@ -61,19 +61,19 @@
             </fieldset>
             <fieldset>
                 <legend>War</legend>
+                <!-- lol -->
                 <div id="war">
-                <!-- <div id="coin-heads" class="display-none"> -->
                     <p>OPPONENT</p>
-                    <p>  +-+</p>
-                    <p>  |<span id="opp-card-number"> </span>|</p>
-                    <p>  |<span id="opp-card-suit"> </span>|</p>
-                    <p>  +-+</p>
-                    <p> </p>
-                    <p>  +-+</p>
-                    <p>  |<span id="player-card-number"> </span>|</p>
-                    <p>  |<span id="player-card-suit"> </span>|</p>
-                    <p>  +-+</p>
-                    <p>  YOU</p>
+                    <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+                    <p>  |<span id="opp-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-number-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-number-2"> </span>|  </span></p>
+                    <p>  |<span id="opp-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-suit-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-suit-2"> </span>|  </span></p>
+                    <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+                    <p>  <span id="war-result-0">    </span><span class="war-column-1 display-none">   <span id="war-result-1">    </span></span><span class="war-column-2 display-none">   <span id="war-result-2">    </span></span></p>
+                    <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+                    <p>  |<span id="player-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-number-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-number-2"> </span>|</span></p>
+                    <p>  |<span id="player-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-suit-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-suit-2"> </span>|</span></p>
+                    <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+                    <p>  YOU  </p>
                     <p> </p>
                 </div>
                 <button id="war-button">Play</button>
