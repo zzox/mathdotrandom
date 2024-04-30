@@ -77,5 +77,5 @@ export const updateStore = (delta) => {
 
 let possibleUpgrades = [
     { name: 'coin-10', price: 50, text: 'Weighted coin', info: 'Increase heads chance by 10%' },
-    { name: 'auto-1', price: 100, text: 'Autoflip', info: 'Choose heads on coin flip every second' }
+    { name: 'auto-1', price: 100, text: 'Autoflip', info: 'Flip a coin every second' }
 ]
