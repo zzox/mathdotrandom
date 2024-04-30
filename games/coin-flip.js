@@ -23,6 +23,9 @@ export const createCoinFlip = () => {
 
     coinBet.onchange = (event) => {
         betAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
+        if (!betAmount) {
+            betAmount = 1
+        }
     }
 
     coinGuessBox.onchange = (event) => {
@@ -78,8 +81,12 @@ export const updateCoinFlip = (delta) => {
     }
 
     if (coinBet.value > State.dollars) {
+        betAmount = State.dollars
         coinBet.value = State.dollars
+
+        // disable autoguess if too broe
         $id('coin-auto-guess-box').checked = false
+        coinGuessOn = false
         throw 'Cannot bet money you dont have'
     }
 }
@@ -94,5 +101,5 @@ export const upgradeHeadsChance = (percent) => {
 export const upgradeAutoFlip = (time) => {
     coinGuessTimer = time
     $id('coin-auto-guess').classList.remove('display-none')
-    $id('coin-auto-guess-rate').innerText = formatRate(time)
+    $id('coin-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }

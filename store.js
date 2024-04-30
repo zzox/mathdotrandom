@@ -5,8 +5,6 @@ import State from './state.js'
 
 let upgrades = []
 let upgradesMade = []
-let errorTimer = 3000
-const errorTime = 3000
 
 const showUpgrade = (name) => {
     const upgrade = possibleUpgrades.find((u) => u.name === name)
@@ -24,14 +22,14 @@ const showUpgrade = (name) => {
 }
 
 export const checkStoreUpgrades = () => {
-    if (totalFlips === 1) {
+    if (totalFlips === 10) {
         showUpgrade('coin-10')
-    } else if (totalFlips === 2) {
+    } else if (totalFlips === 25) {
         showUpgrade('auto-1')
     } else if (totalFlips === 100) {
-        showUpgrade('coin-3')
+        showUpgrade('coin-5')
     } else if (totalFlips === 1000) {
-        showUpgrade('coin-2')
+        showUpgrade('coin-3')
     }
 }
 
@@ -44,9 +42,7 @@ export const doUpgrade = (name) => {
     }
 
     if (State.dollars < upgrade.price) {
-        $query(`#store-item_${name} > .error-text`).innerText = 'Not enough money'
-        errorTimer = 0
-        throw 'Too expensive'
+        throw 'Too expensive, should not hit this error'
     }
 
     // TODO: method on state?
@@ -66,12 +62,17 @@ export const doUpgrade = (name) => {
 }
 
 export const updateStore = (delta) => {
-    if (errorTimer < errorTime) {
-        errorTimer += delta
-        if (errorTimer > errorTime) {
-            $queryAll('.error-text').map((item) => { item.innerText = '' })
-        }
-    }
+    // if (errorTimer < errorTime) {
+    //     errorTimer += delta
+    //     if (errorTimer > errorTime) {
+    //         $queryAll('.error-text').map((item) => { item.innerText = '' })
+    //     }
+    // }
+
+    // PERF:
+    upgrades.forEach((u) => {
+        $query(`#store-item_${u.name} > button`).disabled = u.price > State.dollars
+    })
 }
 
 let possibleUpgrades = [

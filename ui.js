@@ -4,13 +4,8 @@ import { doUpgrade } from './store.js'
 
 // minimize fieldsets
 document.querySelectorAll('legend').forEach(item => {
-    item.onclick = (ev) => {
-        console.log(ev, ev.target, ev.target.parentElement, ev.target.parentElement.className)
-        if (ev.target.parentElement.className === 'minimize') {
-            ev.target.parentElement.className = ''
-        } else {
-            ev.target.parentElement.className = 'minimize'
-        }
+    item.onclick = (event) => {
+        event.target.parentElement.classList.toggle('minimize')
     }
 })
 
@@ -27,7 +22,7 @@ const tailsButton = $id('tails-button')
 
 const formatPrice = (amount) => `$${amount}`
 export const formatPercent = (percent) => Math.round(percent * 100).toFixed(0) + '%'
-export const formatRate = (time) => `${Math.round(1 / time / 1000)}/sec`
+export const formatRate = (time) => `${Math.round(1000 / time)}/sec`
 
 headsButton.onclick = () => flipCoin('heads')
 tailsButton.onclick = () => flipCoin('tails')
@@ -40,9 +35,9 @@ export const pushEvent = (result, scoreData) => {
     const p = $create('p')
     p.className = 'result-item'
     p.innerText = `You chose ${scoreData.choice} on a ${scoreData.game}` +
-    ` and ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
-    (scoreData.isAuto ? ' [AUTO]' : '')
-    resultBox.appendChild(p)
+        ` and ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
+        (scoreData.isAuto ? ' [AUTO]' : '')
+    resultBox.insertBefore(p, resultBox.querySelector('p'))
 }
 
 export const pushStoreItem = (item) => {
@@ -66,6 +61,7 @@ export const pushStoreItem = (item) => {
 
     const button = $create('button')
     button.innerText = 'Buy'
+    button.disabled = true
     button.onclick = () => doUpgrade(item.name)
 
     const errorText = $create('p')
