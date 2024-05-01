@@ -2,6 +2,7 @@ import { updateUi } from './ui.js'
 import { createStore, updateStore } from './store.js'
 import { createCoinFlip, updateCoinFlip } from './games/coin-flip.js'
 import { createWar, updateWar } from './games/war.js'
+import { createPoker, updatePoker } from './games/poker.js'
 import { createResults } from './results.js'
 
 // randomness
@@ -14,6 +15,7 @@ const mainLoop = () => {
     updateCoinFlip(1000 / 60)
     updateWar(1000 / 60)
     updateStore(1000 / 60)
+    updatePoker(1000 / 60)
 }
 
 window.onload = () => {
@@ -21,6 +23,7 @@ window.onload = () => {
     createStore()
     createCoinFlip()
     createWar()
+    createPoker()
     // TODO: request anim frame?
     setInterval(mainLoop, 1000 / 60)
 }

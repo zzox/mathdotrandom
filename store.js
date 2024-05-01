@@ -1,4 +1,4 @@
-import { totalFlips } from './stats.js'
+import { totalFlips, totalWars } from './stats.js'
 import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
@@ -43,6 +43,12 @@ export const checkStoreUpgrades = () => {
         showUpgrade('coin-5')
     } else if (totalFlips === 10000) {
         showUpgrade('coin-1')
+    } else if (totalWars === 50) {
+        showUpgrade('war-auto-1')
+    } else if (totalFlips === 100) {
+        showUpgrade('war-triple-tie')
+    } else if (totalWars === 1000) {
+        showUpgrade('war-max-10')
     }
 }
 
@@ -64,8 +70,12 @@ export const doUpgrade = (name) => {
     console.log(name)
     if (name === 'coin-10') {
         upgradeHeadsChance(0.1)
+    } else if (name === 'coin-5') {
+        upgradeHeadsChance(0.05)
     } else if (name === 'coin-max-5') {
         upgradeMaxCoinBet(5)
+    } else if (name === 'war-max-10') {
+        upgradeMaxWarBet(10)
     } else if (name === 'unlock-war') {
         unlockWar()
     } else if (name === 'coin-auto-1') {
@@ -100,9 +110,11 @@ export const updateStore = (delta) => {
 
 let possibleUpgrades = [
     { name: 'coin-10', price: 10, text: 'Weighted coin', info: 'Increase heads chance by 10%' },
+    { name: 'coin-5', price: 1000, text: 'Specialty Engraving', info: 'Increase heads chance by 5%' },
     { name: 'coin-max-5', price: 25, text: 'Enthusiasm', info: 'Max bet on coin flips is $5' },
     { name: 'coin-auto-1', price: 100, text: 'Autoflip', info: 'Flip a coin every second' },
-    { name: 'war-auto-1', price: 1, text: 'Autowar', info: 'New game of war every second' }
+    { name: 'unlock-war', price: 100, text: 'War', info: 'Fun kids card game' },
+    { name: 'war-auto-1', price: 1000, text: 'Autowar', info: 'New game of war every second' }
 ]
 
 export const pushStoreItem = (item) => {

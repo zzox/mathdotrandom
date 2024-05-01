@@ -24,6 +24,10 @@ export default class State {
         checkStoreUpgrades()
     }
 
+    static subtractScore = (val) => {
+        State.dollars -= val
+    }
+
     static checkIsBroke = () => {
         if (State.gameOver) {
             // update the screen

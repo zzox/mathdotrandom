@@ -169,6 +169,12 @@ export const upgradeAutoWar = (time) => {
     $id('war-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }
 
+export const upgradeMaxWarBet = (newMax) => {
+    maxBet = newMax
+    $id('war-max').innerText = `Max: ${formatPrice(newMax)}`
+    $id('war-bet').max = newMax
+}
+
 export const unlockWar = () => {
     unlocked = true
     $id('war').classList.remove('display-none')
