@@ -1,6 +1,8 @@
 import { makeDeck, shuffleDeck, drawCard, warCardValue } from '../card-deck.js'
-import { $id, $queryAll, loseWinTie } from '../ui.js'
+import { $id, $queryAll, formatRate, loseWinTie } from '../ui.js'
 import State from '../state.js'
+
+let unlocked = false
 
 let warBet
 let betAmount = 1
@@ -8,6 +10,10 @@ let maxBet = 10
 
 let resultShowTimer = 0
 const resultShowTime = 3000
+
+let warGuessOn = false
+let warGuessTimer = 0
+const warGuessTime = 1000
 
 let tripleTieOn = false
 let tripleTieWager = 1
@@ -29,6 +35,10 @@ export const createWar = () => {
         if (!betAmount) {
             betAmount = 1
         }
+    }
+
+    $id('war-auto-guess-box').onchange = (event) => {
+        warGuessOn = event.target.checked
     }
 
     deck = makeDeck()
@@ -75,6 +85,10 @@ const resetCardUi = () => {
 }
 
 export const playWar = () => {
+    if (!unlocked) {
+        throw 'Locked'
+    }
+
     resetCardUi()
 
     State.checkIsBroke()
@@ -121,6 +135,14 @@ export const playWar = () => {
 }
 
 export const updateWar = (delta) => {
+    if (warGuessOn) {
+        warGuessTimer += delta
+        if (warGuessTimer >= warGuessTime) {
+            playWar()
+            warGuessTimer -= warGuessTime
+        }
+    }
+
     resultShowTimer += delta
     if (resultShowTimer >= resultShowTime) {
         resetCardUi()
@@ -139,4 +161,15 @@ export const updateWar = (delta) => {
         // coinGuessOn = false
         throw 'Cannot bet money you dont have'
     }
+}
+
+export const upgradeAutoWar = (time) => {
+    warGuessTimer = time
+    $id('war-auto-guess').classList.remove('display-none')
+    $id('war-auto-guess-rate').innerText = ` ${formatRate(time)}`
+}
+
+export const unlockWar = () => {
+    unlocked = true
+    $id('war').classList.remove('display-none')
 }

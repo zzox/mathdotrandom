@@ -59,10 +59,9 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset>
+            <fieldset id="war" class="display-none">
                 <legend>War</legend>
                 <!-- lol -->
-                <div id="war">
                     <p>OPPONENT</p>
                     <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
                     <p>  |<span id="opp-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-number-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-number-2"> </span>|  </span></p>
@@ -75,9 +74,15 @@
                     <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
                     <p>  YOU  </p>
                     <p> </p>
-                </div>
                 <button id="war-button">Play</button>
                 <label>Bet: $</label><input id="war-bet" type="number" value="1" min="1" max="5"></input> <span id="coin-max">Max: $5</span>
+                <div id="war-auto-guess" class="auto-guess display-none">
+                    <div class="input-label">
+                        <label>Auto-play:&nbsp;</label>
+                        <input type="checkbox" id="war-auto-guess-box">
+                        <p id="war-auto-guess-rate"> (1/sec)</p>
+                    </div>
+                </div>
             </fieldset>
         </div>
         <div class="column">

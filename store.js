@@ -2,6 +2,7 @@ import { totalFlips } from './stats.js'
 import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
+import { unlockWar, upgradeAutoWar } from './games/war.js'
 
 let upgrades = []
 let upgradesMade = []
@@ -10,7 +11,9 @@ let storeBox
 const showUpgrade = (name) => {
     const upgrade = possibleUpgrades.find((u) => u.name === name)
     if (!upgrade) {
-        throw `No upgrade found for ${name}`
+        // TODO: remove
+        console.log(`No upgrade found for ${name}`)
+        return
     }
 
     const storeBox = $id('store')
@@ -23,14 +26,19 @@ const showUpgrade = (name) => {
 }
 
 export const checkStoreUpgrades = () => {
+    // TEST:
+    // if (totalFlips === 1) {
+    //     showUpgrade('war-auto-1')
+    // }
+
     if (totalFlips === 10) {
         showUpgrade('coin-10')
     } else if (totalFlips === 25) {
         showUpgrade('coin-max-5')
     } else if (totalFlips === 50) {
-        showUpgrade('auto-1')
-    // } else if (totalFlips === 100) {
-    //     showUpgrade('unlock-war)
+        showUpgrade('coin-auto-1')
+    } else if (totalFlips === 100) {
+        showUpgrade('unlock-war')
     } else if (totalFlips === 1000) {
         showUpgrade('coin-5')
     } else if (totalFlips === 10000) {
@@ -56,10 +64,14 @@ export const doUpgrade = (name) => {
     console.log(name)
     if (name === 'coin-10') {
         upgradeHeadsChance(0.1)
-    } else if (name === 'auto-1') {
-        upgradeAutoFlip(1000)
     } else if (name === 'coin-max-5') {
-        upgradeMaxCoinBet(10)
+        upgradeMaxCoinBet(5)
+    } else if (name === 'unlock-war') {
+        unlockWar()
+    } else if (name === 'coin-auto-1') {
+        upgradeAutoFlip(1000)
+    } else if (name === 'war-auto-1') {
+        upgradeAutoWar(1000)
     }
 
     // remove from upgrades array
@@ -88,8 +100,9 @@ export const updateStore = (delta) => {
 
 let possibleUpgrades = [
     { name: 'coin-10', price: 10, text: 'Weighted coin', info: 'Increase heads chance by 10%' },
-    { name: 'coin-max-5', price: 25, text: 'Enthusiasm', info: 'Max bet on coin flips in $10' },
-    { name: 'auto-1', price: 100, text: 'Autoflip', info: 'Flip a coin every second' }
+    { name: 'coin-max-5', price: 25, text: 'Enthusiasm', info: 'Max bet on coin flips is $5' },
+    { name: 'coin-auto-1', price: 100, text: 'Autoflip', info: 'Flip a coin every second' },
+    { name: 'war-auto-1', price: 1, text: 'Autowar', info: 'New game of war every second' }
 ]
 
 export const pushStoreItem = (item) => {

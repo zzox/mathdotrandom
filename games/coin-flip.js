@@ -20,11 +20,7 @@ export const createCoinFlip = () => {
     $id('heads-button').onclick = () => flipCoin('heads')
     $id('tails-button').onclick = () => flipCoin('tails')
 
-    const coinGuessBox = $id('coin-auto-guess-box')
-    const coinGuessHeads = $id('coin-auto-guess-heads')
-    const coinGuessTails = $id('coin-auto-guess-tails')
     coinBet = $id('coin-bet')
-
     coinBet.onchange = (event) => {
         betAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
         if (!betAmount) {
@@ -32,17 +28,17 @@ export const createCoinFlip = () => {
         }
     }
 
-    coinGuessBox.onchange = (event) => {
+    $id('coin-auto-guess-box').onchange = (event) => {
         coinGuessOn = event.target.checked
     }
 
-    coinGuessHeads.onchange = (event) => {
+    $id('coin-auto-guess-heads').onchange = (event) => {
         if (event.target.checked) {
             coinGuessChoice = 'heads'
         }
     }
 
-    coinGuessTails.onchange = (event) => {
+    $id('coin-auto-guess-tails').onchange = (event) => {
         if (event.target.checked) {
             coinGuessChoice = 'tails'
         }
