@@ -74,7 +74,7 @@ const unlockPokerBetUi = () => {
     drawPokerButton.disabled = true
 
     for (let i = 0; i < 5; i++) {
-        $id(`poker-hold-${i}`).disabled = false
+        $id(`poker-hold-${i}`).disabled = true
     }
 
     pokerBet.disabled = false
@@ -117,10 +117,16 @@ const pokerDeal = () => {
     }
     cards.forEach((card, i) => updatePokerUi(card, i, false))
 
+    pokerState = 'draw'
+
     State.subtractScore(betAmount)
 }
 
 const pokerDraw = () => {
+    if (pokerState !== 'draw') {
+        throw 'Cannot draw'
+    }
+
     resultShowTimer = 0
 
     for (let card = 0; card < 5; card++) {
@@ -134,9 +140,11 @@ const pokerDraw = () => {
 
     unlockPokerBetUi()
     resultShowTimer = 0
+
+    pokerState = 'ready'
 }
 
-export const updatePoker = () => {
+export const updatePoker = (delta) => {
     resultShowTimer += delta
     if (resultShowTimer >= resultShowTime) {
         resetPokerUi()
