@@ -37,15 +37,17 @@ export const warCardValue = {
     'A': 12
 }
 
-export const makeDeck = () => {
+export const makeDeck = (num = 1) => {
     const pile = []
 
-    for (let s = 0; s < suits.length; s++) {
-        for (let c = 0; c < cards.length; c++) {
-            pile.push(cards[c] + suits[s])
+    for (let i = 0; i < num; i++) {
+        for (let s = 0; s < suits.length; s++) {
+            for (let c = 0; c < cards.length; c++) {
+                pile.push(cards[c] + suits[s])
+            }
         }
     }
-    
+
     return {
         discarded: [],
         pile
@@ -54,6 +56,8 @@ export const makeDeck = () => {
 
 // https://stackoverflow.com/a/12646864
 export const shuffleDeck = (deck) => {
+    deck.discarded = deck.discarded.concat(deck.pile);
+
     for (let i = 51; i > 0; i--) {
         const k = Math.floor(Math.random() * i + 1)
         ;[deck.discarded[i], deck.discarded[k]] = [deck.discarded[k], deck.discarded[i]]

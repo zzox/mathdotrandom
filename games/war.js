@@ -31,8 +31,6 @@ export const createWar = () => {
     }
 
     deck = makeDeck()
-    // TODO: remove pre-shuffle hack
-    deck.discarded = deck.pile
     shuffleDeck(deck)
 }
 
