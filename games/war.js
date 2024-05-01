@@ -4,6 +4,7 @@ import State from '../state.js'
 
 let warBet
 let betAmount = 1
+let maxBet = 10
 
 let resultShowTimer = 0
 const resultShowTime = 3000
@@ -123,6 +124,10 @@ export const updateWar = (delta) => {
     resultShowTimer += delta
     if (resultShowTimer >= resultShowTime) {
         resetCardUi()
+    }
+
+    if (warBet.value > maxBet) {
+        warBet.value = maxBet
     }
 
     if (warBet.value * 5 > State.dollars) {

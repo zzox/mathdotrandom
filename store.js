@@ -1,6 +1,6 @@
 import { totalFlips } from './stats.js'
 import { $id, $query, $create, formatPrice } from './ui.js'
-import { upgradeAutoFlip, upgradeHeadsChance } from './games/coin-flip.js'
+import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
 
 let upgrades = []
@@ -10,7 +10,7 @@ let storeBox
 const showUpgrade = (name) => {
     const upgrade = possibleUpgrades.find((u) => u.name === name)
     if (!upgrade) {
-        throw 'No upgrade found'
+        throw `No upgrade found for ${name}`
     }
 
     const storeBox = $id('store')
@@ -26,11 +26,15 @@ export const checkStoreUpgrades = () => {
     if (totalFlips === 10) {
         showUpgrade('coin-10')
     } else if (totalFlips === 25) {
+        showUpgrade('coin-max-5')
+    } else if (totalFlips === 50) {
         showUpgrade('auto-1')
-    } else if (totalFlips === 100) {
-        showUpgrade('coin-5')
+    // } else if (totalFlips === 100) {
+    //     showUpgrade('unlock-war)
     } else if (totalFlips === 1000) {
-        showUpgrade('coin-3')
+        showUpgrade('coin-5')
+    } else if (totalFlips === 10000) {
+        showUpgrade('coin-1')
     }
 }
 
@@ -54,6 +58,8 @@ export const doUpgrade = (name) => {
         upgradeHeadsChance(0.1)
     } else if (name === 'auto-1') {
         upgradeAutoFlip(1000)
+    } else if (name === 'coin-max-5') {
+        upgradeMaxCoinBet(10)
     }
 
     // remove from upgrades array
@@ -81,7 +87,8 @@ export const updateStore = (delta) => {
 }
 
 let possibleUpgrades = [
-    { name: 'coin-10', price: 50, text: 'Weighted coin', info: 'Increase heads chance by 10%' },
+    { name: 'coin-10', price: 10, text: 'Weighted coin', info: 'Increase heads chance by 10%' },
+    { name: 'coin-max-5', price: 25, text: 'Enthusiasm', info: 'Max bet on coin flips in $10' },
     { name: 'auto-1', price: 100, text: 'Autoflip', info: 'Flip a coin every second' }
 ]
 

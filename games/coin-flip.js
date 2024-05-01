@@ -1,9 +1,10 @@
 import State from '../state.js'
 import { checkRandom } from '../main.js'
-import { $id, formatPercent, formatRate } from '../ui.js'
+import { $id, formatPercent, formatPrice, formatRate } from '../ui.js'
 
 let headsChance = 0.5
 let betAmount = 1
+let maxBet = 1
 
 let coinGuessOn = false
 let coinGuessChoice = 'heads'
@@ -83,6 +84,10 @@ export const updateCoinFlip = (delta) => {
         $id('coin-tails').classList.add('display-none')
     }
 
+    if (coinBet.value > maxBet) {
+        coinBet.value = maxBet
+    }
+
     if (coinBet.value > State.dollars) {
         betAmount = State.dollars
         coinBet.value = State.dollars
@@ -105,4 +110,10 @@ export const upgradeAutoFlip = (time) => {
     coinGuessTimer = time
     $id('coin-auto-guess').classList.remove('display-none')
     $id('coin-auto-guess-rate').innerText = ` ${formatRate(time)}`
+}
+
+export const upgradeMaxCoinBet = (newMax) => {
+    maxBet = newMax
+    $id('coin-max').innerText = `Max: ${formatPrice(newMax)}`
+    $id('coin-bet').max = newMax
 }
