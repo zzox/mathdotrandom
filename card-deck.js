@@ -37,6 +37,9 @@ export const warCardValue = {
     'A': 12
 }
 
+export const pokerValue = () => {}
+export const blackjackValue = () => {}
+
 export const makeDeck = (num = 1) => {
     const pile = []
 

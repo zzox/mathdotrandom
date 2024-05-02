@@ -85,6 +85,7 @@ const resetPokerUi = () => {
         const hold = $id(`poker-hold-${i}`)
         hold.checked = false
         hold.disabled = true
+        cardHolds[i] = false
         $id(`poker-hold-${i}`).checked = false
         $id(`deal-card-number-${i}`).innerText = ' '
         $id(`deal-card-suit-${i}`).innerText = ' '
@@ -139,14 +140,14 @@ const pokerDraw = () => {
     console.log(cards)
 
     unlockPokerBetUi()
-    resultShowTimer = 0
 
+    resultShowTimer = 0
     pokerState = 'ready'
 }
 
 export const updatePoker = (delta) => {
     resultShowTimer += delta
-    if (resultShowTimer >= resultShowTime) {
+    if (pokerState === 'ready' && resultShowTimer >= resultShowTime) {
         resetPokerUi()
     }
 }

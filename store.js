@@ -1,4 +1,4 @@
-import { totalFlips, totalWars } from './stats.js'
+import { totalGames, totalFlips, totalWars } from './stats.js'
 import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
@@ -31,24 +31,46 @@ export const checkStoreUpgrades = () => {
     //     showUpgrade('war-auto-1')
     // }
 
-    if (totalFlips === 10) {
+    if (totalGames === 100) {
+        showUpgrade('unlock-war')
+    } else if (totalGames === 1000) {
+        showUpgrade('unlock-poker')
+    } else if (totalGames === 10000) {
+        showUpgrade('unlock-blackjack')
+    } else if (totalGames === 10000) {
+        showUpgrade('unlock-rps')
+    } else if (totalFlips === 10) {
         showUpgrade('coin-10')
     } else if (totalFlips === 25) {
         showUpgrade('coin-max-5')
     } else if (totalFlips === 50) {
         showUpgrade('coin-auto-1')
-    } else if (totalFlips === 100) {
-        showUpgrade('unlock-war')
+    } else if (totalFlips === 250) {
+        showUpgrade('coin-max-10')
     } else if (totalFlips === 1000) {
         showUpgrade('coin-5')
     } else if (totalFlips === 10000) {
         showUpgrade('coin-1')
     } else if (totalWars === 50) {
         showUpgrade('war-auto-1')
-    } else if (totalFlips === 100) {
+    } else if (totalWars === 100) {
         showUpgrade('war-triple-tie')
+    } else if (totalWars === 200) {
+        showUpgrade('war-remove-2-clubs')
+    } else if (totalWars === 400) {
+        showUpgrade('war-remove-2-spades')
+    } else if (totalWars === 500) {
+        showUpgrade('war-auto-2')
+    } else if (totalWars === 800) {
+        showUpgrade('war-remove-2-diamonds')
     } else if (totalWars === 1000) {
         showUpgrade('war-max-10')
+    } else if (totalWars === 1600) {
+        showUpgrade('war-remove-2-clubs')
+    } else if (totalWars === 3200) {
+        showUpgrade('war-remove-2-hearts')
+    } else if (totalWars === 5000) {
+        showUpgrade('war-auto-4')
     }
 }
 
@@ -74,12 +96,12 @@ export const doUpgrade = (name) => {
         upgradeHeadsChance(0.05)
     } else if (name === 'coin-max-5') {
         upgradeMaxCoinBet(5)
-    } else if (name === 'war-max-10') {
-        upgradeMaxWarBet(10)
-    } else if (name === 'unlock-war') {
-        unlockWar()
     } else if (name === 'coin-auto-1') {
         upgradeAutoFlip(1000)
+    } else if (name === 'unlock-war') {
+        unlockWar()
+    } else if (name === 'war-max-10') {
+        upgradeMaxWarBet(10)
     } else if (name === 'war-auto-1') {
         upgradeAutoWar(1000)
     }
@@ -111,10 +133,18 @@ export const updateStore = (delta) => {
 let possibleUpgrades = [
     { name: 'coin-10', price: 10, text: 'Weighted coin', info: 'Increase heads chance by 10%' },
     { name: 'coin-5', price: 1000, text: 'Specialty Engraving', info: 'Increase heads chance by 5%' },
+    { name: 'coin-3', price: 100000, text: 'Flip Seminar Weeked', info: 'Increase heads chance by 3%' },
     { name: 'coin-max-5', price: 25, text: 'Enthusiasm', info: 'Max bet on coin flips is $5' },
+    { name: 'coin-max-10', price: 2500, text: 'Enthusiasm', info: 'Max bet on coin flips is $10' },
     { name: 'coin-auto-1', price: 100, text: 'Autoflip', info: 'Flip a coin every second' },
-    { name: 'unlock-war', price: 100, text: 'War', info: 'Fun kids card game' },
-    { name: 'war-auto-1', price: 1000, text: 'Autowar', info: 'New game of war every second' }
+    { name: 'unlock-war', price: 100, text: 'War', info: 'Fun card game for kids' },
+    { name: 'war-auto-1', price: 1000, text: 'Autowar', info: 'New game of war every second' },
+    { name: 'war-auto-2', price: 10000, text: 'Superwar', info: 'New game of war every half-second' },
+    { name: 'war-auto-3', price: 100000, text: 'Superwar', info: 'New game of war every quarter-second' },
+    { name: 'war-auto-4', price: 1000000, text: 'Ultrawar', info: 'New game of war every tenth-second' },
+    { name: 'unlock-poker', price: 10000, text: 'Poker', info: 'Game for cowboys and idiots' },
+    { name: 'unlock-blackjack', price: 1000000, text: 'Blackjack', info: 'Game for cowboys and idiots' },
+    { name: 'unlock-rps', price: 100000000, text: 'Rock, Paper, Scissors', info: 'More important than your life' }
 ]
 
 export const pushStoreItem = (item) => {

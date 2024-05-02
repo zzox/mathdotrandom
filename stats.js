@@ -2,6 +2,8 @@ import State from './state.js'
 
 let topCash = 100
 
+export let totalGames = 0
+
 export let totalFlips = 0
 let totalFlipWins = 0
 let totalHeads = 0
@@ -43,5 +45,6 @@ export const pushStat = (val, scoreData) => {
         topCash = State.dollars
     }
 
+    totalGames++
     // upgradeStatsUi()
 }
