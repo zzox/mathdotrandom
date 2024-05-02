@@ -1,4 +1,5 @@
 import { $create, $id, formatPrice } from '../ui.js'
+import { pokerDisplayText } from './games/poker.js'
 
 let resultBox
 
@@ -23,6 +24,11 @@ export const pushEvent = (result, scoreData) => {
             ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
             (scoreData.isAuto ? ' [AUTO]' : '')
         }
+    } else if (scoreData.game === 'poker') {
+        p.innerText = `Poker     | bet ${formatPrice(scoreData.wager)} ` +
+        `  ${result <= 0 ? 'lost' : 'won '} ${result <= 0 ? formatPrice(scoreData.wager) : formatPrice(result - scoreData.wager)} with ${scoreData.hand}` +
+        (scoreData.isAuto ? ' [AUTO]' : '')
     }
+
     resultBox.insertBefore(p, resultBox.querySelector('p'))
 }

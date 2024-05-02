@@ -1,5 +1,3 @@
-// import { drawCard, evaluatePokerHand, makeDeck, shuffleDeck } from '../card-deck.js'
-
 import { drawCard, evaluatePokerHand, makeDeck, shuffleDeck } from '../card-deck.js'
 
 const deck = makeDeck(1)

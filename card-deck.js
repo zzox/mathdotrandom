@@ -45,7 +45,8 @@ export const flush = 'flush'
 export const straight = 'straight'
 export const threeOfKind = 'three-of-kind'
 export const twoPair = 'two-pair'
-export const pair = 'pair'
+export const hiPair = 'hi-pair'
+export const loPair = 'lo-pair'
 export const hiCard = 'hi-card'
 
 export const pokerValue = {
@@ -57,7 +58,8 @@ export const pokerValue = {
     'straight': 4,
     'three-of-kind': 3,
     'two-pair': 2,
-    'pair': 1,
+    'hi-pair': 1,
+    'lo-pair': 0,
     'hi-card': 0
 }
 
@@ -182,18 +184,25 @@ export const evaluatePokerHand = (hand) => {
         if (result === straightFlush && rankDict['A'].length && rankDict['K'].length) {
             result = royalFlush
         }
-    } else if (numFours) {
+    } else if (numFours === 1) {
         result = fourOfKind
-    } else if (numTrips && numPairs) {
+    } else if (numTrips === 1 && numPairs === 1) {
         result = fullHouse
     } else if (isFlushed) {
         result = flush
-    } else if (numTrips) {
+    } else if (numTrips === 1) {
         result = threeOfKind
     } else if (numPairs === 2) {
         result = twoPair
-    } else if (numPairs) {
-        result = pair
+    } else if (numPairs === 1) {
+        if (rankDict['A'].length === 2 ||
+            rankDict['K'].length === 2 ||
+            rankDict['Q'].length === 2 ||
+            rankDict['J'].length === 2) {
+            result = hiPair
+        } else {
+            result = loPair
+        }
     }
 
     return result

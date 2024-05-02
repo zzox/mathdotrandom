@@ -91,7 +91,7 @@ const resetCardUi = () => {
     $queryAll('.war-column-2').forEach((item) => { item.classList.add('display-none') })
 }
 
-export const playWar = () => {
+export const playWar = (isAuto = false) => {
     if (!unlocked) {
         throw 'Locked'
     }
@@ -133,7 +133,7 @@ export const playWar = () => {
     }
 
     const data = {
-        result, playerCard, oppCard, game: 'war', isAuto: false
+        result, playerCard, oppCard, game: 'war', isAuto
     }
 
     if (result === 'win') {
@@ -151,7 +151,7 @@ export const updateWar = (delta) => {
     if (warGuessOn) {
         warGuessTimer += delta
         if (warGuessTimer >= warGuessTime) {
-            playWar()
+            playWar(true)
             warGuessTimer -= warGuessTime
         }
     }
