@@ -12,6 +12,7 @@ let totalTails = 0
 export let totalWars = 0
 let totalWarWins = 0
 let totalWarLosses = 0
+let totalWarTies = 0
 
 export const pushStat = (val, scoreData) => {
     if (scoreData.game === 'coin-flip') {

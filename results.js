@@ -15,9 +15,14 @@ export const pushEvent = (result, scoreData) => {
         ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
         (scoreData.isAuto ? ' [AUTO]' : '')
     } else if (scoreData.game === 'war') {
-        p.innerText = `War       | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
-        ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
-        (scoreData.isAuto ? ' [AUTO]' : '')
+        if (scoreData.result === 'tie') {
+            p.innerText = `War       | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
+            ` ties ${formatPrice(Math.abs(result))}` + (scoreData.isAuto ? ' [AUTO]' : '')
+        } else {
+            p.innerText = `War       | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
+            ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
+            (scoreData.isAuto ? ' [AUTO]' : '')
+        }
     }
     resultBox.insertBefore(p, resultBox.querySelector('p'))
 }

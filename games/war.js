@@ -1,11 +1,12 @@
-import { makeDeck, shuffleDeck, drawCard, warCardValue } from '../card-deck.js'
+import { makeDeck, shuffleDeck, drawCard, warCardValue, pullCard } from '../card-deck.js'
 import { $id, $queryAll, formatRate, loseWinTie } from '../ui.js'
-import State from '../state.js'
+import State, { checkRandom } from '../state.js'
 
 let unlocked = false
 
-let warBet
+let warBet, tripleTieBet
 let betAmount = 1
+let tripleTieBetAmount = 0
 let maxBet = 10
 
 let resultShowTimer = 0
@@ -15,8 +16,7 @@ let warGuessOn = false
 let warGuessTimer = 0
 const warGuessTime = 1000
 
-let tripleTieOn = false
-let tripleTieWager = 1
+let pullAcePercent = 0.0
 
 let deck
 
@@ -29,11 +29,18 @@ export const createWar = () => {
     }
 
     warBet = $id('war-bet')
-
     warBet.onchange = (event) => {
         betAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
         if (!betAmount) {
             betAmount = 1
+        }
+    }
+
+    tripleTieBet = $id('triple-tie-bet')
+    tripleTieBet.onchange = (event) => {
+        tripleTieBetAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
+        if (!tripleTieBetAmount) {
+            tripleTieBetAmount = 0
         }
     }
 
@@ -97,7 +104,15 @@ export const playWar = () => {
     let drawNum, oppCard, playerCard
     for (drawNum = 0; drawNum < 3; drawNum++) {
         oppCard = drawCard(deck)
-        playerCard = drawCard(deck)
+        if (checkRandom(pullAcePercent)) {
+            playerCard = pullCard(deck, 'A')
+            console.log('ace!')
+            if (!playerCard) {
+                playerCard = drawCard(deck)
+            }
+        } else {
+            playerCard = drawCard(deck)
+        }
 
         console.log(oppCard, playerCard)
 
@@ -122,13 +137,11 @@ export const playWar = () => {
     }
 
     if (result === 'win') {
-        State.updateScore(betAmount * (drawNum * 2 + 1), data)
+        State.updateScore(betAmount * (drawNum * 2 + 1) - tripleTieBetAmount, data)
     } else if (result === 'lose') {
-        State.updateScore(betAmount * -(drawNum * 2 + 1), data)
-    } else if (tripleTieOn) {
-        State.updateScore(tripleTieWager * 1000, data)
+        State.updateScore(betAmount * -(drawNum * 2 + 1) - tripleTieBetAmount, data)
     } else {
-        State.updateScore(tripleTieWager, data)
+        State.updateScore(tripleTieBetAmount * 1000, data)
     }
 
     resultShowTimer = 0
@@ -152,9 +165,16 @@ export const updateWar = (delta) => {
         warBet.value = maxBet
     }
 
-    if (warBet.value * 5 > State.dollars) {
-        betAmount = Math.floor(State.dollars / 5)
-        warBet.value = Math.floor(State.dollars / 5)
+    // if (warBet.value * 5 > State.dollars) {
+    //     betAmount = Math.floor(State.dollars / 5)
+    //     warBet.value = Math.floor(State.dollars / 5)
+    // }
+
+    if (warBet.value * 5 + tripleTieBet.value * 5 > State.dollars) {
+        betAmount = Math.floor(State.dollars / 10)
+        warBet.value = Math.floor(State.dollars / 10)
+        tripleTieBetAmount = Math.floor(State.dollars / 10)
+        tripleTieBet.value = Math.floor(State.dollars / 10)
 
         // disable autoguess if too broke
         // $id('coin-auto-guess-box').checked = false
@@ -173,6 +193,19 @@ export const upgradeMaxWarBet = (newMax) => {
     maxBet = newMax
     $id('war-max').innerText = `Max: ${formatPrice(newMax)}`
     $id('war-bet').max = newMax
+    $id('war-triple-tie-bet').max = newMax
+}
+
+export const upgradeWarAcePercent = (percent) => {
+    pullAcePercent += percent
+    $id('war-ace-percent').classList.remove('display-none')
+    // its * 50 because we only look through draw pile if under a certain percent.
+    // half 4% is 2%, 100 to get from decimal percent to display percent, half 100
+    $id('war-ace-percent').innerText = `Ace draw: ${pullAcePercent * 50}%`
+}
+
+export const unlockTripleTie = () => {
+    $id('triple-tie').classList.remove('display-none')
 }
 
 export const unlockWar = () => {

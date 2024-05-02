@@ -2,7 +2,7 @@ import { totalGames, totalFlips, totalWars } from './stats.js'
 import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
-import { unlockWar, upgradeAutoWar } from './games/war.js'
+import { unlockTripleTie, unlockWar, upgradeAutoWar, upgradeWarAcePercent } from './games/war.js'
 
 let upgrades = []
 let upgradesMade = []
@@ -27,8 +27,10 @@ const showUpgrade = (name) => {
 
 export const checkStoreUpgrades = () => {
     // TEST:
-    // if (totalFlips === 1) {
-    //     showUpgrade('war-auto-1')
+    // if (totalWars === 1) {
+    //     showUpgrade('war-2-percent-ace')
+    // } else if (totalWars === 2) {
+    //     showUpgrade('war-triple-tie')
     // }
 
     if (totalGames === 100) {
@@ -57,6 +59,8 @@ export const checkStoreUpgrades = () => {
         showUpgrade('war-triple-tie')
     } else if (totalWars === 200) {
         showUpgrade('war-remove-2-clubs')
+    } else if (totalWars === 250) {
+        showUpgrade('war-2-percent-ace')
     } else if (totalWars === 400) {
         showUpgrade('war-remove-2-spades')
     } else if (totalWars === 500) {
@@ -100,6 +104,10 @@ export const doUpgrade = (name) => {
         upgradeAutoFlip(1000)
     } else if (name === 'unlock-war') {
         unlockWar()
+    } else if (name === 'war-triple-tie') {
+        unlockTripleTie()
+    } else if (name === 'war-2-percent-ace') {
+        upgradeWarAcePercent(0.04)
     } else if (name === 'war-max-10') {
         upgradeMaxWarBet(10)
     } else if (name === 'war-auto-1') {
@@ -135,13 +143,15 @@ let possibleUpgrades = [
     { name: 'coin-5', price: 1000, text: 'Specialty Engraving', info: 'Increase heads chance by 5%' },
     { name: 'coin-3', price: 100000, text: 'Flip Seminar Weeked', info: 'Increase heads chance by 3%' },
     { name: 'coin-max-5', price: 25, text: 'Enthusiasm', info: 'Max bet on coin flips is $5' },
-    { name: 'coin-max-10', price: 2500, text: 'Enthusiasm', info: 'Max bet on coin flips is $10' },
+    { name: 'coin-max-10', price: 2500, text: 'Hoodwink', info: 'Max bet on coin flips is $10' },
     { name: 'coin-auto-1', price: 100, text: 'Autoflip', info: 'Flip a coin every second' },
     { name: 'unlock-war', price: 100, text: 'War', info: 'Fun card game for kids' },
     { name: 'war-auto-1', price: 1000, text: 'Autowar', info: 'New game of war every second' },
     { name: 'war-auto-2', price: 10000, text: 'Superwar', info: 'New game of war every half-second' },
     { name: 'war-auto-3', price: 100000, text: 'Superwar', info: 'New game of war every quarter-second' },
     { name: 'war-auto-4', price: 1000000, text: 'Ultrawar', info: 'New game of war every tenth-second' },
+    { name: 'war-2-percent-ace', price: 100, text: 'Ace draw', info: '2% chance of drawing an ace' },
+    { name: 'war-triple-tie', price: 1000, text: 'Triple tie', info: 'Pays 1000 to 1 on three ties' },
     { name: 'unlock-poker', price: 10000, text: 'Poker', info: 'Game for cowboys and idiots' },
     { name: 'unlock-blackjack', price: 1000000, text: 'Blackjack', info: 'Game for cowboys and idiots' },
     { name: 'unlock-rps', price: 100000000, text: 'Rock, Paper, Scissors', info: 'More important than your life' }

@@ -76,6 +76,10 @@
                     <p> </p>
                 <button id="war-button">Play</button>
                 <label>Bet: $</label><input id="war-bet" type="number" value="1" min="1" max="5"></input> <span id="war-max">Max: $5</span>
+                <p id="war-ace-percent" class="display-none">Ace draw: 4%</p>
+                <div id="triple-tie" class="display-none">
+                    <label>Triple-tie: $</label><input id="triple-tie-bet" type="number" value="0" min="0" max="5"></input> <span id="war-triple-tie-max">Max: $5</span>
+                </div>
                 <div id="war-auto-guess" class="auto-guess display-none">
                     <div class="input-label">
                         <label>Auto-play:&nbsp;</label>
@@ -84,7 +88,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset id="poker">
+            <fieldset id="poker" class="display-none">
                 <legend>Poker</legend>
                     <p>     +-+    +-+    +-+    +-+    +-+</p>
                     <p>     |<span id="deal-card-number-0"> </span>|    |<span id="deal-card-number-1"> </span>|    |<span id="deal-card-number-2"> </span>|    |<span id="deal-card-number-3"> </span>|    |<span id="deal-card-number-4"> </span>|  </p>

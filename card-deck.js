@@ -79,3 +79,14 @@ export const drawCard = (deck) => {
     deck.discarded.push(card)
     return card
 }
+
+export const pullCard = (deck, cardRank) => {
+    const index = deck.pile.findIndex((card) => card[0] === cardRank)
+    if (index >= 0) {
+        const [card] = deck.pile.splice(index, 1)
+        deck.discarded.push(card)
+        return card
+    }
+
+    return null
+}
