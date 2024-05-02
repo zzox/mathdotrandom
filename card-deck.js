@@ -37,7 +37,30 @@ export const warCardValue = {
     'A': 12
 }
 
-export const pokerValue = () => {}
+export const royalFlush = 'royal-flush'
+export const straightFlush = 'straight-flush'
+export const fourOfKind = 'four-of-kind'
+export const fullHouse = 'full-house'
+export const flush = 'flush'
+export const straight = 'straight'
+export const threeOfKind = 'three-of-kind'
+export const twoPair = 'two-pair'
+export const pair = 'pair'
+export const hiCard = 'hi-card'
+
+export const pokerValue = {
+    'royal-flush': 800,
+    'straight-flush': 50,
+    'four-of-kind': 25,
+    'full-house': 9,
+    'flush': 6,
+    'straight': 4,
+    'three-of-kind': 3,
+    'two-pair': 2,
+    'pair': 1,
+    'hi-card': 0
+}
+
 export const blackjackValue = () => {}
 
 export const makeDeck = (num = 1) => {
@@ -89,4 +112,89 @@ export const pullCard = (deck, cardRank) => {
     }
 
     return null
+}
+
+const cardOrder = [ace, king, queen, jack, ten, nine, eight, seven, six, five, four, three, two]
+
+export const evaluatePokerHand = (hand) => {
+    const rankDict = {
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': [],
+        '6': [],
+        '7': [],
+        '8': [],
+        '9': [],
+        'T': [],
+        'J': [],
+        'Q': [],
+        'K': [],
+        'A': []
+    }
+
+    const suitDict = {
+        '♠': [],
+        '♥': [],
+        '♦': [],
+        '♣': []
+    }
+
+    hand.forEach((card) => {
+        rankDict[card[0]].push(card)
+        suitDict[card[1]].push(card)
+    })
+
+    let result = hiCard
+    let numPairs = 0
+    let numTrips = 0
+    let numFours = 0
+    let straightCards = 0
+    for (let count = 0; count < cardOrder.length; count++) {
+        const numCards = rankDict[cardOrder[count]].length
+
+        if (numCards === 0 && straightCards !== 5) {
+            straightCards = 0
+        } else if (numCards === 1) {
+            straightCards++
+        } else if (numCards === 2) {
+            numPairs++
+        } else if (numCards === 3) {
+            numTrips++
+        } else if (numCards === 4) {
+            numFours++
+        }
+    }
+
+    if (straightCards === 4 && rankDict['A'].length === 1) {
+        straightCards++
+    }
+
+    let isFlushed = false
+    for (let i = 0; i < suits.length; i++) {
+        if (suitDict[suits[i]].length === 5) {
+            isFlushed = true
+        }
+    }
+
+    if (straightCards === 5) {
+        result = isFlushed ? straightFlush : straight
+        if (result === straightFlush && rankDict['A'].length && rankDict['K'].length) {
+            result = royalFlush
+        }
+    } else if (numFours) {
+        result = fourOfKind
+    } else if (numTrips && numPairs) {
+        result = fullHouse
+    } else if (isFlushed) {
+        result = flush
+    } else if (numTrips) {
+        result = threeOfKind
+    } else if (numPairs === 2) {
+        result = twoPair
+    } else if (numPairs) {
+        result = pair
+    }
+
+    return result
 }
