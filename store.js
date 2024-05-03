@@ -3,6 +3,7 @@ import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
 import { unlockTripleTie, unlockWar, upgradeAutoWar, upgradeWarAcePercent } from './games/war.js'
+import { time } from './main.js'
 
 let upgrades = []
 let upgradesMade = []
@@ -100,6 +101,8 @@ export const doUpgrade = (name) => {
         upgradeHeadsChance(0.05)
     } else if (name === 'coin-max-5') {
         upgradeMaxCoinBet(5)
+    } else if (name === 'coin-max-10') {
+        upgradeMaxCoinBet(10)
     } else if (name === 'coin-auto-1') {
         upgradeAutoFlip(1000)
     } else if (name === 'unlock-war') {
@@ -112,7 +115,14 @@ export const doUpgrade = (name) => {
         upgradeMaxWarBet(10)
     } else if (name === 'war-auto-1') {
         upgradeAutoWar(1000)
+    } else if (name === 'war-auto-2') {
+        upgradeAutoWar(500)
+    } else {
+        console.warn(`No upgrade for ${name}`)
     }
+
+    // TEST:
+    console.warn(`upgrade ${name} at ${Math.round(time)}`)
 
     // remove from upgrades array
     upgrades = upgrades.filter((u) => u.name !== name)
@@ -146,11 +156,11 @@ let possibleUpgrades = [
     { name: 'coin-max-10', price: 2500, text: 'Hoodwink', info: 'Max bet on coin flips is $10' },
     { name: 'coin-auto-1', price: 100, text: 'Autoflip', info: 'Flip a coin every second' },
     { name: 'unlock-war', price: 100, text: 'War', info: 'Fun card game for kids' },
-    { name: 'war-auto-1', price: 1000, text: 'Autowar', info: 'New game of war every second' },
-    { name: 'war-auto-2', price: 10000, text: 'Superwar', info: 'New game of war every half-second' },
-    { name: 'war-auto-3', price: 100000, text: 'Superwar', info: 'New game of war every quarter-second' },
-    { name: 'war-auto-4', price: 1000000, text: 'Ultrawar', info: 'New game of war every tenth-second' },
-    { name: 'war-2-percent-ace', price: 100, text: 'Ace draw', info: '2% chance of drawing an ace' },
+    { name: 'war-auto-1', price: 500, text: 'Autowar', info: 'New game of war every second' },
+    { name: 'war-auto-2', price: 5000, text: 'Superwar', info: 'New game of war every half-second' },
+    { name: 'war-auto-3', price: 50000, text: 'Megawar', info: 'New game of war every quarter-second' },
+    { name: 'war-auto-4', price: 500000, text: 'Ultrawar', info: 'New game of war every tenth-second' },
+    { name: 'war-2-percent-ace', price: 250, text: 'Ace draw', info: '2% chance of drawing an ace' },
     { name: 'war-triple-tie', price: 1000, text: 'Triple tie', info: 'Pays 1000 to 1 on three ties' },
     { name: 'unlock-poker', price: 10000, text: 'Poker', info: 'Game for cowboys and idiots' },
     { name: 'unlock-blackjack', price: 1000000, text: 'Blackjack', info: 'Game for cowboys and idiots' },

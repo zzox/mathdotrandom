@@ -1,4 +1,5 @@
 import State from './state.js'
+import { $id, formatPercent, formatPrice } from './ui.js'
 
 let topCash = 100
 
@@ -14,6 +15,24 @@ let totalWarWins = 0
 let totalWarLosses = 0
 let totalWarTies = 0
 
+// PERF: pre-create items
+
+let totalGamesUi,
+totalFlipsUi,
+flipWinPercentUi,
+totalWarsUi,
+warWinPercentUi,
+topCashUi
+
+export const createStats = () => {
+    totalGamesUi = $id('total-games')
+    totalFlipsUi = $id('total-flips')
+    flipWinPercentUi = $id('flip-win-percent')
+    totalWarsUi = $id('total-wars')
+    warWinPercentUi = $id('war-win-percent')
+    topCashUi = $id('top-cash')
+}
+
 export const pushStat = (val, scoreData) => {
     if (scoreData.game === 'coin-flip') {
         totalFlips++;
@@ -28,6 +47,9 @@ export const pushStat = (val, scoreData) => {
         } else {
             totalTails++;
         }
+
+        totalFlipsUi.innerText = totalFlips + ''
+        flipWinPercentUi.innerText = formatPercent(totalFlipWins / totalFlips)
     }
 
     if (scoreData.game === 'war') {
@@ -40,12 +62,16 @@ export const pushStat = (val, scoreData) => {
         } else {
             totalWarTies++;
         }
+
+        totalWarsUi.innerText = totalWars + ''
+        warWinPercentUi.innerText = formatPercent(totalWarWins / totalWars)
     }
 
     if (topCash < State.dollars) {
         topCash = State.dollars
+        topCashUi.innerText = formatPrice(topCash)
     }
 
     totalGames++
-    // upgradeStatsUi()
+    totalGamesUi.innerText = totalGames + ''
 }

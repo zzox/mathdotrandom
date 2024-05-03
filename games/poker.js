@@ -2,7 +2,7 @@ import { makeDeck, shuffleDeck, drawCard, evaluatePokerHand, hiCard, pokerValue,
 import { $id } from '../ui.js'
 import State from '../state.js'
 
-let unlocked = true
+let unlocked = false
 
 let pokerBet
 let betAmount = 1
@@ -186,4 +186,9 @@ export const updatePoker = (delta) => {
     // if (pokerState === 'ready' && resultShowTimer >= resultShowTime) {
     //     resetPokerUi()
     // }
+}
+
+export const unlockPoker = () => {
+    unlocked = true
+    $id('poker').classList.remove('display-none')
 }
