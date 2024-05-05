@@ -91,7 +91,7 @@ export const updateCoinFlip = (delta) => {
         // disable autoguess if too broe
         $id('coin-auto-guess-box').checked = false
         coinGuessOn = false
-        throw 'Cannot bet money you dont have'
+        console.error('Cannot bet money you dont have')
     }
 }
 

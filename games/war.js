@@ -9,8 +9,8 @@ let betAmount = 1
 let tripleTieBetAmount = 0
 let maxBet = 10
 
-let resultShowTimer = 0
-const resultShowTime = 3000
+// let resultShowTimer = 0
+// const resultShowTime = 3000
 
 let warGuessOn = false
 let warGuessTimer = 0
@@ -144,7 +144,7 @@ export const playWar = (isAuto = false) => {
         State.updateScore(tripleTieBetAmount * 1000, data)
     }
 
-    resultShowTimer = 0
+    // resultShowTimer = 0
 }
 
 export const updateWar = (delta) => {
@@ -156,10 +156,10 @@ export const updateWar = (delta) => {
         }
     }
 
-    resultShowTimer += delta
-    if (resultShowTimer >= resultShowTime) {
-        resetCardUi()
-    }
+    // resultShowTimer += delta
+    // if (resultShowTimer >= resultShowTime) {
+    //     resetCardUi()
+    // }
 
     if (warBet.value > maxBet) {
         warBet.value = maxBet
@@ -179,7 +179,7 @@ export const updateWar = (delta) => {
         // disable autoguess if too broke
         // $id('coin-auto-guess-box').checked = false
         // coinGuessOn = false
-        throw 'Cannot bet money you dont have'
+        console.error('Cannot bet money you dont have')
     }
 }
 

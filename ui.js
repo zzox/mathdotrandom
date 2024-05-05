@@ -3,7 +3,9 @@ import State from './state.js'
 // minimize fieldsets
 document.querySelectorAll('legend').forEach(item => {
     item.onclick = (event) => {
-        event.target.parentElement.classList.toggle('minimize')
+        if (event.target.parentElement.id !== 'value') {
+            event.target.parentElement.classList.toggle('minimize')
+        }
     }
 })
 

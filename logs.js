@@ -1,15 +1,14 @@
 import { $create, $id, formatPrice } from '../ui.js'
-import { pokerDisplayText } from './games/poker.js'
 
-let resultBox
+let logBox
 
-export const createResults = () => {
-    resultBox = $id('results')
+export const createLogs = () => {
+    logBox = $id('logs')
 }
 
-export const pushEvent = (result, scoreData) => {
+export const pushLog = (result, scoreData) => {
     const p = $create('p')
-    p.className = 'result-item'
+    p.className = 'log-item'
 
     if (scoreData.game === 'coin-flip') {
         p.innerText = `Coin flip |  ${scoreData.choice}  ` +
@@ -30,5 +29,5 @@ export const pushEvent = (result, scoreData) => {
         (scoreData.isAuto ? ' [AUTO]' : '')
     }
 
-    resultBox.insertBefore(p, resultBox.querySelector('p'))
+    logBox.insertBefore(p, logBox.querySelector('p'))
 }

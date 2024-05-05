@@ -36,8 +36,12 @@ export const checkStoreUpgrades = () => {
 
     if (totalGames === 100) {
         showUpgrade('unlock-war')
+    } else if (totalGames === 500) {
+        showUpgrade('show-stats')
     } else if (totalGames === 1000) {
         showUpgrade('unlock-poker')
+    } else if (totalGames === 2500) {
+        showUpgrade('show-logs')
     } else if (totalGames === 10000) {
         showUpgrade('unlock-blackjack')
     } else if (totalGames === 10000) {

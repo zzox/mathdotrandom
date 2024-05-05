@@ -3,7 +3,7 @@ import { createStore, updateStore } from './store.js'
 import { createCoinFlip, updateCoinFlip } from './games/coin-flip.js'
 import { createWar, updateWar } from './games/war.js'
 import { createPoker, updatePoker } from './games/poker.js'
-import { createResults } from './results.js'
+import { createLogs } from './logs.js'
 import { createStats } from './stats.js'
 
 // randomness
@@ -29,7 +29,7 @@ const mainLoop = (total) => {
 }
 
 window.onload = () => {
-    createResults()
+    createLogs()
     createStore()
     createStats()
     createCoinFlip()

@@ -1,6 +1,6 @@
 import { pushStat } from './stats.js'
 import { checkStoreUpgrades } from './store.js'
-import { pushEvent } from './results.js'
+import { pushLog } from './logs.js'
 
 export const checkRandom = (percent) => {
     return Math.random() < percent
@@ -19,7 +19,7 @@ export default class State {
             alert('shouldnt be here')
         }
     
-        pushEvent(val, scoreData)
+        pushLog(val, scoreData)
         pushStat(val, scoreData)
         checkStoreUpgrades()
     }

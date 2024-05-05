@@ -23,9 +23,9 @@ legend:hover {
     cursor: pointer;
 }
 
-/* #score > legend:hover {
+#value > legend:hover {
     cursor: default;
-} */
+}
 
 fieldset {
     margin: 1rem;
@@ -83,12 +83,12 @@ fieldset.minimize > :not(legend) {
 }
 
 /* TODO: stretch this out via grid or flexbox? */
-#results:not(.minimize) {
+#logs:not(.minimize) {
     height: calc(100vh - 6rem);
     overflow-y: scroll;
 }
 
-.result-item {}
+.log-item {}
 
 .error-text {
     color: var(--error-red);
