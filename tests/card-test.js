@@ -12,7 +12,8 @@ const resultsDict = {
     'straight': [], 
     'three-of-kind': [],
     'two-pair': [],
-    'pair': [],
+    'hi-pair': [],
+    'lo-pair': [],
     'hi-card': []
 }
 

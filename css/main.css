@@ -23,9 +23,15 @@ legend:hover {
     cursor: pointer;
 }
 
+/* #score > legend:hover {
+    cursor: default;
+} */
+
 fieldset {
-    margin: 1rem 0;
+    margin: 1rem;
     border-style: inset;
+    padding: 1rem;
+    width: 424px;
 }
 
 h3 {
@@ -51,11 +57,12 @@ input[type='number'] {
 }
 
 .container {
-    /* TODO: consider flexbox */
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* display: flex;
-    justify-content: center; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: calc(100vh - 2rem);
+    margin: 1rem;
+    align-content: flex-start;
 }
 
 fieldset.minimize {
