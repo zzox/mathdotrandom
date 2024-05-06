@@ -7,154 +7,149 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
-    <div class="container">
-        <!-- <div class="column"> -->
-            <fieldset id="value">
-                <legend>Value</legend>
-                <h1 id="score">$100</h1>
-            </fieldset>
-            <fieldset>
-                <legend>Coin flip</legend>
-                <div id="coin-flat">
-                    <p> </p>
-                    <p> </p>
-                    <p> _______</p>
-                    <p>|_______|</p>
-                    <p> </p>
-                    <p> </p>
-                    <p> </p>
-                </div>
-                <div id="coin-heads" class="display-none">
-                    <p>  _____</p>
-                    <p> /     \</p>
-                    <p>/       \</p>
-                    <p>| HEADS |</p>
-                    <p>\       /</p>
-                    <p> \_____/</p>
-                    <p> </p>
-                </div>
-                <div id="coin-tails" class="display-none">
-                    <p>  _____</p>
-                    <p> /     \</p>
-                    <p>/       \</p>
-                    <p>| TAILS |</p>
-                    <p>\       /</p>
-                    <p> \_____/</p>
-                    <p> </p>
-                </div>
-                <button id="heads-button">Heads</button>
-                <button id="tails-button">Tails</button>
-                <label>Bet: $</label><input id="coin-bet" type="number" value="1" min="1" max="1"></input> <span id="coin-max">Max: $1</span>
-                <p id="coin-chances"></p>
-                <div id="coin-auto-guess" class="auto-guess display-none">
-                    <div class="input-label">
-                        <label>Auto-flip:&nbsp;</label>
-                        <input type="checkbox" id="coin-auto-guess-box">
-                        <p id="coin-auto-guess-rate"> (1/sec)</p>
-                    </div>
-                    <div id="coin-auto-guess-choices" class="input-label">
-                        <label>Heads</label>
-                        <input type="radio" name="coin-auto-guess" id="coin-auto-guess-heads" checked>&nbsp;
-                        <label>Tails</label>
-                        <input type="radio" name="coin-auto-guess" id="coin-auto-guess-tails">
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset id="war">
-                <legend>War</legend>
-                <!-- lol -->
-                    <p>OPPONENT</p>
-                    <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
-                    <p>  |<span id="opp-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-number-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-number-2"> </span>|  </span></p>
-                    <p>  |<span id="opp-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-suit-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-suit-2"> </span>|  </span></p>
-                    <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
-                    <p>  <span id="war-result-0">    </span><span class="war-column-1 display-none">   <span id="war-result-1">    </span></span><span class="war-column-2 display-none">   <span id="war-result-2">    </span></span></p>
-                    <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
-                    <p>  |<span id="player-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-number-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-number-2"> </span>|</span></p>
-                    <p>  |<span id="player-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-suit-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-suit-2"> </span>|</span></p>
-                    <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
-                    <p>  YOU  </p>
-                    <p> </p>
-                <button id="war-button">Play</button>
-                <label>Bet: $</label><input id="war-bet" type="number" value="1" min="1" max="5"></input> <span id="war-max">Max: $5</span>
-                <p id="war-ace-percent" class="display-none">Ace draw: 2%</p>
-                <div id="triple-tie" class="display-none">
-                    <label>Triple-tie: $</label><input id="triple-tie-bet" type="number" value="0" min="0" max="5"></input> <span id="war-triple-tie-max">Max: $5</span>
-                </div>
-                <div id="war-auto-guess" class="auto-guess display-none">
-                    <div class="input-label">
-                        <label>Auto-play:&nbsp;</label>
-                        <input type="checkbox" id="war-auto-guess-box">
-                        <p id="war-auto-guess-rate"> (1/sec)</p>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset id="poker">
-            <!-- <fieldset id="poker" class="display-none"> -->
-                <legend>Poker</legend>
-                <p>     +-+    +-+    +-+    +-+    +-+</p>
-                <p>     |<span id="deal-card-number-0"> </span>|    |<span id="deal-card-number-1"> </span>|    |<span id="deal-card-number-2"> </span>|    |<span id="deal-card-number-3"> </span>|    |<span id="deal-card-number-4"> </span>| <span id="deal-result-line-0"></span></p>
-                <p>     |<span id="deal-card-suit-0"> </span>|    |<span id="deal-card-suit-1"> </span>|    |<span id="deal-card-suit-2"> </span>|    |<span id="deal-card-suit-3"> </span>|    |<span id="deal-card-suit-4"> </span>|  <span id="deal-result-line-1"></span></p>
-                <p>     +-+    +-+    +-+    +-+    +-+</p>
-                <div class="input-label">
-                    <label>Hold:&nbsp;</label>
-                    <input type="checkbox" id="poker-hold-0" disabled>
-                    <p>     </p>
-                    <input type="checkbox" id="poker-hold-1" disabled>
-                    <p>     </p>
-                    <input type="checkbox" id="poker-hold-2" disabled>
-                    <p>      </p>
-                    <input type="checkbox" id="poker-hold-3" disabled>
-                    <p>     </p>
-                    <input type="checkbox" id="poker-hold-4" disabled>
-                </div>
-                <p>     +-+    +-+    +-+    +-+    +-+</p>
-                <p>     |<span id="draw-card-number-0"> </span>|    |<span id="draw-card-number-1"> </span>|    |<span id="draw-card-number-2"> </span>|    |<span id="draw-card-number-3"> </span>|    |<span id="draw-card-number-4"> </span>| <span id="draw-result-line-0"></span></p>
-                <p>     |<span id="draw-card-suit-0"> </span>|    |<span id="draw-card-suit-1"> </span>|    |<span id="draw-card-suit-2"> </span>|    |<span id="draw-card-suit-3"> </span>|    |<span id="draw-card-suit-4"> </span>| <span id="draw-result-line-1"></span></p>
-                <p>     +-+    +-+    +-+    +-+    +-+</p>
-                <p> </p>
-                <button id="poker-button-deal">Deal</button>
-                <button id="poker-button-draw" disabled>Draw</button>
-                <label>Bet: $</label><input id="poker-bet" type="number" value="1" min="1" max="100"></input> <span id="poker-max">Max: $100</span>
-                <!-- <div id="poker-auto-play" class="auto-guess display-none"> -->
-                <div id="poker-auto-guess" class="auto-guess">
-                    <div class="input-label">
-                        <label>Auto-play:&nbsp;</label>
-                        <input type="checkbox" id="poker-auto-guess-box">
-                        <p id="poker-auto-guess-rate"> (1/sec)</p>
-                    </div>
-                    <div id="poker-auto-choices" class="input-label">
-                        <label>Strategy:&nbsp;</label>
-                        <select id="poker-select">
-                            <option value="jacks">Keep Jacks</option>
-                        </select>
-                    </div>
-                </div>
-            </fieldset>
-        <!-- </div> -->
-        <!-- <div class="column"> -->
-            <fieldset id="store" class="display-none">
-                <legend>Store</legend>
-            </fieldset>
-            <!-- <fieldset id="stats" class="display-none"> -->
-            <fieldset id="stats">
-                <legend>Stats</legend>
-                <p>Total Games: <span id="total-games" class="bold">0</span></p>
-                <p>Total Flips: <span id="total-flips" class="bold">0</span></p>
-                <p>Flip win: <span id="flip-win-percent" class="bold">0%</span></p>
-                <p>Total Wars: <span id="total-wars" class="bold">0</span></p>
-                <p>War win: <span id="war-win-percent" class="bold">0%</span></p>
-                <p>Poker Games: <span id="total-poker-games" class="bold">0</span></p>
-                <p>Poker Return: <span id="poker-return" class="bold">$0</span></p>
-                <p>Top Cash: <span id="top-cash" class="bold">$100</span></p>
-            </fieldset>
-        <!-- </div> -->
-        <!-- <div class="column"> -->
-            <fieldset id="logs">
-                <legend>Logs</legend>
-            </fieldset>
-        <!-- </div> -->
-    </div>
-    <script type="module" src="./main.js"></script>
+  <div class="container">
+      <!-- <div class="column"> -->
+    <fieldset id="value">
+      <legend>Value</legend>
+      <h1 id="score">$100</h1>
+    </fieldset>
+    <fieldset>
+      <legend>Coin flip</legend>
+      <div id="coin-flat">
+        <p> </p>
+        <p> </p>
+        <p> _______</p>
+        <p>|_______|</p>
+        <p> </p>
+        <p> </p>
+        <p> </p>
+      </div>
+      <div id="coin-heads" class="display-none">
+        <p>  _____</p>
+        <p> /     \</p>
+        <p>/       \</p>
+        <p>| HEADS |</p>
+        <p>\       /</p>
+        <p> \_____/</p>
+        <p> </p>
+      </div>
+      <div id="coin-tails" class="display-none">
+        <p>  _____</p>
+        <p> /     \</p>
+        <p>/       \</p>
+        <p>| TAILS |</p>
+        <p>\       /</p>
+        <p> \_____/</p>
+        <p> </p>
+      </div>
+      <button id="heads-button">Heads</button>
+      <button id="tails-button">Tails</button>
+      <label>Bet: $</label><input id="coin-bet" type="number" value="1" min="1" max="1"></input> <span id="coin-max">Max: $1</span>
+      <p id="coin-chances"></p>
+      <div id="coin-auto-guess" class="auto-guess display-none">
+        <div class="input-label">
+          <label>Auto-flip:&nbsp;</label>
+          <input type="checkbox" id="coin-auto-guess-box">
+          <p id="coin-auto-guess-rate"> (1/sec)</p>
+        </div>
+        <div id="coin-auto-guess-choices" class="input-label">
+          <label>Heads</label>
+          <input type="radio" name="coin-auto-guess" id="coin-auto-guess-heads" checked>&nbsp;
+          <label>Tails</label>
+          <input type="radio" name="coin-auto-guess" id="coin-auto-guess-tails">
+        </div>
+      </div>
+    </fieldset>
+    <fieldset id="war">
+      <legend>War</legend>
+      <!-- lol -->
+          <p>OPPONENT</p>
+          <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+          <p>  |<span id="opp-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-number-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-number-2"> </span>|  </span></p>
+          <p>  |<span id="opp-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-suit-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-suit-2"> </span>|  </span></p>
+          <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+          <p>  <span id="war-result-0">    </span><span class="war-column-1 display-none">   <span id="war-result-1">    </span></span><span class="war-column-2 display-none">   <span id="war-result-2">    </span></span></p>
+          <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+          <p>  |<span id="player-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-number-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-number-2"> </span>|</span></p>
+          <p>  |<span id="player-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-suit-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-suit-2"> </span>|</span></p>
+          <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+          <p>  YOU  </p>
+          <p> </p>
+      <button id="war-button">Play</button>
+      <label>Bet: $</label><input id="war-bet" type="number" value="1" min="1" max="5"></input> <span id="war-max">Max: $5</span>
+      <p id="war-ace-percent" class="display-none">Ace draw: 2%</p>
+      <div id="triple-tie" class="display-none">
+          <label>Triple-tie: $</label><input id="triple-tie-bet" type="number" value="0" min="0" max="5"></input> <span id="war-triple-tie-max">Max: $5</span>
+      </div>
+      <div id="war-auto-guess" class="auto-guess display-none">
+          <div class="input-label">
+              <label>Auto-play:&nbsp;</label>
+              <input type="checkbox" id="war-auto-guess-box">
+              <p id="war-auto-guess-rate"> (1/sec)</p>
+          </div>
+      </div>
+    </fieldset>
+    <!-- <fieldset id="poker" class="display-none"> -->
+    <fieldset id="poker">
+      <legend>Poker</legend>
+      <p>     +-+    +-+    +-+    +-+    +-+</p>
+      <p>     |<span id="deal-card-number-0"> </span>|    |<span id="deal-card-number-1"> </span>|    |<span id="deal-card-number-2"> </span>|    |<span id="deal-card-number-3"> </span>|    |<span id="deal-card-number-4"> </span>| <span id="deal-result-line-0"></span></p>
+      <p>     |<span id="deal-card-suit-0"> </span>|    |<span id="deal-card-suit-1"> </span>|    |<span id="deal-card-suit-2"> </span>|    |<span id="deal-card-suit-3"> </span>|    |<span id="deal-card-suit-4"> </span>|  <span id="deal-result-line-1"></span></p>
+      <p>     +-+    +-+    +-+    +-+    +-+</p>
+      <div class="input-label">
+        <label>Hold:&nbsp;</label>
+        <input type="checkbox" id="poker-hold-0" disabled>
+        <p>     </p>
+        <input type="checkbox" id="poker-hold-1" disabled>
+        <p>     </p>
+        <input type="checkbox" id="poker-hold-2" disabled>
+        <p>      </p>
+        <input type="checkbox" id="poker-hold-3" disabled>
+        <p>     </p>
+        <input type="checkbox" id="poker-hold-4" disabled>
+      </div>
+      <p>     +-+    +-+    +-+    +-+    +-+</p>
+      <p>     |<span id="draw-card-number-0"> </span>|    |<span id="draw-card-number-1"> </span>|    |<span id="draw-card-number-2"> </span>|    |<span id="draw-card-number-3"> </span>|    |<span id="draw-card-number-4"> </span>| <span id="draw-result-line-0"></span></p>
+      <p>     |<span id="draw-card-suit-0"> </span>|    |<span id="draw-card-suit-1"> </span>|    |<span id="draw-card-suit-2"> </span>|    |<span id="draw-card-suit-3"> </span>|    |<span id="draw-card-suit-4"> </span>| <span id="draw-result-line-1"></span></p>
+      <p>     +-+    +-+    +-+    +-+    +-+</p>
+      <p> </p>
+      <button id="poker-button-deal">Deal</button>
+      <button id="poker-button-draw" disabled>Draw</button>
+      <label>Bet: $</label><input id="poker-bet" type="number" value="1" min="1" max="100"></input> <span id="poker-max">Max: $100</span>
+      <!-- <div id="poker-auto-play" class="auto-guess display-none"> -->
+      <div id="poker-auto-guess" class="auto-guess">
+        <div class="input-label">
+          <label>Auto-play:&nbsp;</label>
+          <input type="checkbox" id="poker-auto-guess-box">
+          <p id="poker-auto-guess-rate"> (1/sec)</p>
+        </div>
+        <div id="poker-auto-choices" class="input-label">
+          <label>Strategy:&nbsp;</label>
+          <select id="poker-select">
+            <option value="jacks">Keep Jacks</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset id="store" class="display-none">
+      <legend>Store</legend>
+    </fieldset>
+    <!-- <fieldset id="stats" class="display-none"> -->
+    <fieldset id="stats">
+        <legend>Stats</legend>
+        <p>Total Games: <span id="total-games" class="bold">0</span></p>
+        <p>Total Flips: <span id="total-flips" class="bold">0</span></p>
+        <p>Flip win: <span id="flip-win-percent" class="bold">0%</span></p>
+        <p>Total Wars: <span id="total-wars" class="bold">0</span></p>
+        <p>War win: <span id="war-win-percent" class="bold">0%</span></p>
+        <p>Poker Games: <span id="total-poker-games" class="bold">0</span></p>
+        <p>Poker Return: <span id="poker-return" class="bold">$0</span></p>
+        <p>Top Cash: <span id="top-cash" class="bold">$100</span></p>
+    </fieldset>
+    <fieldset id="logs">
+      <legend>Logs</legend>
+    </fieldset>
+  </div>
+  <script type="module" src="./main.js"></script>
 </body>
 </html>

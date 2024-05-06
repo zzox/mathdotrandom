@@ -6,35 +6,30 @@ import { createPoker, updatePoker } from './games/poker.js'
 import { createLogs } from './logs.js'
 import { createStats } from './stats.js'
 
-// randomness
-export const checkRandom = (percent) => {
-    return Math.random() < percent
-}
-
 export let time = 0
 
 const MAX_DELTA = 1000 / 60
 let last
 
 const mainLoop = (total) => {
-    const delta = total - last < MAX_DELTA ? total - last : MAX_DELTA
-    updateUi()
-    updateCoinFlip(1000 / 60)
-    updateWar(1000 / 60)
-    updateStore(1000 / 60)
-    updatePoker(1000 / 60)
-    time += delta
-    last = total
-    window.requestAnimationFrame(mainLoop)
+  const delta = total - last < MAX_DELTA ? total - last : MAX_DELTA
+  updateUi()
+  updateCoinFlip(1000 / 60)
+  updateWar(1000 / 60)
+  updateStore(1000 / 60)
+  updatePoker(1000 / 60)
+  time += delta
+  last = total
+  window.requestAnimationFrame(mainLoop)
 }
 
 window.onload = () => {
-    createLogs()
-    createStore()
-    createStats()
-    createCoinFlip()
-    createWar()
-    createPoker()
-    // TODO: request anim frame?
-    last = window.requestAnimationFrame(mainLoop)
+  createLogs()
+  createStore()
+  createStats()
+  createCoinFlip()
+  createWar()
+  createPoker()
+  // TODO: request anim frame?
+  last = window.requestAnimationFrame(mainLoop)
 }

@@ -2,11 +2,11 @@ import State from './state.js'
 
 // minimize fieldsets
 document.querySelectorAll('legend').forEach(item => {
-    item.onclick = (event) => {
-        if (event.target.parentElement.id !== 'value') {
-            event.target.parentElement.classList.toggle('minimize')
-        }
+  item.onclick = (event) => {
+    if (event.target.parentElement.id !== 'value') {
+      event.target.parentElement.classList.toggle('minimize')
     }
+  }
 })
 
 export const $id = (id) => document.getElementById(id)
@@ -21,18 +21,18 @@ export const formatPercent = (percent) => Math.round(percent * 100).toFixed(0) +
 export const formatRate = (time) => `${Math.round(1000 / time)}/sec`
 
 export const loseWinTie = {
-    win: 'WIN!',
-    lose: 'Loss',
-    tie: 'TIE!'
+  win: 'WIN!',
+  lose: 'Loss',
+  tie: 'TIE!'
 }
 
 export const updateUi = () => {
-    score.innerText = formatPrice(State.dollars)
+  score.innerText = formatPrice(State.dollars)
 }
 
 export const suitToHtml = {
-    'S': '<span class="spades"></span>',
-    'H': '<span class="hearts"></span>',
-    'D': '<span class="diamonds"></span>',
-    'C': '<span class="clubs"></span>'
+  'S': '<span class="spades"></span>',
+  'H': '<span class="hearts"></span>',
+  'D': '<span class="diamonds"></span>',
+  'C': '<span class="clubs"></span>'
 }
