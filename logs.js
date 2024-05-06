@@ -11,22 +11,19 @@ export const pushLog = (result, scoreData) => {
   p.className = 'log-item'
 
   if (scoreData.game === 'coin-flip') {
-    p.innerText = `Coins |  ${scoreData.choice}  ` +
-        ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
-        (scoreData.isAuto ? ' [AUTO]' : '')
+    p.innerText = `${scoreData.isAuto ? '[A]' : '   '} Coins |    ${scoreData.choice}   ` +
+        `${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}`
   } else if (scoreData.game === 'war') {
     if (scoreData.result === 'tie') {
-      p.innerText = `War   | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
-            ` ties ${formatPrice(Math.abs(result))}` + (scoreData.isAuto ? ' [AUTO]' : '')
+      p.innerText = `${scoreData.isAuto ? '[A]' : '   '} War   | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
+            ` ties ${formatPrice(Math.abs(result))}`
     } else {
-      p.innerText = `War   | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
-            ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}` +
-            (scoreData.isAuto ? ' [AUTO]' : '')
+      p.innerText = `${scoreData.isAuto ? '[A]' : '   '} War   | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
+            ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}`
     }
   } else if (scoreData.game === 'poker') {
-    p.innerHTML = `Poker | wager ${formatPrice(scoreData.wager)}` +
-        ` ${result <= 0 ? 'lost' : 'won '} ${result <= 0 ? formatPrice(scoreData.wager) : formatPrice(result)} with ${scoreData.handHtml}` +
-        (scoreData.isAuto ? ' [AUTO]' : '')
+    p.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} Poker | ${scoreData.handHtml} ${result > 0 ? 'won ' : 'lost'}` + 
+        ` ${result > 0 ? formatPrice(result) : formatPrice(scoreData.wager)}`
   }
 
   logBox.insertBefore(p, logBox.querySelector('p'))
