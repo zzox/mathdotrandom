@@ -1,7 +1,7 @@
-const spade = '♠'
-const heart = '♥'
-const diamond = '♦'
-const club = '♣'
+const spade = 'S'
+const heart = 'H'
+const diamond = 'D'
+const club = 'C'
 
 const suits = [spade, heart, diamond, club]
 
@@ -141,10 +141,10 @@ export const evaluatePokerHand = (hand) => {
     }
 
     const suitDict = {
-        '♠': [],
-        '♥': [],
-        '♦': [],
-        '♣': []
+        'S': [],
+        'H': [],
+        'D': [],
+        'C': []
     }
 
     hand.forEach((card) => {

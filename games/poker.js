@@ -1,8 +1,8 @@
 import { makeDeck, shuffleDeck, drawCard, evaluatePokerHand, hiCard, pokerValue, loPair, warCardValue } from '../card-deck.js'
-import { $id } from '../ui.js'
+import { $id, suitToHtml } from '../ui.js'
 import State from '../state.js'
 
-let unlocked = false
+let unlocked = true
 
 let pokerBet
 let betAmount = 1
@@ -69,7 +69,7 @@ export const createPoker = () => {
 
 const updatePokerUi = (card, num, isDraw) => {
     $id(`${isDraw ? 'draw' : 'deal'}-card-number-${num}`).innerText = card[0]
-    $id(`${isDraw ? 'draw' : 'deal'}-card-suit-${num}`).innerText = card[1]
+    $id(`${isDraw ? 'draw' : 'deal'}-card-suit-${num}`).innerHTML = suitToHtml[card[1]]
 }
 
 const lockPokerBetUi = () => {
@@ -169,7 +169,10 @@ const pokerDraw = (isAuto = false) => {
     cards.sort((a, b) => warCardValue[b[0]] - warCardValue[a[0]])
 
     const data = {
-        hand: cards.join(''), wager: betAmount, game: 'poker', isAuto
+        handHtml: cards.map(card => card[0] + suitToHtml[card[1]]).join(''),
+        wager: betAmount,
+        game: 'poker',
+        isAuto
     }
 
     if (result !== hiCard && result !== loPair) {

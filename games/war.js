@@ -1,5 +1,5 @@
 import { makeDeck, shuffleDeck, drawCard, warCardValue, pullCard } from '../card-deck.js'
-import { $id, $queryAll, formatPercent, formatRate, loseWinTie } from '../ui.js'
+import { $id, $queryAll, formatPercent, formatRate, loseWinTie, suitToHtml } from '../ui.js'
 import State, { checkRandom } from '../state.js'
 
 let unlocked = true
@@ -60,9 +60,9 @@ const updateCardUi = (num, oppCard, playerCard, result) => {
     const playerCardSuit = $id(`player-card-suit-${num}`)
 
     opponentCardNumber.innerText = oppCard[0]
-    opponentCardSuit.innerText = oppCard[1]
+    opponentCardSuit.innerHTML = suitToHtml[oppCard[1]]
     playerCardNumber.innerText = playerCard[0]
-    playerCardSuit.innerText = playerCard[1]
+    playerCardSuit.innerHTML = suitToHtml[playerCard[1]]
 
     if (num === 2 || result !== 'tie') {
         $id(`war-result-${num}`).innerText = loseWinTie[result]

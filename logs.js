@@ -24,8 +24,8 @@ export const pushLog = (result, scoreData) => {
             (scoreData.isAuto ? ' [AUTO]' : '')
         }
     } else if (scoreData.game === 'poker') {
-        p.innerText = `Poker     | bet ${formatPrice(scoreData.wager)} ` +
-        `  ${result <= 0 ? 'lost' : 'won '} ${result <= 0 ? formatPrice(scoreData.wager) : formatPrice(result - scoreData.wager)} with ${scoreData.hand}` +
+        p.innerHTML = `Poker     | bet ${formatPrice(scoreData.wager)} ` +
+        `  ${result <= 0 ? 'lost' : 'won '} ${result <= 0 ? formatPrice(scoreData.wager) : formatPrice(result - scoreData.wager)} with ${scoreData.handHtml}` +
         (scoreData.isAuto ? ' [AUTO]' : '')
     }
 

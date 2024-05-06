@@ -29,3 +29,10 @@ export const loseWinTie = {
 export const updateUi = () => {
     score.innerText = formatPrice(State.dollars)
 }
+
+export const suitToHtml = {
+    'S': '<span class="spades"></span>',
+    'H': '<span class="hearts"></span>',
+    'D': '<span class="diamonds"></span>',
+    'C': '<span class="clubs"></span>'
+}
