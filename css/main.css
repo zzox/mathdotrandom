@@ -90,6 +90,10 @@ fieldset.minimize > :not(legend) {
 
 .log-item {}
 
+#rps-bet {
+  max-width: 8rem;
+}
+
 .error-text {
   color: var(--error-red);
 }

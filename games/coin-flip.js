@@ -87,7 +87,7 @@ export const updateCoinFlip = (delta) => {
     betAmount = State.dollars
     coinBet.value = State.dollars
 
-    // disable autoguess if too broe
+    // disable autoguess if too broke
     $id('coin-auto-guess-box').checked = false
     coinGuessOn = false
     console.error('Cannot bet money you dont have')

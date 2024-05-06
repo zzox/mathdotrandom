@@ -231,7 +231,7 @@ export const updatePoker = (delta) => {
     betAmount = State.dollars
     pokerBet.value = State.dollars
 
-    // disable autoguess if too broe
+    // disable autoguess if too broke
     $id('poker-auto-guess-box').checked = false
     pokerGuessOn = false
     console.error('Cannot bet money you dont have')

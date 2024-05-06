@@ -15,10 +15,10 @@ export const pushLog = (result, scoreData) => {
         `${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}`
   } else if (scoreData.game === 'war') {
     if (scoreData.result === 'tie') {
-      p.innerText = `${scoreData.isAuto ? '[A]' : '   '} War   | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
+      p.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} War   |  ${scoreData.playerCard} vs ${scoreData.oppCard} ` +
             ` ties ${formatPrice(Math.abs(result))}`
     } else {
-      p.innerText = `${scoreData.isAuto ? '[A]' : '   '} War   | ${scoreData.playerCard} vs ${scoreData.oppCard}` +
+      p.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} War   |  ${scoreData.playerCard} vs ${scoreData.oppCard} ` +
             ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}`
     }
   } else if (scoreData.game === 'poker') {

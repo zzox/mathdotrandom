@@ -110,8 +110,6 @@ export const playWar = (isAuto = false) => {
       playerCard = drawCard(deck)
     }
 
-    console.log(oppCard, playerCard)
-
     const oppValue = warCardValue[oppCard[0]]
     const playerValue = warCardValue[playerCard[0]]
 
@@ -129,7 +127,11 @@ export const playWar = (isAuto = false) => {
   }
 
   const data = {
-    result, playerCard, oppCard, game: 'war', isAuto
+    result,
+    playerCard: playerCard[0] + suitToHtml[playerCard[1]],
+    oppCard: oppCard[0] + suitToHtml[oppCard[1]],
+    game: 'war',
+    isAuto
   }
 
   if (result === 'win') {
