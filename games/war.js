@@ -1,4 +1,4 @@
-import { makeDeck, shuffleDeck, drawCard, warCardValue, pullCard } from '../card-deck.js'
+import { makeDeck, shuffleDeck, drawCard, warCardValue, removeCard, pullCard } from '../card-deck.js'
 import { $id, $queryAll, formatPercent, formatRate, loseWinTie, suitToHtml } from '../ui.js'
 import State, { checkRandom } from '../state.js'
 
@@ -14,7 +14,7 @@ let maxBet = 10
 
 let warGuessOn = false
 let warGuessTimer = 0
-const warGuessTime = 1000
+let warGuessTime = 1000
 
 let pullAcePercent = 0.0
 
@@ -137,6 +137,7 @@ export const playWar = (isAuto = false) => {
     } else if (result === 'lose') {
         State.updateScore(betAmount * -(drawNum * 2 + 1) - tripleTieBetAmount, data)
     } else {
+        console.warn('triple tie!!!')
         State.updateScore(tripleTieBetAmount * 1000, data)
     }
 
@@ -175,7 +176,7 @@ export const updateWar = (delta) => {
 }
 
 export const upgradeAutoWar = (time) => {
-    warGuessTimer = time
+    warGuessTime = time
     $id('war-auto-guess').classList.remove('display-none')
     $id('war-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }
@@ -199,14 +200,8 @@ export const unlockTripleTie = () => {
     $id('triple-tie').classList.remove('display-none')
 }
 
-export const removeCard = (cardString) => {
-    if (cardString.length === 1) {
-        deck.pile = deck.pile.filter((card) => card[0] !== cardString)
-        deck.discarded = deck.discarded.filter((card) => card[0] !== cardString)
-    } else if (cardString.length === 2) {
-        deck.pile = deck.pile.filter((card) => card !== cardString)
-        deck.discarded = deck.discarded.filter((card) => card !== cardString)
-    }
+export const removeWarCard = (cardString) => {
+    removeCard(cardString, deck)
 }
 
 export const unlockWar = () => {

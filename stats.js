@@ -15,6 +15,9 @@ let totalWarWins = 0
 let totalWarLosses = 0
 let totalWarTies = 0
 
+export let totalPokerGames = 0
+let pokerReturn = 0
+
 // PERF: pre-create items
 
 let totalGamesUi,
@@ -22,7 +25,9 @@ totalFlipsUi,
 flipWinPercentUi,
 totalWarsUi,
 warWinPercentUi,
-topCashUi
+topCashUi,
+totalPokerGamesUi,
+pokerReturnUi
 
 export const createStats = () => {
     totalGamesUi = $id('total-games')
@@ -31,6 +36,8 @@ export const createStats = () => {
     totalWarsUi = $id('total-wars')
     warWinPercentUi = $id('war-win-percent')
     topCashUi = $id('top-cash')
+    totalPokerGamesUi = $id('total-poker-games')
+    pokerReturnUi = $id('poker-return')
 }
 
 export const pushStat = (val, scoreData) => {
@@ -65,6 +72,15 @@ export const pushStat = (val, scoreData) => {
 
         totalWarsUi.innerText = totalWars + ''
         warWinPercentUi.innerText = formatPercent(totalWarWins / totalWars)
+    }
+
+    if (scoreData.game === 'poker') {
+        totalPokerGames++;
+
+        pokerReturn += -scoreData.wager + val;
+
+        totalPokerGamesUi.innerText = totalPokerGames + ''
+        pokerReturnUi.innerText = formatPrice(pokerReturn)
     }
 
     if (topCash < State.dollars) {

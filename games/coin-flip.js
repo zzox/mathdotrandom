@@ -9,7 +9,7 @@ let maxBet = 1
 let coinGuessOn = false
 let coinGuessChoice = 'heads'
 let coinGuessTimer = 0
-const coinGuessTime = 1000
+let coinGuessTime = 1000
 
 let resultShowTimer = 0
 const resultShowTime = 1000
@@ -103,7 +103,7 @@ export const upgradeHeadsChance = (percent) => {
 }
 
 export const upgradeAutoFlip = (time) => {
-    coinGuessTimer = time
+    coinGuessTime = time
     $id('coin-auto-guess').classList.remove('display-none')
     $id('coin-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }

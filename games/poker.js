@@ -1,5 +1,5 @@
-import { makeDeck, shuffleDeck, drawCard, evaluatePokerHand, hiCard, pokerValue, loPair, warCardValue, checkPokerHolds } from '../card-deck.js'
-import { $id, suitToHtml } from '../ui.js'
+import { makeDeck, shuffleDeck, drawCard, evaluatePokerHand, hiCard, pokerValue, loPair, warCardValue, checkPokerHolds, removeCard, addCard } from '../card-deck.js'
+import { $id, suitToHtml, formatRate, $create } from '../ui.js'
 import State from '../state.js'
 
 let unlocked = true
@@ -16,7 +16,7 @@ const cardHolds = [false, false, false, false, false]
 
 let pokerGuessOn = false
 let pokerGuessTimer = 0
-const pokerGuessTime = 1000
+let pokerGuessTime = 1000
 let pokerGuessStrategy = 'jacks'
 
 let deck
@@ -156,7 +156,7 @@ const pokerDeal = (isAuto = false) => {
     showPokerResultUi(result, false)
 
     if (isAuto) {
-        const suggestion = checkPokerHolds(cards, result)
+        const suggestion = checkPokerHolds(cards, result, pokerGuessStrategy)
         suggestion.forEach((item, i) => {
             cardHolds[i] = item
             pokerHoldButtons[i].checked = item
@@ -222,6 +222,56 @@ export const updatePoker = (delta) => {
             pokerGuessTimer -= pokerGuessTime
         }
     }
+
+    if (pokerBet.value > maxBet) {
+        pokerBet.value = maxBet
+    }
+
+    if (pokerBet.value > State.dollars) {
+        betAmount = State.dollars
+        pokerBet.value = State.dollars
+
+        // disable autoguess if too broe
+        $id('poker-auto-guess-box').checked = false
+        pokerGuessOn = false
+        console.error('Cannot bet money you dont have')
+    }
+}
+
+export const upgradeAutoPoker = (time) => {
+    pokerGuessTime = time
+    $id('poker-auto-guess').classList.remove('display-none')
+    $id('poker-auto-guess-rate').innerText = ` ${formatRate(time)}`
+}
+
+export const addPokerCard = (card) => {
+    addCard(card, deck)
+}
+
+export const bitFlip = () => {
+    removeCard('2', deck)
+    addCard('TC', deck)
+    addCard('TD', deck)
+    addCard('TH', deck)
+    addCard('TS', deck)
+}
+
+export const addPokerStrategy = (strategyName) => {
+    const select = $id('poker-select')
+    const option = $create('option')
+    option.value = strategyName
+
+    if (strategyName === 'pairs') {
+        option.innerText = 'Keep Pairs'
+    } else if (strategyName === 'flush') {
+        option.innerText = 'Try Flush'
+    } else if (strategyName === 'smart') {
+        option.innerText = 'Smart'
+    } else {
+        console.error('bad strategy name')
+    }
+
+    select.appendChild(option)
 }
 
 export const unlockPoker = () => {

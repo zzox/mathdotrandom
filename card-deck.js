@@ -121,6 +121,20 @@ export const pullCard = (deck, cardRank) => {
     throw 'Did not find card'
 }
 
+export const removeCard = (cardString, deck) => {
+    if (cardString.length === 1) {
+        deck.pile = deck.pile.filter((card) => card[0] !== cardString)
+        deck.discarded = deck.discarded.filter((card) => card[0] !== cardString)
+    } else if (cardString.length === 2) {
+        deck.pile = deck.pile.filter((card) => card !== cardString)
+        deck.discarded = deck.discarded.filter((card) => card !== cardString)
+    }
+}
+
+export const addCard = (card, deck) => {
+    deck.discarded.push(card)
+}
+
 const cardOrder = [ace, king, queen, jack, ten, nine, eight, seven, six, five, four, three, two]
 
 export const evaluatePokerHand = (hand) => {
@@ -213,22 +227,49 @@ export const evaluatePokerHand = (hand) => {
     return result
 }
 
-export const checkPokerHolds = (hand, result) => {
-    if (result === 'hi-card') {
+export const checkPokerHolds = (hand, result, strategy) => {
+    // 'jacks' strategy, or on the hi-card part of 'smart' strategy
+    if ((result === 'hi-card' && strategy === 'smart') || strategy === 'jacks') {
         return hand.map(card => warCardValue[card[0]] >= 9)
-    } else if (result === 'hi-pair' || result === 'lo-pair' || result === 'three-of-kind' || result === 'two-pair') {
+    } else if (
+        (strategy === 'pairs' || strategy === 'smart') &&
+        (result === 'hi-pair' || result === 'lo-pair' || result === 'three-of-kind' || result === 'two-pair')
+    ) {
         const dict = {}
         let foundItems = []
         for (let i = 0; i < 5; i++) {
             if (dict[hand[i][0]]) {
                 foundItems.push(hand[i][0])
-                console.log(hand, hand[i], hand[i][0])
             }
             dict[hand[i][0]] = true
         }
 
         return hand.map(card => foundItems.includes(card[0]))
-    } else {
+    } else if (strategy === 'flush') {
+        const dict = {
+            'S': 0,
+            'H': 0,
+            'D': 0,
+            'C': 0
+        }
+
+        for (let i = 0; i < 5; i++) {
+            dict[hand[i][1]]++
+        }
+
+        let max = 0
+        let maxSuit = 0
+        for (let j = 0; j < 4; j++) {
+            if (dict[suits[j]] > max) {
+                max = dict[suits[j]]
+                maxSuit = suits[j]
+            }
+        }
+
+        return hand.map(card => card[1] === maxSuit)
+    } else if (strategy === 'smart') {
         return [true, true, true, true, true]
+    } else {
+        return [false, false, false, false, false]
     }
 }
