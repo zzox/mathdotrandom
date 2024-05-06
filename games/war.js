@@ -2,7 +2,7 @@ import { makeDeck, shuffleDeck, drawCard, warCardValue, pullCard } from '../card
 import { $id, $queryAll, formatPercent, formatRate, loseWinTie, suitToHtml } from '../ui.js'
 import State, { checkRandom } from '../state.js'
 
-let unlocked = true
+let unlocked = false
 
 let warBet, tripleTieBet
 let betAmount = 1
@@ -151,11 +151,6 @@ export const updateWar = (delta) => {
             warGuessTimer -= warGuessTime
         }
     }
-
-    // resultShowTimer += delta
-    // if (resultShowTimer >= resultShowTime) {
-    //     resetCardUi()
-    // }
 
     if (warBet.value > maxBet) {
         warBet.value = maxBet

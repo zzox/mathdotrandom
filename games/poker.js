@@ -1,4 +1,4 @@
-import { makeDeck, shuffleDeck, drawCard, evaluatePokerHand, hiCard, pokerValue, loPair, warCardValue } from '../card-deck.js'
+import { makeDeck, shuffleDeck, drawCard, evaluatePokerHand, hiCard, pokerValue, loPair, warCardValue, checkPokerHolds } from '../card-deck.js'
 import { $id, suitToHtml } from '../ui.js'
 import State from '../state.js'
 
@@ -6,7 +6,7 @@ let unlocked = true
 
 let pokerBet
 let betAmount = 1
-let maxBet = 100
+let maxBet = 1000
 let pokerState = 'ready' // or, 'draw'
 let cards = []
 const cardHolds = [false, false, false, false, false]
@@ -23,13 +23,15 @@ let deck
 
 let dealPokerButton, drawPokerButton
 
+let pokerHoldButtons = []
+
 export const pokerDisplayText = {
     'royal-flush': [' ROYAL', ' FLUSH!'],
     'straight-flush': ['STRAIGHT', ' FLUSH'],
     'four-of-kind': ['Four of', 'a kind'],
     'full-house': [' Full', ' House'],
     'flush': [' Flush', ' '],
-    'straight': ['Straight', '' ],
+    'straight': ['Straight', ''],
     'three-of-kind': ['Three of', 'a kind'],
     'two-pair': ['Two pair', ' '],
     'hi-pair': ['Hi-Pair', ' '],
@@ -58,9 +60,19 @@ export const createPoker = () => {
     }
 
     for (let i = 0; i < 5; i++) {
-        $id(`poker-hold-${i}`).onchange = (event) => {
+        const holdItem = $id(`poker-hold-${i}`)
+        holdItem.onchange = (event) => {
             cardHolds[i] = event.target.checked
         }
+        pokerHoldButtons.push(holdItem)
+    }
+
+    $id('poker-auto-guess-box').onchange = (event) => {
+        pokerGuessOn = event.target.checked
+    }
+
+    $id('poker-auto-choices').onchange = (event) => {
+        pokerGuessStrategy = event.target.value
     }
 
     deck = makeDeck()
@@ -101,11 +113,10 @@ const showPokerResultUi = (result, isDraw) => {
 
 const resetPokerUi = () => {
     for (let i = 0; i < 5; i++) {
-        const hold = $id(`poker-hold-${i}`)
+        const hold = pokerHoldButtons[i]
         hold.checked = false
         hold.disabled = true
         cardHolds[i] = false
-        $id(`poker-hold-${i}`).checked = false
         $id(`deal-card-number-${i}`).innerText = ' '
         $id(`deal-card-suit-${i}`).innerText = ' '
         $id(`draw-card-number-${i}`).innerText = ' '
@@ -118,7 +129,7 @@ const resetPokerUi = () => {
     drawPokerButton.disabled = true
 }
 
-const pokerDeal = () => {
+const pokerDeal = (isAuto = false) => {
     if (!unlocked) {
         throw 'Locked'
     }
@@ -143,6 +154,14 @@ const pokerDeal = () => {
     pokerState = 'draw'
     const result = evaluatePokerHand(cards)
     showPokerResultUi(result, false)
+
+    if (isAuto) {
+        const suggestion = checkPokerHolds(cards, result)
+        suggestion.forEach((item, i) => {
+            cardHolds[i] = item
+            pokerHoldButtons[i].checked = item
+        })
+    }
 
     State.subtractScore(betAmount)
 }
@@ -176,9 +195,14 @@ const pokerDraw = (isAuto = false) => {
     }
 
     if (result !== hiCard && result !== loPair) {
-        State.updateScore(betAmount + betAmount * pokerValue[result], data)
+        State.updateScore(/*betAmount + */betAmount * pokerValue[result], data)
     } else {
         State.updateScore(0, data)
+    }
+
+    // give the user a second to see their hand when they play it themselves
+    if (!isAuto && pokerGuessTimer > 0) {
+        pokerGuessTimer -= 1000
     }
 }
 
@@ -189,6 +213,15 @@ export const updatePoker = (delta) => {
     // if (pokerState === 'ready' && resultShowTimer >= resultShowTime) {
     //     resetPokerUi()
     // }
+
+    if (pokerGuessOn && pokerState === 'ready') {
+        pokerGuessTimer += delta
+        if (pokerGuessTimer >= pokerGuessTime) {
+            pokerDeal(true)
+            pokerDraw(true)
+            pokerGuessTimer -= pokerGuessTime
+        }
+    }
 }
 
 export const unlockPoker = () => {

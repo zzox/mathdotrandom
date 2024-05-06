@@ -116,6 +116,21 @@
                 <button id="poker-button-deal">Deal</button>
                 <button id="poker-button-draw" disabled>Draw</button>
                 <label>Bet: $</label><input id="poker-bet" type="number" value="1" min="1" max="100"></input> <span id="poker-max">Max: $100</span>
+                <!-- <div id="poker-auto-play" class="auto-guess display-none"> -->
+                <div id="poker-auto-play" class="auto-guess">
+                    <div class="input-label">
+                        <label>Auto-play:&nbsp;</label>
+                        <input type="checkbox" id="poker-auto-guess-box">
+                        <p id="poker-auto-guess-rate"> (1/sec)</p>
+                    </div>
+                    <div id="poker-auto-choices" class="input-label">
+                        <label>Strategy:&nbsp;</label>
+                        <select>
+                            <option value="jacks">Keep Jacks</option>
+                            <option value="tens">Keep Tens</option>
+                        </select>
+                    </div>
+                </div>
             </fieldset>
         <!-- </div> -->
         <!-- <div class="column"> -->

@@ -212,3 +212,23 @@ export const evaluatePokerHand = (hand) => {
 
     return result
 }
+
+export const checkPokerHolds = (hand, result) => {
+    if (result === 'hi-card') {
+        return hand.map(card => warCardValue[card[0]] >= 9)
+    } else if (result === 'hi-pair' || result === 'lo-pair' || result === 'three-of-kind' || result === 'two-pair') {
+        const dict = {}
+        let foundItems = []
+        for (let i = 0; i < 5; i++) {
+            if (dict[hand[i][0]]) {
+                foundItems.push(hand[i][0])
+                console.log(hand, hand[i], hand[i][0])
+            }
+            dict[hand[i][0]] = true
+        }
+
+        return hand.map(card => foundItems.includes(card[0]))
+    } else {
+        return [true, true, true, true, true]
+    }
+}

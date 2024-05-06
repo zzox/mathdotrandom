@@ -68,18 +68,20 @@ export const checkStoreUpgrades = () => {
         showUpgrade('war-remove-2')
     } else if (totalWars === 250) {
         showUpgrade('war-2-percent-ace')
+    // } else if (totalWars === 400) {
+    //     showUpgrade('war-remove-2-spades')
     } else if (totalWars === 400) {
-        showUpgrade('war-remove-2-spades')
+        showUpgrade('war-remove-2')
     } else if (totalWars === 500) {
         showUpgrade('war-auto-2')
-    } else if (totalWars === 800) {
-        showUpgrade('war-remove-2-diamonds')
+    // } else if (totalWars === 800) {
+    //     showUpgrade('war-remove-2-diamonds')
     } else if (totalWars === 1000) {
         showUpgrade('war-max-10')
-    } else if (totalWars === 1600) {
-        showUpgrade('war-remove-2-clubs')
-    } else if (totalWars === 3200) {
-        showUpgrade('war-remove-2-hearts')
+    // } else if (totalWars === 1600) {
+    //     showUpgrade('war-remove-2-clubs')
+    // } else if (totalWars === 3200) {
+    //     showUpgrade('war-remove-2-hearts')
     } else if (totalWars === 5000) {
         showUpgrade('war-auto-4')
     }
@@ -175,6 +177,11 @@ let possibleUpgrades = [
     { name: 'war-triple-tie', price: 1000, text: 'Triple tie', info: 'Pays 1000 to 1 on three war ties' },
     { name: 'war-remove-2', price: 500, text: 'No more 2s', info: 'Remove all 2s from the war deck' },
     { name: 'unlock-poker', price: 10000, text: 'Poker', info: 'Game for cowboys and idiots' },
+    { name: 'poker-add-ace-spades', price: 10000, text: 'Ace of spades', info: '----' },
+    { name: 'poker-add-king-diamonds', price: 10000, text: 'Ace of spades', info: '----' },
+    { name: 'poker-add-queen-hearts', price: 10000, text: 'Ace of spades', info: '----' },
+    { name: 'poker-add-jack-clubs', price: 10000, text: 'Ace of spades', info: '----' },
+    { name: 'poker-bitflip', price: 100000, text: 'Bitflip', info: 'All 2s are now 10s' },
     { name: 'unlock-blackjack', price: 1000000, text: 'Blackjack', info: 'Game for cowboys and idiots' },
     { name: 'unlock-rps', price: 100000000, text: 'Rock, Paper, Scissors', info: 'More important than your life' }
 ]
