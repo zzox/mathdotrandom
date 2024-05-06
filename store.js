@@ -2,7 +2,7 @@ import { totalGames, totalFlips, totalWars, totalPokerGames } from './stats.js'
 import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
-import { removeWarCard, unlockTripleTie, unlockWar, upgradeAutoWar, upgradeWarAcePercent } from './games/war.js'
+import { removeWarCard, unlockTripleTie, unlockWar, upgradeAutoWar, upgradeMaxWarBet, upgradeWarAcePercent } from './games/war.js'
 import { time } from './main.js'
 import { addPokerCard, addPokerStrategy, bitFlip, upgradeAutoPoker } from './games/poker.js'
 

@@ -1,5 +1,5 @@
 import { makeDeck, shuffleDeck, drawCard, warCardValue, removeCard, pullCard } from '../card-deck.js'
-import { $id, $queryAll, formatPercent, formatRate, loseWinTie, suitToHtml } from '../ui.js'
+import { $id, $queryAll, formatPercent, formatRate, formatPrice, loseWinTie, suitToHtml } from '../ui.js'
 import State, { checkRandom } from '../state.js'
 
 let unlocked = false

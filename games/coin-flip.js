@@ -51,7 +51,7 @@ export const flipCoin = (side, isAuto = false) => {
   }
 
   const isHeads = checkRandom(headsChance)
-  if (side === 'heads' && isHeads || side === 'tails' && !isHeads) {
+  if ((side === 'heads' && isHeads) || (side === 'tails' && !isHeads)) {
     State.updateScore(betAmount, { choice: side, game: 'coin-flip', isAuto })
   } else {
     State.updateScore(-betAmount, { choice: side, game: 'coin-flip', isAuto })
