@@ -2,7 +2,7 @@ import { totalGames, totalFlips, totalWars } from './stats.js'
 import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
-import { unlockTripleTie, unlockWar, upgradeAutoWar, upgradeWarAcePercent } from './games/war.js'
+import { removeCard, unlockTripleTie, unlockWar, upgradeAutoWar, upgradeWarAcePercent } from './games/war.js'
 import { time } from './main.js'
 
 let upgrades = []
@@ -54,6 +54,8 @@ export const checkStoreUpgrades = () => {
         showUpgrade('coin-auto-1')
     } else if (totalFlips === 250) {
         showUpgrade('coin-max-10')
+    } else if (totalFlips === 500) {
+        showUpgrade('coin-auto-2')
     } else if (totalFlips === 1000) {
         showUpgrade('coin-5')
     } else if (totalFlips === 10000) {
@@ -63,7 +65,7 @@ export const checkStoreUpgrades = () => {
     } else if (totalWars === 100) {
         showUpgrade('war-triple-tie')
     } else if (totalWars === 200) {
-        showUpgrade('war-remove-2-clubs')
+        showUpgrade('war-remove-2')
     } else if (totalWars === 250) {
         showUpgrade('war-2-percent-ace')
     } else if (totalWars === 400) {
@@ -114,7 +116,11 @@ export const doUpgrade = (name) => {
     } else if (name === 'war-triple-tie') {
         unlockTripleTie()
     } else if (name === 'war-2-percent-ace') {
-        upgradeWarAcePercent(0.04)
+        upgradeWarAcePercent(0.2)
+    } else if (name === 'war-5-percent-ace') {
+        upgradeWarAcePercent(0.5)
+    } else if (name === 'war-remove-2') {
+        removeCard('2')
     } else if (name === 'war-max-10') {
         upgradeMaxWarBet(10)
     } else if (name === 'war-auto-1') {
@@ -165,7 +171,9 @@ let possibleUpgrades = [
     { name: 'war-auto-3', price: 50000, text: 'Megawar', info: 'New game of war every quarter-second' },
     { name: 'war-auto-4', price: 500000, text: 'Ultrawar', info: 'New game of war every tenth-second' },
     { name: 'war-2-percent-ace', price: 250, text: 'Ace draw', info: '2% chance of drawing an ace' },
-    { name: 'war-triple-tie', price: 1000, text: 'Triple tie', info: 'Pays 1000 to 1 on three ties' },
+    { name: 'war-5-percent-ace', price: 2500, text: 'Fast hands', info: '5% chance of drawing an ace' },
+    { name: 'war-triple-tie', price: 1000, text: 'Triple tie', info: 'Pays 1000 to 1 on three war ties' },
+    { name: 'war-remove-2', price: 500, text: 'No more 2s', info: 'Remove all 2s from the war deck' },
     { name: 'unlock-poker', price: 10000, text: 'Poker', info: 'Game for cowboys and idiots' },
     { name: 'unlock-blackjack', price: 1000000, text: 'Blackjack', info: 'Game for cowboys and idiots' },
     { name: 'unlock-rps', price: 100000000, text: 'Rock, Paper, Scissors', info: 'More important than your life' }
@@ -203,7 +211,7 @@ export const pushStoreItem = (item) => {
     div.appendChild(button)
     div.appendChild(errorText)
 
-    storeBox.appendChild(div)
+    storeBox.prepend(div)
 }
 
 export const removeStoreItem = (name) => {

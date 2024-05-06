@@ -1,8 +1,8 @@
 import { makeDeck, shuffleDeck, drawCard, warCardValue, pullCard } from '../card-deck.js'
-import { $id, $queryAll, formatRate, loseWinTie } from '../ui.js'
+import { $id, $queryAll, formatPercent, formatRate, loseWinTie } from '../ui.js'
 import State, { checkRandom } from '../state.js'
 
-let unlocked = false
+let unlocked = true
 
 let warBet, tripleTieBet
 let betAmount = 1
@@ -106,10 +106,6 @@ export const playWar = (isAuto = false) => {
         oppCard = drawCard(deck)
         if (checkRandom(pullAcePercent)) {
             playerCard = pullCard(deck, 'A')
-            console.log('ace!')
-            if (!playerCard) {
-                playerCard = drawCard(deck)
-            }
         } else {
             playerCard = drawCard(deck)
         }
@@ -179,7 +175,7 @@ export const updateWar = (delta) => {
         // disable autoguess if too broke
         // $id('coin-auto-guess-box').checked = false
         // coinGuessOn = false
-        console.error('Cannot bet money you dont have')
+        console.warn('Cannot bet money you dont have')
     }
 }
 
@@ -201,11 +197,21 @@ export const upgradeWarAcePercent = (percent) => {
     $id('war-ace-percent').classList.remove('display-none')
     // its * 50 because we only look through draw pile if under a certain percent.
     // half 4% is 2%, 100 to get from decimal percent to display percent, half 100
-    $id('war-ace-percent').innerText = `Ace draw: ${pullAcePercent * 50}%`
+    $id('war-ace-percent').innerHTML = `Ace draw: <span class="bold">${formatPercent(percent)}</span>`
 }
 
 export const unlockTripleTie = () => {
     $id('triple-tie').classList.remove('display-none')
+}
+
+export const removeCard = (cardString) => {
+    if (cardString.length === 1) {
+        deck.pile = deck.pile.filter((card) => card[0] !== cardString)
+        deck.discarded = deck.discarded.filter((card) => card[0] !== cardString)
+    } else if (cardString.length === 2) {
+        deck.pile = deck.pile.filter((card) => card !== cardString)
+        deck.discarded = deck.discarded.filter((card) => card !== cardString)
+    }
 }
 
 export const unlockWar = () => {

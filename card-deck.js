@@ -113,7 +113,12 @@ export const pullCard = (deck, cardRank) => {
         return card
     }
 
-    return null
+    const dIndex = deck.discarded.findIndex((card) => card[0] === cardRank)
+    if (dIndex >= 0) {
+        return deck.discarded[dIndex]
+    }
+
+    throw 'Did not find card'
 }
 
 const cardOrder = [ace, king, queen, jack, ten, nine, eight, seven, six, five, four, three, two]
