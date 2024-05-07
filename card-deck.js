@@ -86,7 +86,7 @@ export const makeDeck = (num = 1) => {
 export const shuffleDeck = (deck) => {
   deck.discarded = deck.discarded.concat(deck.pile)
 
-  for (let i = 51; i > 0; i--) {
+  for (let i = deck.discarded.length - 1; i > 0; i--) {
     const k = Math.floor(Math.random() * i + 1)
         ;[deck.discarded[i], deck.discarded[k]] = [deck.discarded[k], deck.discarded[i]]
   }
