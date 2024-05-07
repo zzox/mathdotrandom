@@ -1,6 +1,7 @@
 import State from '../state.js'
 import { $id, $queryAll, loseWinTie } from '../ui.js'
 
+let locked = true
 let betAmount = 1
 
 let resultShowTimer = 0
@@ -10,7 +11,7 @@ let rpsBet
 
 const rpsResultText = {
   rock: '  Rock  ',
-  paper: ' Paper  ',
+  paper: '  Paper ',
   scissors: 'Scissors'
 }
 
@@ -49,6 +50,10 @@ const getOppChoice = () => {
 }
 
 export const playRps = (choice) => {
+  if (locked) {
+    throw 'Locked'
+  }
+
   clearRpsUi()
 
   const oppChoice = getOppChoice()
@@ -96,4 +101,9 @@ export const updateRps = (delta) => {
 
     console.error('Cannot bet money you dont have')
   }
+}
+
+export const unlockRps = () => {
+  locked = false;
+  $id('rps').classList.remove('display-none')
 }

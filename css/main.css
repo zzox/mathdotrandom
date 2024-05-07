@@ -48,6 +48,7 @@ input[type='number'] {
   /* height: 24px; */
   /* font-size: 18px; */
   min-width: 0px;
+  max-width: 8rem;
 }
 
 .input-label {
@@ -84,15 +85,11 @@ fieldset.minimize > :not(legend) {
 
 /* TODO: stretch this out via grid or flexbox? */
 #logs:not(.minimize) {
-  height: calc(100vh - 6rem);
+  height: calc(50vh - 6rem);
   overflow-y: scroll;
 }
 
 .log-item {}
-
-#rps-bet {
-  max-width: 8rem;
-}
 
 .error-text {
   color: var(--error-red);

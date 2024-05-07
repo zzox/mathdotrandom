@@ -191,7 +191,7 @@ export const upgradeMaxWarBet = (newMax) => {
 }
 
 export const upgradeWarAcePercent = (percent) => {
-  pullAcePercent += percent
+  pullAcePercent = percent
   $id('war-ace-percent').classList.remove('display-none')
   $id('war-ace-percent').innerHTML = `Ace draw: <span class="bold">${formatPercent(percent)}</span>`
 }

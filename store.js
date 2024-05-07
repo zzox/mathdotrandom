@@ -67,11 +67,11 @@ export const checkStoreUpgrades = () => {
   if (totalWars === 50) {
     showUpgrade('war-auto-1')
   } else if (totalWars === 100) {
-    showUpgrade('war-triple-tie')
-  } else if (totalWars === 200) {
-    showUpgrade('war-remove-2')
-  } else if (totalWars === 250) {
     showUpgrade('war-2-percent-ace')
+  } else if (totalWars === 200) {
+    showUpgrade('war-triple-tie')
+  } else if (totalWars === 250) {
+    showUpgrade('war-remove-2')
     // } else if (totalWars === 400) {
     //     showUpgrade('war-remove-2-spades')
   } else if (totalWars === 400) {
@@ -144,9 +144,9 @@ export const doUpgrade = (name) => {
   } else if (name === 'war-triple-tie') {
     unlockTripleTie()
   } else if (name === 'war-2-percent-ace') {
-    upgradeWarAcePercent(0.2)
+    upgradeWarAcePercent(0.02)
   } else if (name === 'war-5-percent-ace') {
-    upgradeWarAcePercent(0.5)
+    upgradeWarAcePercent(0.05)
   } else if (name === 'war-remove-2') {
     removeWarCard('2')
   } else if (name === 'war-max-10') {

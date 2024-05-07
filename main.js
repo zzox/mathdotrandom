@@ -9,17 +9,17 @@ import { createRps,updateRps } from './games/rps.js'
 
 export let time = 0
 
-const MAX_DELTA = 1000 / 60
+const MAX_DELTA = 1000 / 30
 let last
 
 const mainLoop = (total) => {
   const delta = total - last < MAX_DELTA ? total - last : MAX_DELTA
   updateUi()
-  updateCoinFlip(1000 / 60)
-  updateWar(1000 / 60)
-  updateStore(1000 / 60)
-  updatePoker(1000 / 60)
-  updateRps(1000 / 60)
+  updateCoinFlip(delta)
+  updateWar(delta)
+  updateStore(delta)
+  updatePoker(delta)
+  updateRps(delta)
   time += delta
   last = total
   window.requestAnimationFrame(mainLoop)
