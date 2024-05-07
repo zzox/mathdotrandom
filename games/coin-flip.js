@@ -1,5 +1,5 @@
 import State, { checkRandom } from '../state.js'
-import { $id, formatPercent, formatPrice, formatRate } from '../ui.js'
+import { $id, $queryAll, formatPercent, formatPrice, formatRate, loseWinTie } from '../ui.js'
 
 let headsChance = 0.5
 let betAmount = 1
@@ -50,15 +50,19 @@ export const flipCoin = (side, isAuto = false) => {
     throw 'Bad coin choice'
   }
 
+  let result
   const isHeads = checkRandom(headsChance)
   if ((side === 'heads' && isHeads) || (side === 'tails' && !isHeads)) {
+    result = 'win'
     State.updateScore(betAmount, { choice: side, game: 'coin-flip', isAuto })
   } else {
+    result = 'lose'
     State.updateScore(-betAmount, { choice: side, game: 'coin-flip', isAuto })
   }
 
   $id(isHeads ? 'coin-heads' : 'coin-tails').classList.remove('display-none')
   $id(isHeads ? 'coin-tails' : 'coin-heads').classList.add('display-none')
+  $queryAll('#coin-result-text').forEach(item => item.innerText = loseWinTie[result])
   $id('coin-flat').classList.add('display-none')
   resultShowTimer = 0
 }
@@ -77,6 +81,7 @@ export const updateCoinFlip = (delta) => {
     $id('coin-flat').classList.remove('display-none')
     $id('coin-heads').classList.add('display-none')
     $id('coin-tails').classList.add('display-none')
+    $queryAll('#coin-result-text').forEach(item => item.innerText = '')
   }
 
   if (coinBet.value > maxBet) {

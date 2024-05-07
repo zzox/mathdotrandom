@@ -1,5 +1,5 @@
 import State from '../state.js'
-import { $id } from '../ui.js'
+import { $id, $queryAll, loseWinTie } from '../ui.js'
 
 let betAmount = 1
 
@@ -7,6 +7,12 @@ let resultShowTimer = 0
 const resultShowTime = 3000
 
 let rpsBet
+
+const rpsResultText = {
+  rock: '  Rock  ',
+  paper: ' Paper  ',
+  scissors: 'Scissors'
+}
 
 export const createRps = () => {
   $id('rock-button').onclick = () => playRps('rock')
@@ -46,12 +52,25 @@ export const playRps = (choice) => {
   clearRpsUi()
 
   const oppChoice = getOppChoice()
+  let data = {
+    game: 'rps',
+    choice: rpsResultText[choice],
+    oppChoice: rpsResultText[oppChoice],
+  }
+
+  let result
   if (choices.indexOf(oppChoice) === (choices.indexOf(choice) + 1) % 3) {
-    State.updateScore(-betAmount, {})
+    data.result = 'lost'
+    result = 'lose'
+    State.updateScore(-betAmount, data)
   } else if (choices.indexOf(oppChoice) === (choices.indexOf(choice) + 2) % 3) {
-    State.updateScore(betAmount, {})
+    result = 'win'
+    data.result = 'won '
+    State.updateScore(betAmount, data)
   } else {
-    State.updateScore(0, {})
+    result = 'tie'
+    data.result = 'tied'
+    State.updateScore(0, data)
   }
 
   $id('rps-none').classList.add('display-none')
@@ -61,6 +80,7 @@ export const playRps = (choice) => {
     }
   }
 
+  $queryAll('#rps-result-text').forEach(item => item.innerText = loseWinTie[result])
   resultShowTimer = 0
 }
 

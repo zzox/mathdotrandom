@@ -28,7 +28,7 @@
         <p>  _____</p>
         <p> /     \</p>
         <p>/       \</p>
-        <p>| HEADS |</p>
+        <p>| HEADS |  <span id="coin-result-text"></span></p>
         <p>\       /</p>
         <p> \_____/</p>
         <p> </p>
@@ -37,7 +37,7 @@
         <p>  _____</p>
         <p> /     \</p>
         <p>/       \</p>
-        <p>| TAILS |</p>
+        <p>| TAILS |  <span id="coin-result-text"></span></p>
         <p>\       /</p>
         <p> \_____/</p>
         <p> </p>
@@ -63,18 +63,18 @@
     <fieldset id="war">
       <legend>War</legend>
       <!-- lol -->
-          <p>OPPONENT</p>
-          <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
-          <p>  |<span id="opp-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-number-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-number-2"> </span>|  </span></p>
-          <p>  |<span id="opp-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-suit-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-suit-2"> </span>|  </span></p>
-          <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
-          <p>  <span id="war-result-0">    </span><span class="war-column-1 display-none">   <span id="war-result-1">    </span></span><span class="war-column-2 display-none">   <span id="war-result-2">    </span></span></p>
-          <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
-          <p>  |<span id="player-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-number-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-number-2"> </span>|</span></p>
-          <p>  |<span id="player-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-suit-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-suit-2"> </span>|</span></p>
-          <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
-          <p>  YOU  </p>
-          <p> </p>
+        <p>OPPONENT</p>
+        <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+        <p>  |<span id="opp-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-number-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-number-2"> </span>|  </span></p>
+        <p>  |<span id="opp-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="opp-card-suit-1"> </span>|  </span><span class="war-column-2 display-none">  |<span id="opp-card-suit-2"> </span>|  </span></p>
+        <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+        <p>  <span id="war-result-0">    </span><span class="war-column-1 display-none">   <span id="war-result-1">    </span></span><span class="war-column-2 display-none">   <span id="war-result-2">    </span></span></p>
+        <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+        <p>  |<span id="player-card-number-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-number-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-number-2"> </span>|</span></p>
+        <p>  |<span id="player-card-suit-0"> </span>|  <span class="war-column-1 display-none">  |<span id="player-card-suit-1"> </span>|</span>  <span class="war-column-2 display-none">  |<span id="player-card-suit-2"> </span>|</span></p>
+        <p>  +-+  <span class="war-column-1 display-none">  +-+  </span><span class="war-column-2 display-none">  +-+  </span></p>
+        <p>  YOU  </p>
+        <p> </p>
       <button id="war-button">Play</button>
       <label>Bet: $</label><input id="war-bet" type="number" value="1" min="1" max="5"></input> <span id="war-max">Max: $5</span>
       <p id="war-ace-percent" class="display-none">Ace draw: 2%</p>
@@ -147,7 +147,7 @@
         <p>  ____</p>
         <p> /    VV\</p>
         <p>/        \</p>
-        <p>|  ROCK  |</p>
+        <p>|  ROCK  |      <span id="rps-result-text"></span></p>
         <p>\       _/</p>
         <p> |______\</p>
         <p> </p>
@@ -156,7 +156,7 @@
         <p>_______</p>
         <p>|      \</p>
         <p>|       |</p>
-        <p>| PAPER |</p>
+        <p>| PAPER |       <span id="rps-result-text"></span></p>
         <p>|       |</p>
         <p>|_______|</p>
         <p> </p>
@@ -165,7 +165,7 @@
         <p>        __</p>
         <p>       / /</p>
         <p> _____/_/_____</p>
-        <p>/_SCISSORS____\</p>
+        <p>/_SCISSORS____\ <span id="rps-result-text"></span></p>
         <p>0   / /</p>
         <p>  0/_/</p>
         <p> </p>
