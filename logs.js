@@ -1,33 +1,53 @@
 import { $create, $id, formatPrice } from '../ui.js'
 
 let logBox
+let logIndex = 0
+let logItems = []
+
+// moving to 1000 causes performance issues at the highest rates
+const NUM_LOGS = 100
 
 export const createLogs = () => {
   logBox = $id('logs')
+  for (let i = 0; i < NUM_LOGS; i++) {
+    const p = $create('p')
+    p.className = 'log-item'
+    logItems.push(p)
+    logBox.appendChild(p)
+  }
 }
 
 export const pushLog = (result, scoreData) => {
-  const p = $create('p')
-  p.className = 'log-item'
+  logIndex = (logIndex + 1) % logItems.length
+  const logItem = logItems[logIndex]
 
   if (scoreData.game === 'coin-flip') {
-    p.innerText = `${scoreData.isAuto ? '[A]' : '   '} Coins |    ${scoreData.choice}   ` +
+    logItem.innerText = `${scoreData.isAuto ? '[A]' : '   '} Coins |    ${scoreData.choice}   ` +
       `${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}`
   } else if (scoreData.game === 'war') {
     if (scoreData.result === 'tie') {
-      p.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} War   |  ${scoreData.playerCard} vs ${scoreData.oppCard} ` +
+      logItem.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} War   |  ${scoreData.playerCard} vs ${scoreData.oppCard} ` +
         ` ties ${formatPrice(Math.abs(result))}`
     } else {
-      p.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} War   |  ${scoreData.playerCard} vs ${scoreData.oppCard} ` +
+      logItem.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} War   |  ${scoreData.playerCard} vs ${scoreData.oppCard} ` +
         ` ${result < 0 ? 'lost' : 'won '} ${formatPrice(Math.abs(result))}`
     }
   } else if (scoreData.game === 'poker') {
-    p.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} Poker | ${scoreData.handHtml} ${result > 0 ? 'won ' : 'lost'}` + 
+    logItem.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} Poker | ${scoreData.handHtml} ${result > 0 ? 'won ' : 'lost'}` +
       ` ${result > 0 ? formatPrice(result) : formatPrice(scoreData.wager)}`
   } else if (scoreData.game === 'rps') {
-    p.innerText = `    RPS   | ${scoreData.choice} vs ${scoreData.oppChoice} ` +
+    logItem.innerText = `    RPS   | ${scoreData.choice} vs ${scoreData.oppChoice} ` +
       `${scoreData.result} ${formatPrice(Math.abs(result))}`
   }
 
-  logBox.insertBefore(p, logBox.querySelector('p'))
+  const scrollPos = logBox.scrollTop
+
+  logBox.insertBefore(logItem, logBox.querySelector('p'))
+
+  // prevent scrolling to top, stops smooth scroll
+  // if (scrollPos >= 1) {
+  //   const style = window.getComputedStyle(logItem)
+  //   console.log(scrollPos, parseFloat(style.getPropertyValue('height')))
+  //   logBox.scrollTop = scrollPos + parseFloat(style.getPropertyValue('height'))
+  // }
 }
