@@ -1,12 +1,12 @@
 import { makeDeck, shuffleDeck, drawCard, evaluatePokerHand, hiCard, pokerValue, loPair, warCardValue, checkPokerHolds, removeCard, addCard } from '../card-deck.js'
-import { $id, suitToHtml, formatRate, $create } from '../ui.js'
+import { $id, suitToHtml, formatRate, formatPrice, $create } from '../ui.js'
 import State from '../state.js'
 
 let unlocked = true
 
 let pokerBet
 let betAmount = 1
-const maxBet = 1000
+let maxBet = 1000
 let pokerState = 'ready' // or, 'draw'
 let cards = []
 const cardHolds = [false, false, false, false, false]
@@ -19,6 +19,8 @@ let pokerGuessTimer = 0
 let pokerGuessTime = 1000
 let pokerGuessStrategy = 'jacks'
 
+let loPairOn = false
+
 let deck
 
 let dealPokerButton, drawPokerButton
@@ -30,8 +32,8 @@ export const pokerDisplayText = {
   'straight-flush': ['STRAIGHT', ' FLUSH'],
   'four-of-kind': ['Four of', 'a kind'],
   'full-house': [' Full', ' House'],
-  flush: [' Flush', ' '],
-  straight: ['Straight', ''],
+  'flush': [' Flush', ' '],
+  'straight': ['Straight', ''],
   'three-of-kind': ['Three of', 'a kind'],
   'two-pair': ['Two pair', ' '],
   'hi-pair': ['Hi-Pair', ' '],
@@ -194,7 +196,7 @@ const pokerDraw = (isAuto = false) => {
     isAuto
   }
 
-  if (result !== hiCard && result !== loPair) {
+  if (result !== hiCard && (loPairOn || result !== loPair)) {
     State.updateScore(/* betAmount + */betAmount * pokerValue[result], data)
   } else {
     State.updateScore(0, data)
@@ -244,6 +246,12 @@ export const upgradeAutoPoker = (time) => {
   $id('poker-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }
 
+export const upgradeMaxPokerBet = (newMax) => {
+  maxBet = newMax
+  $id('poker-max').innerText = `Max: ${formatPrice(newMax)}`
+  $id('poker-bet').max = newMax
+}
+
 export const addPokerCard = (card) => {
   addCard(card, deck)
 }
@@ -254,6 +262,12 @@ export const bitFlip = () => {
   addCard('TD', deck)
   addCard('TH', deck)
   addCard('TS', deck)
+}
+
+export const upgradeLoPair = () => {
+  loPairOn = true
+  // ATTN: feels gross
+  pokerValue['lo-pair'] = 1
 }
 
 export const addPokerStrategy = (strategyName) => {

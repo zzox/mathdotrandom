@@ -193,8 +193,6 @@ export const upgradeMaxWarBet = (newMax) => {
 export const upgradeWarAcePercent = (percent) => {
   pullAcePercent += percent
   $id('war-ace-percent').classList.remove('display-none')
-  // its * 50 because we only look through draw pile if under a certain percent.
-  // half 4% is 2%, 100 to get from decimal percent to display percent, half 100
   $id('war-ace-percent').innerHTML = `Ace draw: <span class="bold">${formatPercent(percent)}</span>`
 }
 

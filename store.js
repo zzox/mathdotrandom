@@ -4,7 +4,7 @@ import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/
 import State from './state.js'
 import { removeWarCard, unlockTripleTie, unlockWar, upgradeAutoWar, upgradeMaxWarBet, upgradeWarAcePercent } from './games/war.js'
 import { time } from './main.js'
-import { addPokerCard, addPokerStrategy, bitFlip, upgradeAutoPoker } from './games/poker.js'
+import { addPokerCard, addPokerStrategy, bitFlip, upgradeAutoPoker, upgradeLoPair, upgradeMaxPokerBet } from './games/poker.js'
 
 let upgrades = []
 const upgradesMade = []
@@ -28,6 +28,12 @@ const showUpgrade = (name) => {
 }
 
 export const checkStoreUpgrades = () => {
+  if (totalPokerGames === 1) {
+    showUpgrade('poker-max-1000')
+  } else if (totalPokerGames === 2) {
+    showUpgrade('poker-lo-pair')
+  }
+
   if (totalGames === 100) {
     showUpgrade('unlock-war')
   } else if (totalGames === 500) {
@@ -151,6 +157,8 @@ export const doUpgrade = (name) => {
     upgradeAutoWar(500)
   } else if (name === 'poker-auto-1') {
     upgradeAutoPoker(1000)
+  } else if (name === 'poker-max-1000') {
+    upgradeMaxPokerBet(1000)
   } else if (name === 'poker-add-ace-spades') {
     addPokerCard('AS')
   } else if (name === 'poker-add-king-diamonds') {
@@ -167,7 +175,8 @@ export const doUpgrade = (name) => {
     addPokerStrategy('flush')
   } else if (name === 'poker-strat-smart') {
     addPokerStrategy('smart')
-    // } else if (name === 'poker-lo-pair')  {
+  } else if (name === 'poker-lo-pair')  {
+    upgradeLoPair()
   } else {
     console.warn(`No upgrade for ${name}`)
   }
@@ -217,17 +226,18 @@ let possibleUpgrades = [
   { name: 'war-remove-2', price: 500, text: 'No more 2s', info: 'Remove all 2s from the war deck' },
   { name: 'unlock-poker', price: 10000, text: 'Poker', info: 'Game for cowboys and idiots' },
   { name: 'poker-auto-1', price: 1000, text: 'Autopoker', info: 'New poker hand and draw every second' },
+  { name: 'poker-max-1000', price: 10000, text: 'Change states', info: 'Max poker bet of $1000' },
   { name: 'poker-strat-flush', price: 1111, text: 'Strat', info: '' },
   { name: 'poker-strat-keep-pairs', price: 3333, text: 'Strat', info: '' },
   { name: 'poker-strat-smart', price: 9999, text: 'Strat', info: '' },
-  { name: 'poker-add-ace-spades', price: 5555, text: 'Ace of spades', info: 'Everyone can use a little help' },
+  { name: 'poker-add-ace-spades', price: 5555, text: 'Ace of spades', info: 'Like the song' },
   { name: 'poker-add-king-diamonds', price: 6666, text: 'King of diamonds', info: 'Extra king for you' },
   { name: 'poker-add-queen-hearts', price: 7777, text: 'Queen of hearts', info: 'Queen!' },
   { name: 'poker-add-jack-clubs', price: 8888, text: 'Jack of Clubs', info: 'Extra jack wouldn\'t hurt' },
   { name: 'poker-bitflip', price: 100000, text: 'Bitflip', info: 'All 2s are now 10s' },
-  // { name: 'poker-lo-pair', price: 500000, text: 'Lo-Pair wins', info: 'Get money back with lo-pairs' },
+  { name: 'poker-lo-pair', price: 1000000, text: 'Lo-Pair wins', info: 'Get money back with lo-pairs' },
   { name: 'unlock-blackjack', price: 1000000, text: 'Blackjack', info: 'Game for cowboys and idiots' },
-  { name: 'unlock-rps', price: 100000000, text: 'Rock, Paper, Scissors', info: 'More important than your life' }
+  { name: 'unlock-rps', price: 100000000, text: 'Rock, Paper, Scissors', info: 'A real game. Pay with your life if you want to.' }
 ]
 
 export const pushStoreItem = (item) => {
