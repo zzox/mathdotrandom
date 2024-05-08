@@ -6,6 +6,7 @@ import { createPoker, updatePoker } from './games/poker.js'
 import { createLogs } from './logs.js'
 import { createStats } from './stats.js'
 import { createRps,updateRps } from './games/rps.js'
+import { createBj, updateBj } from './games/blackjack.js'
 
 export let time = 0
 
@@ -19,6 +20,7 @@ const mainLoop = (total) => {
   updateWar(delta)
   updateStore(delta)
   updatePoker(delta)
+  updateBj(delta)
   updateRps(delta)
   time += delta
   last = total
@@ -32,6 +34,7 @@ window.onload = () => {
   createCoinFlip()
   createWar()
   createPoker()
+  createBj()
   createRps()
   // TODO: request anim frame?
   last = window.requestAnimationFrame(mainLoop)

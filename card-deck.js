@@ -54,8 +54,8 @@ export const pokerValue = {
   'straight-flush': 50,
   'four-of-kind': 25,
   'full-house': 9,
-  flush: 6,
-  straight: 4,
+  'flush': 6,
+  'straight': 4,
   'three-of-kind': 3,
   'two-pair': 2,
   'hi-pair': 1,
@@ -63,7 +63,38 @@ export const pokerValue = {
   'hi-card': 0
 }
 
-export const blackjackValue = () => {}
+export const blackjackValue = {
+  'A': 11,
+  'K': 10,
+  'Q': 10,
+  'J': 10,
+  'T': 10,
+  '9': 9,
+  '8': 8,
+  '7': 7,
+  '6': 6,
+  '5': 5,
+  '4': 4,
+  '3': 3,
+  '2': 2,
+  // 'LA': 1
+}
+
+export const blackjackLowValue = {
+  'K': 10,
+  'Q': 10,
+  'J': 10,
+  'T': 10,
+  '9': 9,
+  '8': 8,
+  '7': 7,
+  '6': 6,
+  '5': 5,
+  '4': 4,
+  '3': 3,
+  '2': 2,
+  'A': 1,
+}
 
 export const makeDeck = (num = 1) => {
   const pile = []
@@ -272,4 +303,33 @@ export const checkPokerHolds = (hand, result, strategy) => {
   } else {
     return [false, false, false, false, false]
   }
+}
+
+// ATTN: wrong, two aces evals to 2 or 22 instead of 12
+export const evaulateBjValues = (cards) => {
+  let hardValue = 0
+  let softValue = 0
+
+  for (let i = 0; i < cards.length; i++) {
+    hardValue += blackjackLowValue[cards[i][0]]
+    softValue += blackjackValue[cards[i][0]]
+  }
+
+  return [hardValue, softValue]
+}
+
+export const evaulateFinalBjValues = (cards) => {
+  let hardValue = 0
+  let softValue = 0
+
+  for (let i = 0; i < cards.length; i++) {
+    hardValue += blackjackLowValue[cards[i][0]]
+    softValue += blackjackValue[cards[i][0]]
+  }
+
+  if (softValue > 21) {
+    return hardValue
+  }
+
+  return softValue
 }
