@@ -35,6 +35,9 @@ export const pushLog = (result, scoreData) => {
   } else if (scoreData.game === 'poker') {
     logItem.innerHTML = `${scoreData.isAuto ? '[A]' : '   '} Poker | ${scoreData.handHtml} ${result > 0 ? 'won ' : 'lost'}` +
       ` ${result > 0 ? formatPrice(result) : formatPrice(scoreData.wager)}`
+  } else if (scoreData.game === 'bj') {
+    logItem.innerText = `${scoreData.isAuto ? '[A]' : '   '} BJack |  total ${scoreData.total}  ${result > 0 ? 'won ' : 'lost'}` +
+      ` ${result > 0 ? formatPrice(result - scoreData.wager) : formatPrice(scoreData.wager)}`
   } else if (scoreData.game === 'rps') {
     logItem.innerText = `    RPS   | ${scoreData.choice} vs ${scoreData.oppChoice} ` +
       `${scoreData.result} ${formatPrice(Math.abs(result))}`

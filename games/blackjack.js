@@ -57,18 +57,19 @@ const lockButtons = () => {
   dealBjButton.disabled = true
   hitBjButton.disabled = false
   standBjButton.disabled = false
+  bjBet.disabled = true
 }
 
 const unlockButtons = () => {
   dealBjButton.disabled = false
   hitBjButton.disabled = true
   standBjButton.disabled = true
+  bjBet.disabled = false
 }
 
 const updateDealerBjUi = (num, hide = false) => {
   if (num > 11) return
 
-  console.log(num, $queryAll(`bj-dealer-card-${num}`))
   $queryAll(`.bj-dealer-card-${num}`).forEach(item => item.classList.remove('display-none'))
   $id(`bj-dealer-number-${num}`).innerText = hide ? 'X' : dealerCards[num][0]
   $id(`bj-dealer-suit-${num}`).innerHTML = hide ? 'X' :  suitToHtml[dealerCards[num][1]]
@@ -97,6 +98,8 @@ const resetCardUi = () => {
 
   $id('bj-player-amount').innerText = ''
   $id('bj-dealer-amount').innerText = ''
+
+  $id('bj-result').innerText = ''
 }
 
 const updateBjUi = (hidden = true) => {
@@ -109,19 +112,18 @@ const updateBjUi = (hidden = true) => {
   }
 
   const playerValues = evaulateBjValues(playerCards)
-  if (playerValues[0] === playerValues[1] || playerValues[1] > 21) {
+  if (!hidden) {
+    const playerValue = evaulateFinalBjValues(playerCards)
+    $id('bj-player-amount').innerText = playerValue
+  } else if (playerValues[0] === playerValues[1] || playerValues[1] > 21) {
     $id('bj-player-amount').innerText = playerValues[0]
   } else {
     $id('bj-player-amount').innerText = `${playerValues[0]} or ${playerValues[1]}`
   }
 
   if (!hidden) {
-    const dealerValues = evaulateBjValues(dealerCards)
-    if (dealerValues[0] === dealerValues[1] || dealerValues[1] > 21) {
-      $id('bj-dealer-amount').innerText = dealerValues[0]
-    } else {
-      $id('bj-dealer-amount').innerText = `${dealerValues[0]} or ${dealerValues[1]}`
-    }
+    const dealerValue = evaulateFinalBjValues(dealerCards)
+    $id('bj-dealer-amount').innerText = dealerValue
   }
 }
 
@@ -152,6 +154,7 @@ export const dealBj = () => {
   } else if (dealerValues[1] === 21) {
     loseBj(true)
   } else {
+    // TODO: play through auto-guesses
     updateBjUi(true)
     lockButtons()
   }
@@ -164,13 +167,13 @@ export const hitBj = () => {
 
   const playerValues = evaulateBjValues(playerCards)
 
-  if (playerValues[1] > 21) {
+  if (playerValues[0] > 21) {
     drawDealerCards()
-    loseBj()
+    loseBj(false, true)
   } else if (playerValues[0] === 21 || playerValues[1] === 21) {
     standBj()
   } else {
-    updateBjUi()
+    updateBjUi(true)
   }
 }
 
@@ -180,7 +183,7 @@ export const standBj = () => {
   const playerValue = evaulateFinalBjValues(playerCards)
   const dealerValue = evaulateFinalBjValues(dealerCards)
   if (dealerValue > 21) {
-    winBj(true)
+    winBj()
   } else if (dealerValue === playerValue) {
     pushBj()
   } else if (playerValue > dealerValue) {
@@ -192,35 +195,52 @@ export const standBj = () => {
 
 const drawDealerCards = () => {
   while (true) {
-    dealerCards.push(drawCard(deck))
     const dealerValues = evaulateBjValues(dealerCards)
-    if (dealerValues[0] >= 16 || dealerValues[1] >= 17) {
+    if (dealerValues[0] >= 16 || (dealerValues[1] >= 17 && dealerValues[1] <= 21)) {
       return
     }
+    dealerCards.push(drawCard(deck))
+  }
+}
+
+const getScoreData = () => {
+  let total = evaulateFinalBjValues(playerCards) + ''
+  if (total.length === 1) {
+    total = '0' + total
+  }
+
+  return {
+    game: 'bj',
+    wager: betAmount,
+    total
   }
 }
 
 const winBj = (isBlackJack) => {
   if (isBlackJack) {
-    State.updateScore(Math.floor(betAmount + betAmount * blackjackAmount), {})
+    $id('bj-result').innerText = 'Blackjack!'
+    State.updateScore(Math.floor(betAmount + betAmount * blackjackAmount), getScoreData())
   } else {
-    State.updateScore(Math.floor(betAmount + betAmount), {})
+    $id('bj-result').innerText = 'Win!'
+    State.updateScore(Math.floor(betAmount + betAmount), getScoreData())
   }
 
   updateBjUi(false)
   unlockButtons()
 }
 
-const loseBj = (isBlackJack) => {
-  State.updateScore(0, {})
+const loseBj = (isBlackJack, isBust) => {
+  State.updateScore(0, getScoreData())
   updateBjUi(false) 
   unlockButtons()
+  $id('bj-result').innerText = isBust ? 'Bust' : 'Lose'
 }
 
 const pushBj = () => {
-  State.updateScore(betAmount, {})
+  State.updateScore(betAmount, getScoreData())
   updateBjUi(false)
   unlockButtons()
+  $id('bj-result').innerText = 'Push'
 }
 
 export const updateBj = (delta) => {

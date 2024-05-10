@@ -77,23 +77,6 @@ export const blackjackValue = {
   '4': 4,
   '3': 3,
   '2': 2,
-  // 'LA': 1
-}
-
-export const blackjackLowValue = {
-  'K': 10,
-  'Q': 10,
-  'J': 10,
-  'T': 10,
-  '9': 9,
-  '8': 8,
-  '7': 7,
-  '6': 6,
-  '5': 5,
-  '4': 4,
-  '3': 3,
-  '2': 2,
-  'A': 1,
 }
 
 export const makeDeck = (num = 1) => {
@@ -307,29 +290,42 @@ export const checkPokerHolds = (hand, result, strategy) => {
 
 // ATTN: wrong, two aces evals to 2 or 22 instead of 12
 export const evaulateBjValues = (cards) => {
-  let hardValue = 0
-  let softValue = 0
-
+  // get high value of all cards
+  let value = 0
   for (let i = 0; i < cards.length; i++) {
-    hardValue += blackjackLowValue[cards[i][0]]
-    softValue += blackjackValue[cards[i][0]]
+    value += blackjackValue[cards[i][0]]
   }
 
-  return [hardValue, softValue]
+  // walk through cards again, we can subtract 10 for every ace that
+  // makes value over 21, but always at least one to signal to user.
+  let containsAce = false
+  let lowValue = value
+  for (let i = 0; i < cards.length; i++) {
+    if (cards[i][0] === 'A') {
+      if (value > 21 || !containsAce) {
+        containsAce = true
+        lowValue -= 10
+      }
+      if (lowValue <= 22) {
+        break
+      }
+    }
+  }
+
+  // for display purposes
+  if (value === lowValue && containsAce) {
+    lowValue -= 10
+  }
+
+  return [lowValue, value]
 }
 
 export const evaulateFinalBjValues = (cards) => {
-  let hardValue = 0
-  let softValue = 0
+  const values = evaulateBjValues(cards)
 
-  for (let i = 0; i < cards.length; i++) {
-    hardValue += blackjackLowValue[cards[i][0]]
-    softValue += blackjackValue[cards[i][0]]
+  if (values[1] > 21) {
+    return values[0]
   }
 
-  if (softValue > 21) {
-    return hardValue
-  }
-
-  return softValue
+  return values[1]
 }
