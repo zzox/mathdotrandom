@@ -36,6 +36,5 @@ window.onload = () => {
   createPoker()
   createBj()
   createRps()
-  // TODO: request anim frame?
   last = window.requestAnimationFrame(mainLoop)
 }

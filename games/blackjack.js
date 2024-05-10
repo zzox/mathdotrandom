@@ -1,5 +1,5 @@
-import { makeDeck, shuffleDeck, drawCard, warCardValue, removeCard, pullCard, evaulateBjValues, evaulateFinalBjValues } from '../card-deck.js'
-import { $id, $queryAll, formatPercent, formatRate, formatPrice, loseWinTie, suitToHtml } from '../ui.js'
+import { makeDeck, shuffleDeck, drawCard, cardCountValue, evaulateBjValues, evaulateFinalBjValues } from '../card-deck.js'
+import { $id, $queryAll, formatRate, formatPrice, suitToHtml } from '../ui.js'
 import State from '../state.js'
 
 let unlocked = true
@@ -13,11 +13,13 @@ let blackjackAmount = 1.5
 
 let bjGuessOn = false
 let bjGuessTimer = 0
-let bjGuessTime = 1000
+let bjGuessTime = 100
 
 let deck
 let dealerCards = []
 let playerCards = []
+let count = 0
+let numDecks = 6
 
 let dealBjButton, hitBjButton, standBjButton
 
@@ -61,12 +63,24 @@ const lockButtons = () => {
   bjState = 'play'
 }
 
+// TODO: delete `it`
+let it = 0
+
 const unlockButtons = () => {
   dealBjButton.disabled = false
   hitBjButton.disabled = true
   standBjButton.disabled = true
   bjBet.disabled = false
   bjState = 'ready'
+
+  it++
+
+  if (deck.discarded.length > (deck.pile.length + deck.discarded.length) * 2 / 3) {
+    console.log('shuffling', it, count, deck.discarded.length, deck.pile.length)
+    count = 0
+    shuffleDeck(deck)
+    it = 0
+  }
 }
 
 const updateDealerBjUi = (num, hide = false) => {
@@ -127,6 +141,15 @@ const updateBjUi = (hidden = true) => {
     const dealerValue = evaulateFinalBjValues(dealerCards)
     $id('bj-dealer-amount').innerText = dealerValue
   }
+
+  const trueCount = Math.round(count / (deck.pile.length / 52))
+  $id('bj-count').innerText = `${count} (${trueCount})`
+}
+
+const drawFromDeckWithCount = () => {
+  const card = drawCard(deck)
+  count += cardCountValue[card[0]]
+  return card
 }
 
 export const dealBj = () => {
@@ -144,11 +167,11 @@ export const dealBj = () => {
 
   State.checkIsBroke()
 
-  dealerCards.push(drawCard(deck))
-  dealerCards.push(drawCard(deck))
+  dealerCards.push(drawFromDeckWithCount())
+  dealerCards.push(drawFromDeckWithCount())
 
-  playerCards.push(drawCard(deck))
-  playerCards.push(drawCard(deck))
+  playerCards.push(drawFromDeckWithCount())
+  playerCards.push(drawFromDeckWithCount())
 
   const playerValues = evaulateBjValues(playerCards)
   const dealerValues = evaulateBjValues(dealerCards)
@@ -169,7 +192,7 @@ export const dealBj = () => {
 }
 
 export const hitBj = () => {
-  playerCards.push(drawCard(deck))
+  playerCards.push(drawFromDeckWithCount())
 
   const playerValues = evaulateBjValues(playerCards)
 
@@ -205,7 +228,7 @@ const drawDealerCards = () => {
     if (dealerValues[0] >= 16 || (dealerValues[1] >= 17 && dealerValues[1] <= 21)) {
       return
     }
-    dealerCards.push(drawCard(deck))
+    dealerCards.push(drawFromDeckWithCount())
   }
 }
 
@@ -258,8 +281,17 @@ const pushBj = () => {
 
 export const updateBj = (delta) => {
   if (bjGuessOn) {
-    // bjGuessTimer += delta
+    bjGuessTimer += delta
     if (bjGuessTimer >= bjGuessTime && bjState === 'ready') {
+      dealBj()
+      if (bjState === 'play' && evaulateFinalBjValues(playerCards) <= 16) {
+        hitBj()
+      }
+
+      if (bjState === 'play') {
+        standBj()
+      }
+
       bjGuessTimer -= bjGuessTime
     }
   }

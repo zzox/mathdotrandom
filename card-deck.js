@@ -79,6 +79,22 @@ export const blackjackValue = {
   '2': 2,
 }
 
+export const cardCountValue = {
+  'A': -1,
+  'K': -1,
+  'Q': -1,
+  'J': -1,
+  'T': -1,
+  '9': 0,
+  '8': 0,
+  '7': 0,
+  '6': 1,
+  '5': 1,
+  '4': 1,
+  '3': 1,
+  '2': 1
+}
+
 export const makeDeck = (num = 1) => {
   const pile = []
 
