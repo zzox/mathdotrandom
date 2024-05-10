@@ -147,8 +147,8 @@
       <button id="bj-button-hit" disabled>Hit</button>
       <button id="bj-button-stand" disabled>Stand</button>
       <label>Bet: $</label><input id="bj-bet" type="number" value="1" min="1" max="100"></input> <span id="bj-max">Max: $1000</span>
-      <p>Decks: <span id="bj-num-decks">6</span></p>
-      <p>Count (true): <span id="bj-count">0 (0)</span></p>
+      <p id="bj-num-decks-ui" class="display-none">Decks: <span id="bj-num-decks">6</span></p>
+      <p id="bj-count-ui" class="display-none">Count (true): <span id="bj-count">0 (0)</span></p>
       <div id="bj-auto-guess" class="auto-guess">
         <div class="input-label">
           <label>Auto-play:&nbsp;</label>
@@ -215,6 +215,9 @@
         <p>War win: <span id="war-win-percent" class="bold">0%</span></p>
         <p>Poker Games: <span id="total-poker-games" class="bold">0</span></p>
         <p>Poker Return: <span id="poker-return" class="bold">$0</span></p>
+        <p>Blackjack Games: <span id="total-bj-games" class="bold">0</span></p>
+        <p>Blackjack win: <span id="bj-win-percent" class="bold">0%</span></p>
+        <p>BlackJack Return: <span id="bj-return" class="bold">$0</span></p>
         <p>Top Cash: <span id="top-cash" class="bold">$100</span></p>
     </fieldset>
     <fieldset id="logs">
