@@ -1,19 +1,23 @@
-import { makeDeck, shuffleDeck, drawCard, cardCountValue, evaulateBjValues, evaulateFinalBjValues } from '../card-deck.js'
+import { makeDeck, shuffleDeck, drawCard, cardCountValue, evaulateBjValues, evaulateFinalBjValues, warCardValue } from '../card-deck.js'
 import { $id, $queryAll, formatRate, formatPrice, suitToHtml } from '../ui.js'
 import State from '../state.js'
 
 let unlocked = true
 let bjState = 'ready'
+let isBettingHiCount = false
 
 let bjBet
 let betAmount = 1
 let maxBet = 1000
+let bjCountMin = 0
+let bjCountBetAmount = 0
+let bjStrategy = 'hit16'
 
 let blackjackAmount = 1.5
 
 let bjGuessOn = false
 let bjGuessTimer = 0
-let bjGuessTime = 100
+let bjGuessTime = 1000
 
 let deck
 let dealerCards = []
@@ -21,22 +25,22 @@ let playerCards = []
 let count = 0
 let numDecks = 6
 
-let dealBjButton, hitBjButton, standBjButton
+let dealBjButton, hitBjButton, standBjButton, bjCountMinUi, bjHiCountBet
 
 export const createBj = () => {
   dealBjButton = $id('bj-button-deal')
   dealBjButton.onclick = () => {
-    dealBj()
+    dealBj(false)
   }
 
   hitBjButton = $id('bj-button-hit')
   hitBjButton.onclick = () => {
-    hitBj()
+    hitBj(false)
   }
 
   standBjButton = $id('bj-button-stand')
   standBjButton.onclick = () => {
-    standBj()
+    standBj(false)
   }
 
   bjBet = $id('bj-bet')
@@ -47,8 +51,25 @@ export const createBj = () => {
     }
   }
 
+  bjHiCountBet = $id('bj-hi-count')
+  bjHiCountBet.onchange = (event) => {
+    bjCountBetAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
+    if (!bjCountBetAmount) {
+      bjCountBetAmount = 0
+    }
+  }
+
+  bjCountMinUi = $id('bj-count-min')
+  bjCountMinUi.onchange = (event) => {
+    bjCountMin = event.target.value
+  }
+
   $id('bj-auto-guess-box').onchange = (event) => {
     bjGuessOn = event.target.checked
+  }
+
+  $id('bj-select').onchange = (event) => {
+    bjStrategy = event.target.value
   }
 
   deck = makeDeck(6)
@@ -60,6 +81,8 @@ const lockButtons = () => {
   hitBjButton.disabled = false
   standBjButton.disabled = false
   bjBet.disabled = true
+  bjHiCountBet.disabled = true
+  bjCountMinUi.disabled = true
   bjState = 'play'
 }
 
@@ -71,6 +94,8 @@ const unlockButtons = () => {
   hitBjButton.disabled = true
   standBjButton.disabled = true
   bjBet.disabled = false
+  bjHiCountBet.disabled = false
+  bjCountMinUi.disabled = false
   bjState = 'ready'
 
   it++
@@ -142,9 +167,13 @@ const updateBjUi = (hidden = true) => {
     $id('bj-dealer-amount').innerText = dealerValue
   }
 
-  const trueCount = Math.round(count / (deck.pile.length / 52))
+  const trueCount = getTrueCount()
   $id('bj-count').innerText = `${count} (${trueCount})`
 }
+
+const getTrueCount = () => Math.round(count / (deck.pile.length / 52))
+
+const getBetAmount = () => isBettingHiCount && bjCountBetAmount > 0 ? bjCountBetAmount : betAmount
 
 const drawFromDeckWithCount = () => {
   const card = drawCard(deck)
@@ -152,7 +181,7 @@ const drawFromDeckWithCount = () => {
   return card
 }
 
-export const dealBj = () => {
+export const dealBj = (isAuto) => {
   if (!unlocked) {
     throw 'Locked'
   }
@@ -167,6 +196,14 @@ export const dealBj = () => {
 
   State.checkIsBroke()
 
+  isBettingHiCount = getTrueCount() >= bjCountMin && bjCountBetAmount > 0
+  console.log(isBettingHiCount, getTrueCount(), bjStrategy)
+  // let bet = betAmount
+  // if (isBettingHiCount) {
+  //   bet = bjCountBetAmount
+  // }
+  State.subtractScore(getBetAmount())
+
   dealerCards.push(drawFromDeckWithCount())
   dealerCards.push(drawFromDeckWithCount())
 
@@ -177,9 +214,9 @@ export const dealBj = () => {
   const dealerValues = evaulateBjValues(dealerCards)
 
   if (dealerValues[1] === 21 && playerValues[1] === 21) {
-    pushBj(true)
+    pushBj(true, isAuto)
   } else if (playerValues[1] === 21) {
-    winBj(true)
+    winBj(true, isAuto)
   } else if (dealerValues[1] === 21) {
     loseBj(true)
   } else {
@@ -187,38 +224,36 @@ export const dealBj = () => {
     updateBjUi(true)
     lockButtons()
   }
-
-  State.subtractScore(betAmount)
 }
 
-export const hitBj = () => {
+export const hitBj = (isAuto) => {
   playerCards.push(drawFromDeckWithCount())
 
   const playerValues = evaulateBjValues(playerCards)
 
   if (playerValues[0] > 21) {
     drawDealerCards()
-    loseBj(false, true)
+    loseBj(false, true, isAuto)
   } else if (playerValues[0] === 21 || playerValues[1] === 21) {
-    standBj()
+    standBj(isAuto)
   } else {
     updateBjUi(true)
   }
 }
 
-export const standBj = () => {
+export const standBj = (isAuto) => {
   drawDealerCards()
 
   const playerValue = evaulateFinalBjValues(playerCards)
   const dealerValue = evaulateFinalBjValues(dealerCards)
   if (dealerValue > 21) {
-    winBj()
+    winBj(false, isAuto)
   } else if (dealerValue === playerValue) {
-    pushBj()
+    pushBj(isAuto)
   } else if (playerValue > dealerValue) {
-    winBj()
+    winBj(false, isAuto)
   } else {
-    loseBj()
+    loseBj(false, false, isAuto)
   }
 }
 
@@ -232,7 +267,9 @@ const drawDealerCards = () => {
   }
 }
 
-const getScoreData = (result) => {
+const getScoreData = (result, isAuto) => {
+  const bet = getBetAmount()
+
   let playerTotal = evaulateFinalBjValues(playerCards) + ''
   let dealerTotal = evaulateFinalBjValues(dealerCards) + ''
   if (playerTotal.length === 1) {
@@ -245,53 +282,72 @@ const getScoreData = (result) => {
 
   return {
     game: 'bj',
-    wager: betAmount,
+    wager: bet,
+    isAuto,
+    isBettingHiCount,
     result,
     playerTotal,
     dealerTotal
   }
 }
 
-const winBj = (isBlackJack) => {
+const winBj = (isBlackJack, isAuto) => {
+  const bet = getBetAmount()
   if (isBlackJack) {
     $id('bj-result').innerText = 'Blackjack!'
-    State.updateScore(Math.floor(betAmount + betAmount * blackjackAmount), getScoreData('win '))
+    State.updateScore(Math.floor(bet + bet * blackjackAmount), getScoreData('win ', isAuto))
   } else {
     $id('bj-result').innerText = 'Win!'
-    State.updateScore(betAmount + betAmount, getScoreData('win '))
+    State.updateScore(bet + bet, getScoreData('win ', isAuto))
   }
 
   updateBjUi(false)
   unlockButtons()
 }
 
-const loseBj = (isBlackJack, isBust) => {
-  State.updateScore(0, getScoreData('lost'))
+const loseBj = (isBlackJack, isBust, isAuto) => {
+  State.updateScore(0, getScoreData('lost', isAuto))
   updateBjUi(false) 
   unlockButtons()
   $id('bj-result').innerText = isBust ? 'Bust' : 'Lose'
 }
 
-const pushBj = () => {
-  State.updateScore(betAmount, getScoreData('push'))
+const pushBj = (isAuto) => {
+  State.updateScore(getBetAmount(), getScoreData('push', isAuto))
   updateBjUi(false)
   unlockButtons()
   $id('bj-result').innerText = 'Push'
+}
+
+const evaluateStrategy = () => {
+  if (bjStrategy === 'hit16') {
+    return evaulateFinalBjValues(playerCards) < 16
+  } else if (bjStrategy === 'dealer-plus') {
+    const playerValue = evaulateFinalBjValues(playerCards)
+    return playerValue <= 11 || (playerValue <= 16 && warCardValue[dealerCards[1][0]] > 4)
+  }
+}
+
+const runAutoBj = () => {
+  dealBj(true)
+  while (evaluateStrategy()) {
+    if (bjState === 'play') {
+      hitBj(true)
+    } else {
+      break
+    }
+  }
+
+  if (bjState === 'play') {
+    standBj(true)
+  }
 }
 
 export const updateBj = (delta) => {
   if (bjGuessOn) {
     bjGuessTimer += delta
     if (bjGuessTimer >= bjGuessTime && bjState === 'ready') {
-      dealBj()
-      if (bjState === 'play' && evaulateFinalBjValues(playerCards) <= 16) {
-        hitBj()
-      }
-
-      if (bjState === 'play') {
-        standBj()
-      }
-
+      runAutoBj()
       bjGuessTimer -= bjGuessTime
     }
   }
@@ -305,6 +361,11 @@ export const updateBj = (delta) => {
   //     warBet.value = Math.floor(State.dollars / 5)
   // }
 
+  if (bjHiCountBet.value > State.dollars) {
+    bjHiCountBet.value = 0
+    bjCountBetAmount = 0
+  }
+
   if (bjBet.value > State.dollars) {
     betAmount = State.dollars
     bjBet.value = State.dollars
@@ -314,6 +375,10 @@ export const updateBj = (delta) => {
     bjGuessOn = false
     console.warn('Cannot bet money you dont have')
   }
+}
+
+export const upgradeBjAmount = () => {
+  blackjackAmount = 2
 }
 
 export const upgradeAutoBj = (time) => {

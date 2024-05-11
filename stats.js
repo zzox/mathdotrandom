@@ -23,6 +23,8 @@ let bjWins = 0
 let bjLosses = 0
 let bjTies = 0
 let bjReturn = 0
+let bjHiCountGames = 0
+let bjHiCountWins = 0
 
 // PERF: pre-create items
 
@@ -36,7 +38,9 @@ let totalGamesUi,
   pokerReturnUi,
   totalBjGamesUi,
   bjWinPercent,
-  bjReturnUi
+  bjReturnUi,
+  bjHiCountGamesUi,
+  bjHiCountWinPercent
 
 export const createStats = () => {
   totalGamesUi = $id('total-games')
@@ -49,6 +53,8 @@ export const createStats = () => {
   pokerReturnUi = $id('poker-return')
   totalBjGamesUi = $id('total-bj-games')
   bjWinPercent = $id('bj-win-percent')
+  bjHiCountGamesUi = $id('total-bj-hi-games')
+  bjHiCountWinPercent = $id('bj-hi-win-percent')
   bjReturnUi = $id('bj-return')
 }
 
@@ -108,8 +114,17 @@ export const pushStat = (val, scoreData) => {
       bjWins++
     }
 
+    if (scoreData.isBettingHiCount) {
+      bjHiCountGames++
+      if (scoreData.result === 'win ') {
+        bjHiCountWins++
+      }
+    }
+
     totalBjGamesUi.innerText = totalBjGames + ''
     bjWinPercent.innerText = formatPercent(bjWins / totalBjGames)
+    bjHiCountGamesUi.innerText = bjHiCountGames + ''
+    bjHiCountWinPercent.innerText = formatPercent(bjHiCountWins / bjHiCountGames || 0)
     bjReturnUi.innerText = formatPrice(bjReturn)
   }
 

@@ -147,8 +147,11 @@
       <button id="bj-button-hit" disabled>Hit</button>
       <button id="bj-button-stand" disabled>Stand</button>
       <label>Bet: $</label><input id="bj-bet" type="number" value="1" min="1" max="100"></input> <span id="bj-max">Max: $1000</span>
-      <p id="bj-num-decks-ui" class="display-none">Decks: <span id="bj-num-decks">6</span></p>
-      <p id="bj-count-ui" class="display-none">Count (true): <span id="bj-count">0 (0)</span></p>
+      <p id="bj-num-decks-ui">Decks: <span id="bj-num-decks">6</span></p>
+      <p id="bj-count-ui">Count (true): <span id="bj-count">0 (0)</span></p>
+
+      <!-- <p id="bj-num-decks-ui" class="display-none">Decks: <span id="bj-num-decks">6</span></p>
+      <p id="bj-count-ui" class="display-none">Count (true): <span id="bj-count">0 (0)</span></p> -->
       <div id="bj-auto-guess" class="auto-guess">
         <div class="input-label">
           <label>Auto-play:&nbsp;</label>
@@ -156,6 +159,17 @@
           <p id="bj-auto-guess-rate"> (1/sec)</p>
         </div>
         <div id="bj-auto-choices" class="input-label">
+          <label>Strategy:&nbsp;</label>
+          <select id="bj-select">
+            <option value="hit16">Hit 16</option>
+            <option value="dealer-plus">Dealer+</option>
+          </select>
+        </div>
+        <div id="bj-auto-count" class="input-label">
+          <label>Count min:&nbsp;</label>
+          <input id="bj-count-min" type="number" value="0" min="0" max="25">
+          <label>&nbsp;Hi count-bet: $</label>
+          <input id="bj-hi-count" type="number" value="0" min="0" max="1000">
         </div>
       </div>
     </fieldset>
@@ -215,9 +229,11 @@
         <p>War win: <span id="war-win-percent" class="bold">0%</span></p>
         <p>Poker Games: <span id="total-poker-games" class="bold">0</span></p>
         <p>Poker Return: <span id="poker-return" class="bold">$0</span></p>
-        <p>Blackjack Games: <span id="total-bj-games" class="bold">0</span></p>
-        <p>Blackjack win: <span id="bj-win-percent" class="bold">0%</span></p>
-        <p>BlackJack Return: <span id="bj-return" class="bold">$0</span></p>
+        <p>BJack Games: <span id="total-bj-games" class="bold">0</span></p>
+        <p>BJack Win: <span id="bj-win-percent" class="bold">0%</span></p>
+        <p>BJack Hi-Count Games: <span id="total-bj-hi-games" class="bold">0</span></p>
+        <p>BJack Hi-Count Win: <span id="bj-hi-win-percent" class="bold">0%</span></p>
+        <p>BJack Return: <span id="bj-return" class="bold">$0</span></p>
         <p>Top Cash: <span id="top-cash" class="bold">$100</span></p>
     </fieldset>
     <fieldset id="logs">
