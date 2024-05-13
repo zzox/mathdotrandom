@@ -1,5 +1,5 @@
 import { makeDeck, shuffleDeck, drawCard, cardCountValue, evaulateBjValues, evaulateFinalBjValues, warCardValue } from '../card-deck.js'
-import { $id, $queryAll, formatRate, formatPrice, suitToHtml } from '../ui.js'
+import { $id, $create, $queryAll, formatRate, formatPrice, suitToHtml } from '../ui.js'
 import State from '../state.js'
 
 let unlocked = true
@@ -12,6 +12,7 @@ let maxBet = 1000
 let bjCountMin = 0
 let bjCountBetAmount = 0
 let bjStrategy = 'hit16'
+let bjSpy = false
 
 let blackjackAmount = 1.5
 
@@ -145,7 +146,7 @@ const resetCardUi = () => {
 
 const updateBjUi = (hidden = true) => {
   for (let i = 0; i < dealerCards.length; i++) {
-    updateDealerBjUi(i, i === 0 && hidden)
+    updateDealerBjUi(i, i === 0 && hidden && !bjSpy)
   }
 
   for (let i = 0; i < playerCards.length; i++) {
@@ -153,7 +154,7 @@ const updateBjUi = (hidden = true) => {
   }
 
   const playerValues = evaulateBjValues(playerCards)
-  if (!hidden) {
+  if (!hidden || bjSpy) {
     const playerValue = evaulateFinalBjValues(playerCards)
     $id('bj-player-amount').innerText = playerValue
   } else if (playerValues[0] === playerValues[1] || playerValues[1] > 21) {
@@ -162,7 +163,7 @@ const updateBjUi = (hidden = true) => {
     $id('bj-player-amount').innerText = `${playerValues[0]} or ${playerValues[1]}`
   }
 
-  if (!hidden) {
+  if (!hidden || bjSpy) {
     const dealerValue = evaulateFinalBjValues(dealerCards)
     $id('bj-dealer-amount').innerText = dealerValue
   }
@@ -218,7 +219,7 @@ export const dealBj = (isAuto) => {
   } else if (playerValues[1] === 21) {
     winBj(true, isAuto)
   } else if (dealerValues[1] === 21) {
-    loseBj(true)
+    loseBj(true, false, isAuto)
   } else {
     // TODO: play through auto-guesses
     updateBjUi(true)
@@ -320,11 +321,26 @@ const pushBj = (isAuto) => {
 }
 
 const evaluateStrategy = () => {
+  const playerValue = evaulateFinalBjValues(playerCards)
   if (bjStrategy === 'hit16') {
-    return evaulateFinalBjValues(playerCards) < 16
+    return playerValue < 16
   } else if (bjStrategy === 'dealer-plus') {
-    const playerValue = evaulateFinalBjValues(playerCards)
     return playerValue <= 11 || (playerValue <= 16 && warCardValue[dealerCards[1][0]] > 4)
+  } else if (bjStrategy === 'spy') {
+    if (playerValue <= 11) {
+      return true
+    }
+
+    const dealerValue = evaulateFinalBjValues(dealerCards)
+    if (dealerValue >= 16) {
+      return playerValue < dealerValue
+    } else if (dealerValue >= 12) {
+      return false
+    } else {
+      // const count = getTrueCount()
+      console.log('here', count, playerValue, playerValue - (count + 10) <= 0)
+      return playerValue - (count + 10) <= 0 && playerValue < 16
+    }
   }
 }
 
@@ -382,6 +398,11 @@ export const upgradeBjAmount = () => {
 }
 
 export const upgradeAutoBj = (time) => {
+  if (time > bjGuessTime) {
+    console.warn('out of order, disregarding')
+    return
+  }
+
   bjGuessTime = time
   $id('bj-auto-guess').classList.remove('display-none')
   $id('bj-auto-guess-rate').innerText = ` ${formatRate(time)}`
@@ -391,6 +412,39 @@ export const upgradeMaxBjBet = (newMax) => {
   maxBet = newMax
   $id('bj-max').innerText = `Max: ${formatPrice(newMax)}`
   $id('bj-bet').max = newMax
+}
+
+export const showBjCount = () => {
+  $id('bj-count-ui').classList.remove('display-none')
+}
+
+export const removeBjDecks = (deckNum) => {
+  numDecks -= deckNum
+  $id('bj-num-decks-ui').classList.remove('display-none')
+  $id('bj-num-decks').innerText = numDecks + ''
+  deck = makeDeck(numDecks)
+  shuffleDeck(deck)
+}
+
+export const addBjStrategy = (strategyName) => {
+  $id('bj-auto-choices').classList.remove('display-none')
+  const select = $id('bj-select')
+  const option = $create('option')
+  option.value = strategyName
+
+  if (strategyName === 'dealer-plus') {
+    option.innerText = 'Dealer+'
+  } else if (strategyName === 'spy') {
+    option.innerText = 'Spy'
+  } else {
+    console.error('bad strategy name')
+  }
+
+  select.appendChild(option)
+}
+
+export const addBjSpy = () => {
+  bjSpy = true
 }
 
 export const unlockBj = () => {

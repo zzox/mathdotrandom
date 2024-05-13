@@ -1,10 +1,11 @@
-import { totalGames, totalFlips, totalWars, totalPokerGames } from './stats.js'
+import { totalGames, totalFlips, totalWars, totalPokerGames, totalBjGames } from './stats.js'
 import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
 import { removeWarCard, unlockTripleTie, unlockWar, upgradeAutoWar, upgradeMaxWarBet, upgradeWarAcePercent } from './games/war.js'
 import { time } from './main.js'
 import { addPokerCard, addPokerStrategy, bitFlip, upgradeAutoPoker, upgradeLoPair, upgradeMaxPokerBet } from './games/poker.js'
+import { addBjSpy, addBjStrategy, showBjCount, upgradeAutoBj, upgradeBjAmount, removeBjDecks } from './games/blackjack.js'
 
 let upgrades = []
 const upgradesMade = []
@@ -111,6 +112,30 @@ export const checkStoreUpgrades = () => {
   } else if (totalPokerGames === 5000) {
     showUpgrade('poker-lo-pair')
   }
+
+  if (totalBjGames === 1) {
+    showUpgrade('bj-auto-1')
+  } else if (totalBjGames === 2) {
+    showUpgrade('show-bj-count')
+  } else if (totalBjGames === 3) {
+    showUpgrade('bj-blackjack-2')
+  } else if (totalBjGames === 4) {
+    showUpgrade('bj-strat-dealer')
+  } else if (totalBjGames === 5) {
+    showUpgrade('bj-remove-two-decks')
+  } else if (totalBjGames === 6) {
+    showUpgrade('bj-remove-one-deck-1')
+  } else if (totalBjGames === 7) {
+    showUpgrade('bj-remove-one-deck-2')
+  } else if (totalBjGames === 8) {
+    showUpgrade('bj-remove-one-deck-3')
+  } else if (totalBjGames === 9) {
+    showUpgrade('bj-strat-spy')
+  } else if (totalBjGames === 10) {
+    showUpgrade('bj-max-10000')
+  } else if (totalBjGames === 11) {
+    showUpgrade('bj-max-100000')
+  }
 }
 
 export const doUpgrade = (name) => {
@@ -177,6 +202,25 @@ export const doUpgrade = (name) => {
     addPokerStrategy('smart')
   } else if (name === 'poker-lo-pair')  {
     upgradeLoPair()
+  } else if (name === 'bj-auto-1') {
+    upgradeAutoBj(1000)
+  } else if (name === 'show-bj-count') {
+    showBjCount()
+  } else if (name === 'bj-blackjack-2') {
+    upgradeBjAmount()
+  } else if (name === 'bj-strat-dealer') {
+    addBjStrategy('dealer-plus')
+  } else if (name === 'bj-remove-two-decks') {
+    removeBjDecks(2)
+  } else if (name === 'bj-remove-one-deck-1') {
+    removeBjDecks(1)
+  } else if (name === 'bj-remove-one-deck-2') {
+    removeBjDecks(1)
+  } else if (name === 'bj-remove-one-deck-3') {
+    removeBjDecks(1)
+  } else if (name === 'bj-strat-spy') {
+    addBjSpy(1)
+    addBjStrategy('spy')
   } else {
     console.warn(`No upgrade for ${name}`)
   }
@@ -237,6 +281,15 @@ let possibleUpgrades = [
   { name: 'poker-bitflip', price: 100000, text: 'Bitflip', info: 'All 2s are now 10s' },
   { name: 'poker-lo-pair', price: 1000000, text: 'Lo-Pair wins', info: 'Get money back with lo-pairs' },
   { name: 'unlock-blackjack', price: 1000000, text: 'Blackjack', info: 'Game for cowboys and idiots' },
+  { name: 'bj-auto-1', price: 1, text: 'Autojack', info: '' },
+  { name: 'show-bj-count', price: 1, text: 'Show card count', info: '' },
+  { name: 'bj-blackjack-2', price: 1, text: 'Bribe the mayor', info: 'Blackjack pays 2-to-1' },
+  { name: 'bj-strat-dealer', price: 1, text: 'Dealer+ strat', info: '' },
+  { name: 'bj-remove-two-decks', price: 1, text: '', info: 'Remove two blackjack decks' },
+  { name: 'bj-remove-one-deck-1', price: 1, text: '', info: 'Remove a single blackjack deck' },
+  { name: 'bj-remove-one-deck-2', price: 1, text: '', info: 'Remove a another blackjack deck' },
+  { name: 'bj-remove-one-deck-3', price: 1, text: '', info: 'Remove yet another blackjack deck' },
+  { name: 'bj-strat-spy', price: 1, text: '', info: '' },
   { name: 'unlock-rps', price: 100000000, text: 'Rock, Paper, Scissors', info: 'A real game. Pay with your life if you want to.' }
 ]
 
