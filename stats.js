@@ -123,8 +123,8 @@ export const pushStat = (val, scoreData) => {
 
     totalBjGamesUi.innerText = totalBjGames + ''
     bjWinPercent.innerText = formatPercent(bjWins / totalBjGames)
-    bjHiCountGamesUi.innerText = bjHiCountGames + ''
-    bjHiCountWinPercent.innerText = formatPercent(bjHiCountWins / bjHiCountGames || 0)
+    // bjHiCountGamesUi.innerText = bjHiCountGames + ''
+    // bjHiCountWinPercent.innerText = formatPercent(bjHiCountWins / bjHiCountGames || 0)
     bjReturnUi.innerText = formatPrice(bjReturn)
   }
 

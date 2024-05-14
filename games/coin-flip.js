@@ -107,13 +107,18 @@ export const upgradeHeadsChance = (percent) => {
 }
 
 export const upgradeAutoFlip = (time) => {
+  if (time > coinGuessTime) {
+    console.warn('higher time, disregarding')
+    return
+  }
+
   coinGuessTime = time
   $id('coin-auto-guess').classList.remove('display-none')
   $id('coin-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }
 
 export const upgradeMaxCoinBet = (newMax) => {
-  maxBet = newMax
-  $id('coin-max').innerText = `Max: ${formatPrice(newMax)}`
-  $id('coin-bet').max = newMax
+  maxBet += newMax
+  $id('coin-max').innerText = formatPrice(maxBet)
+  $id('coin-bet').max = maxBet
 }

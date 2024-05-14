@@ -247,9 +247,9 @@ export const upgradeAutoPoker = (time) => {
 }
 
 export const upgradeMaxPokerBet = (newMax) => {
-  maxBet = newMax
-  $id('poker-max').innerText = `Max: ${formatPrice(newMax)}`
-  $id('poker-bet').max = newMax
+  maxBet += newMax
+  $id('poker-max').innerText = `Max: ${formatPrice(maxBet)}`
+  $id('poker-bet').max = maxBet
 }
 
 export const addPokerCard = (card) => {

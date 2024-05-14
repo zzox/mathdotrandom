@@ -36,7 +36,7 @@ export const createWar = () => {
     }
   }
 
-  tripleTieBet = $id('triple-tie-bet')
+  tripleTieBet = $id('war-triple-tie-bet')
   tripleTieBet.onchange = (event) => {
     tripleTieBetAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
     if (!tripleTieBetAmount) {
@@ -171,23 +171,29 @@ export const updateWar = (delta) => {
     tripleTieBet.value = Math.floor(State.dollars / 10)
 
     // disable autoguess if too broke
-    // $id('coin-auto-guess-box').checked = false
-    // coinGuessOn = false
+    $id('coin-auto-guess-box').checked = false
+    coinGuessOn = false
     console.warn('Cannot bet money you dont have')
   }
 }
 
 export const upgradeAutoWar = (time) => {
+  if (time > warGuessTime) {
+    console.warn('higher time, disregarding')
+    return
+  }
+
   warGuessTime = time
   $id('war-auto-guess').classList.remove('display-none')
   $id('war-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }
 
 export const upgradeMaxWarBet = (newMax) => {
-  maxBet = newMax
-  $id('war-max').innerText = `Max: ${formatPrice(newMax)}`
-  $id('war-bet').max = newMax
-  $id('war-triple-tie-bet').max = newMax
+  maxBet += newMax
+  $id('war-bet').max = maxBet
+  $id('war-triple-tie-bet').max = maxBet
+  $id('war-max').innerText = formatPrice(maxBet)
+  $id('war-triple-tie-max').innerText = formatPrice(maxBet)
 }
 
 export const upgradeWarAcePercent = (percent) => {

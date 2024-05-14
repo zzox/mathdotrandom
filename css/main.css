@@ -28,7 +28,7 @@ legend:hover {
 }
 
 fieldset {
-  margin: 1rem;
+  margin: 0.5rem;
   border-style: inset;
   padding: 1rem;
   width: 424px;
@@ -88,6 +88,11 @@ fieldset.minimize > :not(legend) {
 #logs:not(.minimize) {
   height: calc(50vh - 6rem);
   /* max-height: calc(50vh - 6rem); */
+  overflow-y: scroll;
+}
+
+#store {
+  max-height: calc(37vh - 6rem);
   overflow-y: scroll;
 }
 
