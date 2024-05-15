@@ -110,7 +110,7 @@
       <p>     +-+    +-+    +-+    +-+    +-+</p>
       <p>     |<span id="draw-card-number-0"> </span>|    |<span id="draw-card-number-1"> </span>|    |<span id="draw-card-number-2"> </span>|    |<span id="draw-card-number-3"> </span>|    |<span id="draw-card-number-4"> </span>| <span id="draw-result-line-0"></span></p>
       <p>     |<span id="draw-card-suit-0"> </span>|    |<span id="draw-card-suit-1"> </span>|    |<span id="draw-card-suit-2"> </span>|    |<span id="draw-card-suit-3"> </span>|    |<span id="draw-card-suit-4"> </span>| <span id="draw-result-line-1"></span></p>
-      <p>     +-+    +-+    +-+    +-+    +-+</p>
+      <p>     +-+    +-+    +-+    +-+    +-+    <span id="poker-result-text"></span></p></p>
       <p> </p>
       <button id="poker-button-deal">Deal</button>
       <button id="poker-button-draw" disabled>Draw</button>
@@ -146,7 +146,7 @@
       <button id="bj-button-deal">Deal</button>
       <button id="bj-button-hit" disabled>Hit</button>
       <button id="bj-button-stand" disabled>Stand</button>
-      <label>Bet: $</label><input id="bj-bet" type="number" value="1" min="1" max="100"></input> Max: <span id="bj-max">$1000</span>
+      <label>Bet: $</label><input id="bj-bet" type="number" value="1" min="1" max="1000"></input> Max: <span id="bj-max">$1000</span>
       <p id="bj-num-decks-ui" class="display-none">Decks: <span id="bj-num-decks">6</span></p>
       <p id="bj-count-ui" class="display-none">Count (true): <span id="bj-count">0 (0)</span></p>
       <div id="bj-auto-guess" class="auto-guess display-none">
@@ -215,24 +215,28 @@
     <fieldset id="store" class="display-none">
       <legend>Store</legend>
     </fieldset>
-    <!-- <fieldset id="stats" class="display-none"> -->
-    <fieldset id="stats">
+    <fieldset id="stats" class="display-none">
+    <!-- <fieldset id="stats"> -->
         <legend>Stats</legend>
         <p>Total Games: <span id="total-games" class="bold">0</span></p>
         <p>Total Flips: <span id="total-flips" class="bold">0</span></p>
         <p>Flip win: <span id="flip-win-percent" class="bold">0%</span></p>
-        <p>Total Wars: <span id="total-wars" class="bold">0</span></p>
-        <p>War win: <span id="war-win-percent" class="bold">0%</span></p>
-        <p>Poker Games: <span id="total-poker-games" class="bold">0</span></p>
-        <p>Poker Return: <span id="poker-return" class="bold">$0</span></p>
-        <p>BJack Games: <span id="total-bj-games" class="bold">0</span></p>
-        <p>BJack Win: <span id="bj-win-percent" class="bold">0%</span></p>
+        <p class="war-results display-none">Total Wars: <span id="total-wars" class="bold">0</span></p>
+        <p class="war-results display-none">War win: <span id="war-win-percent" class="bold">0%</span></p>
+        <p class="war-results-triple display-none">Triple ties: <span id="war-triple-ties" class="bold">0</span></p>
+        <p class="poker-results display-none">Poker Games: <span id="total-poker-games" class="bold">0</span></p>
+        <p class="poker-results display-none" >Poker Return: <span id="poker-return" class="bold">$0</span></p>
+        <p class="bjack-results display-none">BJack Games: <span id="total-bj-games" class="bold">0</span></p>
+        <p class="bjack-results display-none">BJack Win: <span id="bj-win-percent" class="bold">0%</span></p>
         <!-- <p>BJack Hi-Count Games: <span id="total-bj-hi-games" class="bold">0</span></p> -->
         <!-- <p>BJack Hi-Count Win: <span id="bj-hi-win-percent" class="bold">0%</span></p> -->
-        <p>BJack Return: <span id="bj-return" class="bold">$0</span></p>
+        <p class="bjack-results display-none">BJack Return: <span id="bj-return" class="bold">$0</span></p>
+        <p class="rps-results display-none">(R/P/S)<span id="rps-ui" class="bold">(0/0/0)</span></p>
+        <p class="rps-results display-none">(W/T/L)<span id="rps-res-ui" class="bold">(0/0/0)</span></p>
         <p>Top Cash: <span id="top-cash" class="bold">$100</span></p>
     </fieldset>
-    <fieldset id="logs">
+    <fieldset id="logs" class="display-none">
+    <!-- <fieldset id="logs"> -->
       <legend>Logs</legend>
     </fieldset>
   </div>

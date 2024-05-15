@@ -26,6 +26,11 @@ let bjReturn = 0
 let bjHiCountGames = 0
 let bjHiCountWins = 0
 
+let totalRpsGames = 0
+let totalRocks = 0
+let totalPapers = 0
+let totalScissors = 0
+
 // PERF: pre-create items
 
 let totalGamesUi,
@@ -33,6 +38,7 @@ let totalGamesUi,
   flipWinPercentUi,
   totalWarsUi,
   warWinPercentUi,
+  warTiesUi,
   topCashUi,
   totalPokerGamesUi,
   pokerReturnUi,
@@ -40,7 +46,9 @@ let totalGamesUi,
   bjWinPercent,
   bjReturnUi,
   bjHiCountGamesUi,
-  bjHiCountWinPercent
+  bjHiCountWinPercent,
+  rpsUi,
+  rpsResUi
 
 export const createStats = () => {
   totalGamesUi = $id('total-games')
@@ -48,6 +56,7 @@ export const createStats = () => {
   flipWinPercentUi = $id('flip-win-percent')
   totalWarsUi = $id('total-wars')
   warWinPercentUi = $id('war-win-percent')
+  warTiesUi = $id('war-triple-ties')
   topCashUi = $id('top-cash')
   totalPokerGamesUi = $id('total-poker-games')
   pokerReturnUi = $id('poker-return')
@@ -56,6 +65,8 @@ export const createStats = () => {
   bjHiCountGamesUi = $id('total-bj-hi-games')
   bjHiCountWinPercent = $id('bj-hi-win-percent')
   bjReturnUi = $id('bj-return')
+  rpsUi = $id('rps-ui')
+  rpsResUi = $id('rps-res-ui')
 }
 
 export const pushStat = (val, scoreData) => {
@@ -90,6 +101,7 @@ export const pushStat = (val, scoreData) => {
 
     totalWarsUi.innerText = totalWars + ''
     warWinPercentUi.innerText = formatPercent(totalWarWins / totalWars)
+    warTiesUi.innerText = totalWarTies + ''
   }
 
   if (scoreData.game === 'poker') {
@@ -126,6 +138,15 @@ export const pushStat = (val, scoreData) => {
     // bjHiCountGamesUi.innerText = bjHiCountGames + ''
     // bjHiCountWinPercent.innerText = formatPercent(bjHiCountWins / bjHiCountGames || 0)
     bjReturnUi.innerText = formatPrice(bjReturn)
+  }
+
+  if (scoreData.game === 'rps') {
+    totalRpsGames++
+
+    rps
+
+    rpsUi.innerText = `(${totalRocks}/${totalPapers}/${totalScissors})`
+    rpsResUi.innerText = `(${rpsWins}/${rpsTies}/${rpsLosses})`
   }
 
   if (topCash < State.dollars) {

@@ -1,5 +1,5 @@
 import { makeDeck, shuffleDeck, drawCard, evaluatePokerHand, hiCard, pokerValue, loPair, warCardValue, checkPokerHolds, removeCard, addCard } from '../card-deck.js'
-import { $id, suitToHtml, formatRate, formatPrice, $create } from '../ui.js'
+import { $id, $queryAll, suitToHtml, formatRate, formatPrice, $create } from '../ui.js'
 import State from '../state.js'
 
 let unlocked = true
@@ -111,6 +111,12 @@ const unlockPokerBetUi = () => {
 const showPokerResultUi = (result, isDraw) => {
   $id(`${isDraw ? 'draw' : 'deal'}-result-line-0`).innerText = pokerDisplayText[result][0]
   $id(`${isDraw ? 'draw' : 'deal'}-result-line-1`).innerText = pokerDisplayText[result][1]
+
+  if (result === 'hi-card' || (!loPairOn && result === 'lo-pair')) {
+    $id('poker-result-text').innerText = 'Loss'
+  } else {
+    $id('poker-result-text').innerText = 'Win!'
+  }
 }
 
 const resetPokerUi = () => {
@@ -246,9 +252,9 @@ export const upgradeAutoPoker = (time) => {
   $id('poker-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }
 
-export const upgradeMaxPokerBet = (newMax) => {
-  maxBet += newMax
-  $id('poker-max').innerText = `Max: ${formatPrice(maxBet)}`
+export const upgradeMaxPokerBet = (maxIncrease) => {
+  maxBet += maxIncrease
+  $id('poker-max').innerText = formatPrice(maxBet)
   $id('poker-bet').max = maxBet
 }
 
@@ -291,4 +297,5 @@ export const addPokerStrategy = (strategyName) => {
 export const unlockPoker = () => {
   unlocked = true
   $id('poker').classList.remove('display-none')
+  $queryAll('.poker-results').forEach((item) => item.classList.remove('display-none'))
 }

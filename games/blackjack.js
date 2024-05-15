@@ -408,10 +408,10 @@ export const upgradeAutoBj = (time) => {
   $id('bj-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }
 
-export const upgradeMaxBjBet = (newMax) => {
-  maxBet = newMax
-  $id('bj-max').innerText = `Max: ${formatPrice(newMax)}`
-  $id('bj-bet').max = newMax
+export const upgradeMaxBjBet = (maxIncrease) => {
+  maxBet += maxIncrease
+  $id('bj-max').innerText = formatPrice(maxBet)
+  $id('bj-bet').max = maxBet
 }
 
 export const showBjCount = () => {
@@ -450,4 +450,5 @@ export const addBjSpy = () => {
 export const unlockBj = () => {
   unlocked = true
   $id('blackjack').classList.remove('display-none')
+  $queryAll('.blackjack-results').forEach((item) => item.classList.remove('display-none'))
 }

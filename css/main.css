@@ -86,7 +86,7 @@ fieldset.minimize > :not(legend) {
 }
 
 #logs:not(.minimize) {
-  height: calc(50vh - 6rem);
+  height: calc(35vh);
   /* max-height: calc(50vh - 6rem); */
   overflow-y: scroll;
 }

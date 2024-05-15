@@ -165,14 +165,15 @@ export const updateWar = (delta) => {
   // }
 
   if (warBet.value * 5 + tripleTieBet.value * 5 > State.dollars) {
-    betAmount = Math.floor(State.dollars / 10)
-    warBet.value = Math.floor(State.dollars / 10)
-    tripleTieBetAmount = Math.floor(State.dollars / 10)
-    tripleTieBet.value = Math.floor(State.dollars / 10)
+    betAmount = Math.min(betAmount, Math.floor(State.dollars / 10))
+    warBet.value = Math.min(betAmount, Math.floor(State.dollars / 10))
+
+    tripleTieBetAmount = Math.min(tripleTieBetAmount, Math.floor(State.dollars / 10))
+    tripleTieBet.value = Math.min(tripleTieBetAmount, Math.floor(State.dollars / 10))
 
     // disable autoguess if too broke
-    $id('coin-auto-guess-box').checked = false
-    coinGuessOn = false
+    $id('war-auto-guess-box').checked = false
+    warGuessOn = false
     console.warn('Cannot bet money you dont have')
   }
 }
@@ -188,8 +189,8 @@ export const upgradeAutoWar = (time) => {
   $id('war-auto-guess-rate').innerText = ` ${formatRate(time)}`
 }
 
-export const upgradeMaxWarBet = (newMax) => {
-  maxBet += newMax
+export const upgradeMaxWarBet = (maxIncrease) => {
+  maxBet += maxIncrease
   $id('war-bet').max = maxBet
   $id('war-triple-tie-bet').max = maxBet
   $id('war-max').innerText = formatPrice(maxBet)
@@ -197,13 +198,14 @@ export const upgradeMaxWarBet = (newMax) => {
 }
 
 export const upgradeWarAcePercent = (percent) => {
-  pullAcePercent = percent
+  pullAcePercent += percent
   $id('war-ace-percent').classList.remove('display-none')
   $id('war-ace-percent').innerHTML = `Ace draw: <span class="bold">${formatPercent(percent)}</span>`
 }
 
 export const unlockTripleTie = () => {
   $id('triple-tie').classList.remove('display-none')
+  $queryAll('.war-results-triple').forEach((item) => item.classList.remove('display-none'))
 }
 
 export const removeWarCard = (cardString) => {
@@ -213,4 +215,5 @@ export const removeWarCard = (cardString) => {
 export const unlockWar = () => {
   unlocked = true
   $id('war').classList.remove('display-none')
+  $queryAll('.war-results').forEach((item) => item.classList.remove('display-none'))
 }

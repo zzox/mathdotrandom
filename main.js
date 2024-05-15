@@ -14,8 +14,8 @@ const MAX_DELTA = 1000 / 30
 let last
 
 const mainLoop = (total) => {
-  // const delta = total - last < MAX_DELTA ? total - last : MAX_DELTA
-  const delta = 100
+  const delta = total - last < MAX_DELTA ? total - last : MAX_DELTA
+  // TEST: const delta = 100
   updateUi()
   updateCoinFlip(delta)
   updateWar(delta)
