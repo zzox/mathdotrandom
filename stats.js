@@ -9,11 +9,13 @@ export let totalFlips = 0
 let totalFlipWins = 0
 let totalHeads = 0
 let totalTails = 0
+let flipsReturn = 0
 
 export let totalWars = 0
 let totalWarWins = 0
 let totalWarLosses = 0
 let totalWarTies = 0
+let warReturn = 0
 
 export let totalPokerGames = 0
 let pokerReturn = 0
@@ -27,19 +29,24 @@ let bjHiCountGames = 0
 let bjHiCountWins = 0
 
 let totalRpsGames = 0
+let rpsReturn = 0
 let totalRocks = 0
 let totalPapers = 0
 let totalScissors = 0
+let rpsWins = 0
+let rpsLosses = 0
+let rpsTies = 0
 
 // PERF: pre-create items
 
 let totalGamesUi,
   totalFlipsUi,
   flipWinPercentUi,
+  flipReturnUi,
   totalWarsUi,
   warWinPercentUi,
   warTiesUi,
-  topCashUi,
+  warReturnUi,
   totalPokerGamesUi,
   pokerReturnUi,
   totalBjGamesUi,
@@ -48,15 +55,19 @@ let totalGamesUi,
   bjHiCountGamesUi,
   bjHiCountWinPercent,
   rpsUi,
-  rpsResUi
+  rpsResUi,
+  rpsReturnUi,
+  topCashUi
 
 export const createStats = () => {
   totalGamesUi = $id('total-games')
   totalFlipsUi = $id('total-flips')
   flipWinPercentUi = $id('flip-win-percent')
+  flipReturnUi = $id('flip-return')
   totalWarsUi = $id('total-wars')
   warWinPercentUi = $id('war-win-percent')
   warTiesUi = $id('war-triple-ties')
+  warReturnUi = $id('war-return')
   topCashUi = $id('top-cash')
   totalPokerGamesUi = $id('total-poker-games')
   pokerReturnUi = $id('poker-return')
@@ -67,11 +78,14 @@ export const createStats = () => {
   bjReturnUi = $id('bj-return')
   rpsUi = $id('rps-ui')
   rpsResUi = $id('rps-res-ui')
+  rpsReturnUi = $id('rps-return')
 }
 
 export const pushStat = (val, scoreData) => {
   if (scoreData.game === 'coin-flip') {
     totalFlips++
+
+    flipsReturn += val
 
     // ATTN: can we win with 0?
     if (val > 0) {
@@ -86,10 +100,13 @@ export const pushStat = (val, scoreData) => {
 
     totalFlipsUi.innerText = totalFlips + ''
     flipWinPercentUi.innerText = formatPercent(totalFlipWins / totalFlips)
+    flipReturnUi.innerText = formatPrice(flipsReturn)
   }
 
   if (scoreData.game === 'war') {
     totalWars++
+
+    warReturn += val
 
     if (val > 0) {
       totalWarWins++
@@ -101,6 +118,7 @@ export const pushStat = (val, scoreData) => {
 
     totalWarsUi.innerText = totalWars + ''
     warWinPercentUi.innerText = formatPercent(totalWarWins / totalWars)
+    warReturnUi.innerText = formatPrice(warReturn)
     warTiesUi.innerText = totalWarTies + ''
   }
 
@@ -143,10 +161,27 @@ export const pushStat = (val, scoreData) => {
   if (scoreData.game === 'rps') {
     totalRpsGames++
 
-    rps
+    rpsReturn += val
+
+    if (scoreData.result === 'lost') {
+      rpsLosses++
+    } else if (scoreData.result === 'won ') {
+      rpsWins++
+    } else if (scoreData.result === 'tied') {
+      rpsTies++
+    }
+
+    if (scoreData.oppChoice === '  Rock  ') {
+      totalRocks++
+    } else if (scoreData.oppChoice === '  Paper ') {
+      totalPapers++
+    } else if (scoreData.oppChoice === 'Scissors') {
+      totalScissors++
+    }
 
     rpsUi.innerText = `(${totalRocks}/${totalPapers}/${totalScissors})`
     rpsResUi.innerText = `(${rpsWins}/${rpsTies}/${rpsLosses})`
+    rpsReturnUi.innerText = formatPrice(rpsReturn)
   }
 
   if (topCash < State.dollars) {

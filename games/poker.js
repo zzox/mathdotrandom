@@ -6,7 +6,7 @@ let unlocked = true
 
 let pokerBet
 let betAmount = 1
-let maxBet = 1000
+let maxBet = 100
 let pokerState = 'ready' // or, 'draw'
 let cards = []
 const cardHolds = [false, false, false, false, false]
@@ -112,10 +112,12 @@ const showPokerResultUi = (result, isDraw) => {
   $id(`${isDraw ? 'draw' : 'deal'}-result-line-0`).innerText = pokerDisplayText[result][0]
   $id(`${isDraw ? 'draw' : 'deal'}-result-line-1`).innerText = pokerDisplayText[result][1]
 
-  if (result === 'hi-card' || (!loPairOn && result === 'lo-pair')) {
-    $id('poker-result-text').innerText = 'Loss'
-  } else {
-    $id('poker-result-text').innerText = 'Win!'
+  if (isDraw) {
+    if (result === 'hi-card' || (!loPairOn && result === 'lo-pair')) {
+      $id('poker-result-text').innerText = 'Loss'
+    } else {
+      $id('poker-result-text').innerText = 'Win!'
+    }
   }
 }
 

@@ -7,7 +7,7 @@ let unlocked = false
 let warBet, tripleTieBet
 let betAmount = 1
 let tripleTieBetAmount = 0
-let maxBet = 10
+let maxBet = 5
 
 // let resultShowTimer = 0
 // const resultShowTime = 3000
@@ -200,7 +200,7 @@ export const upgradeMaxWarBet = (maxIncrease) => {
 export const upgradeWarAcePercent = (percent) => {
   pullAcePercent += percent
   $id('war-ace-percent').classList.remove('display-none')
-  $id('war-ace-percent').innerHTML = `Ace draw: <span class="bold">${formatPercent(percent)}</span>`
+  $id('war-ace-percent').innerHTML = `Ace draw: <span class="bold">${formatPercent(pullAcePercent)}</span>`
 }
 
 export const unlockTripleTie = () => {

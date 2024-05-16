@@ -198,11 +198,7 @@ export const dealBj = (isAuto) => {
   State.checkIsBroke()
 
   isBettingHiCount = getTrueCount() >= bjCountMin && bjCountBetAmount > 0
-  console.log(isBettingHiCount, getTrueCount(), bjStrategy)
-  // let bet = betAmount
-  // if (isBettingHiCount) {
-  //   bet = bjCountBetAmount
-  // }
+
   State.subtractScore(getBetAmount())
 
   dealerCards.push(drawFromDeckWithCount())
@@ -450,5 +446,5 @@ export const addBjSpy = () => {
 export const unlockBj = () => {
   unlocked = true
   $id('blackjack').classList.remove('display-none')
-  $queryAll('.blackjack-results').forEach((item) => item.classList.remove('display-none'))
+  $queryAll('.bjack-results').forEach((item) => item.classList.remove('display-none'))
 }

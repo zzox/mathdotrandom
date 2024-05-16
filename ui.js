@@ -16,7 +16,7 @@ export const $queryAll = (q) => Array.from(document.querySelectorAll(q))
 
 const score = $id('score')
 
-export const formatPrice = (amount) => `$${amount}`
+export const formatPrice = (amount) => `$${amount.toLocaleString()}`
 export const formatPercent = (percent) => Math.round(percent * 100).toFixed(0) + '%'
 export const formatRate = (time) => `${Math.round(1000 / time)}/sec`
 

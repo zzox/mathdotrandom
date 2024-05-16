@@ -6,6 +6,7 @@ import { removeWarCard, unlockTripleTie, unlockWar, upgradeAutoWar, upgradeMaxWa
 import { time } from './main.js'
 import { addPokerCard, addPokerStrategy, bitFlip, unlockPoker, upgradeAutoPoker, upgradeLoPair, upgradeMaxPokerBet } from './games/poker.js'
 import { addBjSpy, addBjStrategy, showBjCount, upgradeAutoBj, upgradeBjAmount, removeBjDecks, unlockBj } from './games/blackjack.js'
+import { unlockRps } from './games/rps.js'
 
 let upgrades = []
 const upgradesMade = []
@@ -41,7 +42,7 @@ export const checkStoreUpgrades = () => {
     showUpgrade('show-logs')
   } else if (totalGames === 10000) {
     showUpgrade('unlock-blackjack')
-  } else if (totalGames === 50000) {
+  } else if (totalGames === 25000) {
     showUpgrade('unlock-rps')
   }
 
@@ -79,61 +80,63 @@ export const checkStoreUpgrades = () => {
     showUpgrade('war-max-10')
   } else if (totalWars === 500) {
     showUpgrade('war-auto-4')
-  } else if (totalWars === 900) {
-    // showUpgrade('war-auto-4')
   } else if (totalWars === 1000) {
+    showUpgrade('war-5-percent-ace')
+  } else if (totalWars === 2500) {
     showUpgrade('war-auto-10')
-  } else if (totalWars === 2000) {
+  } else if (totalWars === 5000) {
     showUpgrade('war-remove-3')
-  } else if (totalWars === 3000) {
+  } else if (totalWars === 10000) {
     showUpgrade('war-remove-4')
+  } else if (totalWars === 25000) {
+    showUpgrade('war-remove-5')
   }
 
   if (totalPokerGames === 10) {
     showUpgrade('poker-auto-1')
+  } else if (totalPokerGames === 200) {
+    showUpgrade('poker-add-jack-clubs')
   } else if (totalPokerGames === 250) {
     showUpgrade('poker-strat-keep-pairs')
+  } else if (totalPokerGames === 300) {
+    showUpgrade('poker-add-queen-hearts')
+  } else if (totalPokerGames === 400) {
+    showUpgrade('poker-add-king-diamonds')
   } else if (totalPokerGames === 500) {
     showUpgrade('poker-bitflip')
   } else if (totalPokerGames === 600) {
-    showUpgrade('poker-add-jack-clubs')
-  } else if (totalPokerGames === 700) {
-    showUpgrade('poker-add-queen-hearts')
+    showUpgrade('poker-add-ace-spades')
   } else if (totalPokerGames === 750) {
     showUpgrade('poker-strat-flush')
-  } else if (totalPokerGames === 800) {
-    showUpgrade('poker-add-king-diamonds')
-  } else if (totalPokerGames === 900) {
-    showUpgrade('poker-add-ace-spades')
   } else if (totalPokerGames === 1000) {
-    showUpgrade('poker-max-1000')
+    showUpgrade('poker-max-200')
   } else if (totalPokerGames === 1250) {
     showUpgrade('poker-strat-smart')
   } else if (totalPokerGames === 5000) {
     showUpgrade('poker-lo-pair')
   }
 
-  if (totalBjGames === 1) {
+  if (totalBjGames === 10) {
     showUpgrade('bj-auto-1')
-  } else if (totalBjGames === 2) {
+  } else if (totalBjGames === 25) {
     showUpgrade('show-bj-count')
-  } else if (totalBjGames === 3) {
+  } else if (totalBjGames === 200) {
     showUpgrade('bj-blackjack-2')
-  } else if (totalBjGames === 4) {
+  } else if (totalBjGames === 400) {
     showUpgrade('bj-strat-dealer')
-  } else if (totalBjGames === 5) {
+  } else if (totalBjGames === 500) {
     showUpgrade('bj-remove-two-decks')
-  } else if (totalBjGames === 6) {
+  } else if (totalBjGames === 600) {
     showUpgrade('bj-remove-one-deck-1')
-  } else if (totalBjGames === 7) {
+  } else if (totalBjGames === 700) {
     showUpgrade('bj-remove-one-deck-2')
-  } else if (totalBjGames === 8) {
+  } else if (totalBjGames === 800) {
     showUpgrade('bj-remove-one-deck-3')
-  } else if (totalBjGames === 9) {
+  } else if (totalBjGames === 900) {
     showUpgrade('bj-strat-spy')
-  } else if (totalBjGames === 10) {
+  } else if (totalBjGames === 1000) {
     showUpgrade('bj-max-10000')
-  } else if (totalBjGames === 11) {
+  } else if (totalBjGames === 10000) {
     showUpgrade('bj-max-100000')
   }
 }
@@ -202,8 +205,8 @@ export const doUpgrade = (name) => {
     unlockPoker()
   } else if (name === 'poker-auto-1') {
     upgradeAutoPoker(1000)
-  } else if (name === 'poker-max-1000') {
-    upgradeMaxPokerBet(900)
+  } else if (name === 'poker-max-200') {
+    upgradeMaxPokerBet(100)
   } else if (name === 'poker-add-ace-spades') {
     addPokerCard('AS')
   } else if (name === 'poker-add-king-diamonds') {
@@ -243,6 +246,8 @@ export const doUpgrade = (name) => {
   } else if (name === 'bj-strat-spy') {
     addBjSpy(1)
     addBjStrategy('spy')
+  } else if (name === 'unlock-rps') {
+    unlockRps()
   } else {
     console.warn(`No upgrade for ${name}`)
   }
@@ -301,8 +306,8 @@ let possibleUpgrades = [
   { name: 'war-remove-5', price: 500000, text: 'No more fives', info: 'Remove all 5s from the war deck' },
   { name: 'unlock-poker', price: 1000, text: 'Poker', info: 'Game for cowboys and idiots' },
   { name: 'poker-max-200', price: 10000, text: 'Change states', info: 'Max poker bet of $200' },
-  { name: 'poker-max-500', price: 10000, text: 'Change states', info: 'Max poker bet of $200' },
-  { name: 'poker-max-1000', price: 10000, text: 'Change states', info: 'Max poker bet of $200' },
+  // { name: 'poker-max-500', price: 10000, text: 'Change states', info: 'Max poker bet of $200' },
+  // { name: 'poker-max-1000', price: 10000, text: 'Change states', info: 'Max poker bet of $200' },
   { name: 'poker-auto-1', price: 1000, text: 'Autopoker', info: 'New poker hand and draw every second' },
   { name: 'poker-auto-2', price: 2000, text: 'Superpoker', info: 'New poker hand and draw twice per second' },
   { name: 'poker-auto-4', price: 4000, text: 'Megapoker', info: 'New poker hand and draw four times per second' },

@@ -5,7 +5,7 @@ import { createWar, updateWar } from './games/war.js'
 import { createPoker, updatePoker } from './games/poker.js'
 import { createLogs } from './logs.js'
 import { createStats } from './stats.js'
-import { createRps,updateRps } from './games/rps.js'
+import { createRps, updateRps } from './games/rps.js'
 import { createBj, updateBj } from './games/blackjack.js'
 
 export let time = 0
@@ -29,6 +29,7 @@ const mainLoop = (total) => {
 }
 
 window.onload = () => {
+  console.log('hi https://zzox.net')
   createLogs()
   createStore()
   createStats()
