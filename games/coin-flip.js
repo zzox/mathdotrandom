@@ -95,7 +95,7 @@ export const updateCoinFlip = (delta) => {
     // disable autoguess if too broke
     $id('coin-auto-guess-box').checked = false
     coinGuessOn = false
-    console.error('Cannot bet money you dont have')
+    console.warn('Cannot bet money you dont have')
   }
 }
 
@@ -121,4 +121,9 @@ export const upgradeMaxCoinBet = (newMax) => {
   maxBet += newMax
   $id('coin-max').innerText = formatPrice(maxBet)
   $id('coin-bet').max = maxBet
+}
+
+export const destroyCoinFlip = () => {
+  $id('heads-button').disabled = true
+  $id('tails-button').disabled = true
 }

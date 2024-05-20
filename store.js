@@ -16,7 +16,7 @@ const showUpgrade = (name) => {
   const upgrade = possibleUpgrades.find((u) => u.name === name)
   if (!upgrade) {
     // TODO: remove
-    console.log(`No upgrade found for ${name}`)
+    // console.log(`No upgrade found for ${name}`)
     return
   }
 
@@ -85,10 +85,12 @@ export const checkStoreUpgrades = () => {
   } else if (totalWars === 2500) {
     showUpgrade('war-auto-10')
   } else if (totalWars === 5000) {
-    showUpgrade('war-remove-3')
+    showUpgrade('war-max-25')
   } else if (totalWars === 10000) {
-    showUpgrade('war-remove-4')
+    showUpgrade('war-remove-3')
   } else if (totalWars === 25000) {
+    showUpgrade('war-remove-4')
+  } else if (totalWars === 50000) {
     showUpgrade('war-remove-5')
   }
 
@@ -155,8 +157,6 @@ export const doUpgrade = (name) => {
 
   // TODO: method on state?
   State.dollars -= upgrade.price
-
-  console.log(name)
   if (name === 'coin-10') {
     upgradeHeadsChance(0.1)
   } else if (name === 'show-stats') {
@@ -252,8 +252,7 @@ export const doUpgrade = (name) => {
     console.warn(`No upgrade for ${name}`)
   }
 
-  // TEST:
-  console.warn(`upgrade ${name} at ${Math.round(time)}`)
+  console.log(`upgrade ${name} at ${Math.round(time)}`)
 
   // remove from upgrades array
   upgrades = upgrades.filter((u) => u.name !== name)
@@ -319,9 +318,9 @@ let possibleUpgrades = [
   { name: 'poker-add-king-diamonds', price: 3333, text: 'King of diamonds', info: 'Extra king for you' },
   { name: 'poker-add-ace-spades', price: 4444, text: 'Ace of spades', info: 'Like the song' },
   { name: 'poker-bitflip', price: 5000, text: 'Bitflip', info: 'All poker 2s are now 10s' },
-  { name: 'poker-strat-smart', price: 7777, text: 'Smart strat', info: 'Mitigate risk and go for whats easiest.' },
+  { name: 'poker-strat-smart', price: 7777, text: 'Smart strat', info: 'Mitigate risk but go high' },
   { name: 'poker-lo-pair', price: 100000, text: 'Lo-Pair wins', info: 'Get money back with lo-pairs' },
-  { name: 'unlock-blackjack', price: 10000, text: 'Blackjack', info: 'Game for cowboys and idiots' },
+  { name: 'unlock-blackjack', price: 10000, text: 'Blackjack', info: :'Game for cowboys and idiots' },
   { name: 'bj-auto-1', price: 10000, text: 'Autojack', info: 'New game of blackjack every second' },
   { name: 'bj-auto-2', price: 20000, text: 'Superjack', info: 'New game of blackjack twice per second' },
   { name: 'bj-auto-4', price: 40000, text: 'Megajack', info: 'New game of blackjack for times per second' },
@@ -333,7 +332,7 @@ let possibleUpgrades = [
   { name: 'bj-remove-one-deck-2', price: 50000, text: 'Slimming down', info: 'Remove another blackjack deck' },
   { name: 'bj-remove-one-deck-3', price: 60000, text: 'Lock in', info: 'Remove yet another blackjack deck' },
   { name: 'bj-strat-spy', price: 100000, text: 'X-ray specs', info: 'See the blackjack dealers hand. Comes with strat' },
-  { name: 'unlock-rps', price: 10000, text: 'Rock, Paper, Scissors', info: 'A real game. You may pay with your life' },
+  { name: 'unlock-rps', price: 100000, text: 'Rock, Paper, Scissors', info: 'A real game. You may pay with your life.' },
   { name: 'show-stats', price: 250, text: 'Show Stats', info: 'If you\'re into that type of thing' },
   { name: 'show-logs', price: 2500, text: 'Show Logs', info: 'May cause performance issues' },
 ]
@@ -371,6 +370,8 @@ export const pushStoreItem = (item) => {
   div.appendChild(errorText)
 
   storeBox.prepend(div)
+
+  div.scrollIntoView()
 }
 
 export const removeStoreItem = (name) => {

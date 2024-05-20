@@ -8,15 +8,15 @@ export const checkRandom = (percent) => {
 
 export default class State {
   static gameOver = false
-  static dollars = 10000000
+  static dollars = 100
 
   static updateScore = (val, scoreData) => {
     State.dollars += val
     if (State.dollars === 0) {
       State.gameOver = true
-      alert('game over')
+      // alert('game over')
     } else if (State.dollars < 0) {
-      alert('shouldnt be here')
+      console.warn('be here?')
     }
 
     pushLog(val, scoreData)

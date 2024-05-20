@@ -1,17 +1,35 @@
-import { updateUi } from './ui.js'
+import { $id, $query, createUi, dhm, updateUi } from './ui.js'
 import { createStore, updateStore } from './store.js'
-import { createCoinFlip, updateCoinFlip } from './games/coin-flip.js'
-import { createWar, updateWar } from './games/war.js'
-import { createPoker, updatePoker } from './games/poker.js'
+import { createCoinFlip, destroyCoinFlip, updateCoinFlip } from './games/coin-flip.js'
+import { createWar, destroyWar, updateWar } from './games/war.js'
+import { createPoker, destroyPoker, pokerState, updatePoker } from './games/poker.js'
 import { createLogs } from './logs.js'
 import { createStats } from './stats.js'
-import { createRps, updateRps } from './games/rps.js'
-import { createBj, updateBj } from './games/blackjack.js'
+import { createRps, destroyRps, updateRps } from './games/rps.js'
+import { bjState, createBj, destroyBj, updateBj } from './games/blackjack.js'
+import State from './state.js'
 
 export let time = 0
 
 const MAX_DELTA = 1000 / 30
 let last
+
+let gameOver = false
+let victory = false
+
+const loseGame = () => {
+  $id('game-over-modal').classList.remove('display-none')
+  destroyCoinFlip()
+  destroyWar()
+  destroyPoker()
+  destroyBj()
+  destroyRps()
+}
+
+const winGame = () => {
+  $id('game-over-modal').classList.remove('display-none')
+  $query('game-over-modal > p').innerText = `You got to a million dollars in ${dhm(time)}`
+}
 
 const mainLoop = (total) => {
   const delta = total - last < MAX_DELTA ? total - last : MAX_DELTA
@@ -25,6 +43,16 @@ const mainLoop = (total) => {
   updateRps(delta)
   time += delta
   last = total
+
+  if (!gameOver && pokerState === 'ready' && bjState === 'ready' && State.dollars <= 0) {
+    gameOver = true
+    loseGame()
+  }
+
+  if (!victory && State.dollars >= 1000000) {
+    winGame()
+  }
+
   window.requestAnimationFrame(mainLoop)
 }
 
@@ -38,5 +66,6 @@ window.onload = () => {
   createPoker()
   createBj()
   createRps()
+  createUi()
   last = window.requestAnimationFrame(mainLoop)
 }

@@ -36,3 +36,27 @@ export const suitToHtml = {
   'D': '<span class="diamonds"></span>',
   'C': '<span class="clubs"></span>'
 }
+
+export const createUi = () => {
+  const gameOverModal = $id('game-over-modal')
+  gameOverModal.querySelector('button').onclick = () => {
+    gameOverModal.classList.add('display-none')
+  }
+
+  const victoryModal = $id('victory-modal')
+  victoryModal.querySelector('button').onclick = () => {
+    victoryModal.classList.add('display-none')
+  }
+}
+
+// from: https://stackoverflow.com/a/27065690
+export const dhm = (ms) => {
+  const days = Math.floor(ms / (24*60*60*1000))
+  const daysms = ms % (24*60*60*1000)
+  const hours = Math.floor(daysms / (60*60*1000))
+  const hoursms = ms % (60*60*1000)
+  const minutes = Math.floor(hoursms / (60*1000))
+  const minutesms = ms % (60*1000)
+  const sec = Math.floor(minutesms / 1000)
+  return days + ":" + hours + ":" + minutes + ":" + sec
+}

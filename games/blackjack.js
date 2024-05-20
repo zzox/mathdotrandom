@@ -3,7 +3,7 @@ import { $id, $create, $queryAll, formatRate, formatPrice, suitToHtml } from '..
 import State from '../state.js'
 
 let unlocked = true
-let bjState = 'ready'
+export let bjState = 'ready'
 let isBettingHiCount = false
 
 let bjBet
@@ -447,4 +447,10 @@ export const unlockBj = () => {
   unlocked = true
   $id('blackjack').classList.remove('display-none')
   $queryAll('.bjack-results').forEach((item) => item.classList.remove('display-none'))
+}
+
+export const destroyBj = () => {
+  dealBjButton.disabled = true
+  hitBjButton.disabled = true
+  standBjButton.disabled = true
 }

@@ -7,7 +7,7 @@ let unlocked = true
 let pokerBet
 let betAmount = 1
 let maxBet = 100
-let pokerState = 'ready' // or, 'draw'
+export let pokerState = 'ready' // or, 'draw'
 let cards = []
 const cardHolds = [false, false, false, false, false]
 
@@ -135,6 +135,8 @@ const resetPokerUi = () => {
   // hack
   showPokerResultUi(hiCard, true)
   showPokerResultUi(hiCard, false)
+  $id('poker-result-text').innerText = ''
+
   cards = []
   drawPokerButton.disabled = true
 }
@@ -244,7 +246,7 @@ export const updatePoker = (delta) => {
     // disable autoguess if too broke
     $id('poker-auto-guess-box').checked = false
     pokerGuessOn = false
-    console.error('Cannot bet money you dont have')
+    console.warn('Cannot bet money you dont have')
   }
 }
 
@@ -300,4 +302,9 @@ export const unlockPoker = () => {
   unlocked = true
   $id('poker').classList.remove('display-none')
   $queryAll('.poker-results').forEach((item) => item.classList.remove('display-none'))
+}
+
+export const destroyPoker = () => {
+  dealPokerButton.disabled = true
+  drawPokerButton.diabled = true
 }

@@ -139,7 +139,7 @@ export const playWar = (isAuto = false) => {
   } else if (result === 'lose') {
     State.updateScore(betAmount * -(drawNum * 2 + 1) - tripleTieBetAmount, data)
   } else {
-    console.warn('triple tie!!!')
+    // console.warn('triple tie!!!')
     State.updateScore(tripleTieBetAmount * 1000, data)
   }
 
@@ -216,4 +216,8 @@ export const unlockWar = () => {
   unlocked = true
   $id('war').classList.remove('display-none')
   $queryAll('.war-results').forEach((item) => item.classList.remove('display-none'))
+}
+
+export const destroyWar = () => {
+  playWarButton.disabled = true
 }

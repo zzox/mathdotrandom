@@ -99,7 +99,7 @@ export const updateRps = (delta) => {
     betAmount = State.dollars
     rpsBet.value = State.dollars
 
-    console.error('Cannot bet money you dont have')
+    console.warn('Cannot bet money you dont have')
   }
 }
 
@@ -107,4 +107,10 @@ export const unlockRps = () => {
   locked = false;
   $id('rps').classList.remove('display-none')
   $queryAll('.rps-results').forEach((item) => item.classList.remove('display-none'))
+}
+
+export const destroyRps = () => {
+  $id('rock-button').disabled = true
+  $id('paper-button').disabled = true
+  $id('scissors-button').disabled = true
 }
