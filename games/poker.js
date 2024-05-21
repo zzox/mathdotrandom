@@ -226,6 +226,8 @@ export const updatePoker = (delta) => {
   //     resetPokerUi()
   // }
 
+  drawPokerButton.diabled = true
+
   if (pokerGuessOn && pokerState === 'ready') {
     pokerGuessTimer += delta
     if (pokerGuessTimer >= pokerGuessTime) {

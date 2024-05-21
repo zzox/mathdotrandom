@@ -58,5 +58,26 @@ export const dhm = (ms) => {
   const minutes = Math.floor(hoursms / (60*1000))
   const minutesms = ms % (60*1000)
   const sec = Math.floor(minutesms / 1000)
-  return days + ":" + hours + ":" + minutes + ":" + sec
+
+  let dayString = ''
+  if (days > 0) {
+    dayString = `${days} day${days === 1 ? '' : 's'}, `
+  }
+
+  let hourString = ''
+  if (hours > 0 || days > 0) {
+    hourString = `${hours} hour${hours === 1 ? '' : 's'}, `
+  }
+
+  let minString = ''
+  if (minutes > 0 || hours > 0 || days > 0) {
+    minString = `${minutes} minute${minutes === 1 ? '' : 's'} and `
+  }
+
+  let secString = ''
+  if (sec > 0) {
+    secString = `${sec} second${sec === 1 ? '' : 's'}!`
+  }
+
+  return dayString + hourString + minString + secString
 }

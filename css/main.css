@@ -5,6 +5,7 @@
 body {
   margin: 0;
   font-family: monospace;
+  background-color: white;
 }
 
 p {
@@ -30,7 +31,7 @@ legend:hover {
 fieldset {
   margin: 0.5rem;
   border-style: inset;
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   width: 424px;
 }
 
@@ -65,6 +66,8 @@ input[type='number'] {
   max-height: calc(100vh - 2rem);
   margin: 1rem;
   justify-content: center;
+  /* needed for itch: */
+  overflow-y: scroll;
 }
 
 @media (min-width: 650px) {
@@ -75,6 +78,7 @@ input[type='number'] {
     max-height: calc(100vh - 2rem);
     margin: 1rem;
     align-content: flex-start;
+    justify-content: flex-start;
   }
 }
 
@@ -96,7 +100,7 @@ fieldset.minimize > :not(legend) {
 }
 
 #logs:not(.minimize) {
-  height: calc(35vh);
+  height: calc(33vh);
   /* max-height: calc(50vh - 6rem); */
   overflow-y: scroll;
 }

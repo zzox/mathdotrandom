@@ -1,4 +1,4 @@
-import { $create, $id, formatPrice } from '../ui.js'
+import { $create, $id, formatPrice } from './ui.js'
 
 let logBox
 let logIndex = 0

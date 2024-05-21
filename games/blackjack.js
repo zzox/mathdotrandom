@@ -102,7 +102,6 @@ const unlockButtons = () => {
   it++
 
   if (deck.discarded.length > (deck.pile.length + deck.discarded.length) * 2 / 3) {
-    console.log('shuffling', it, count, deck.discarded.length, deck.pile.length)
     count = 0
     shuffleDeck(deck)
     it = 0
@@ -334,7 +333,6 @@ const evaluateStrategy = () => {
       return false
     } else {
       // const count = getTrueCount()
-      console.log('here', count, playerValue, playerValue - (count + 10) <= 0)
       return playerValue - (count + 10) <= 0 && playerValue < 16
     }
   }

@@ -27,8 +27,8 @@ const loseGame = () => {
 }
 
 const winGame = () => {
-  $id('game-over-modal').classList.remove('display-none')
-  $query('game-over-modal > p').innerText = `You got to a million dollars in ${dhm(time)}`
+  $id('victory-modal').classList.remove('display-none')
+  $query('#victory-modal > fieldset > p').innerText = `You got to 1 million dollars in ${dhm(time)}`
 }
 
 const mainLoop = (total) => {
@@ -50,6 +50,7 @@ const mainLoop = (total) => {
   }
 
   if (!victory && State.dollars >= 1000000) {
+    victory = true
     winGame()
   }
 

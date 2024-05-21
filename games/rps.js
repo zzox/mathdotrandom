@@ -90,6 +90,10 @@ export const playRps = (choice) => {
 }
 
 export const updateRps = (delta) => {
+  $id('rock-button').disabled = betAmount <= 0
+  $id('paper-button').disabled = betAmount <= 0
+  $id('scissors-button').disabled = betAmount <= 0
+
   resultShowTimer += delta
   if (resultShowTimer >= resultShowTime) {
     clearRpsUi()
