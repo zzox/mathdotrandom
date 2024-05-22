@@ -1,8 +1,9 @@
 import { makeDeck, shuffleDeck, drawCard, warCardValue, removeCard, pullCard } from '../card-deck.js'
 import { $id, $queryAll, formatPercent, formatRate, formatPrice, loseWinTie, suitToHtml } from '../ui.js'
 import State, { checkRandom } from '../state.js'
+import { checkNumber, checkNumberWithZero } from '../util.js'
 
-let unlocked = false
+let unlocked = true
 
 let warBet, tripleTieBet
 let betAmount = 1
@@ -30,18 +31,14 @@ export const createWar = () => {
 
   warBet = $id('war-bet')
   warBet.onchange = (event) => {
-    betAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
-    if (!betAmount) {
-      betAmount = 1
-    }
+    betAmount = checkNumber(event.target.value, State.dollars)
+    warBet.value = betAmount
   }
 
   tripleTieBet = $id('war-triple-tie-bet')
   tripleTieBet.onchange = (event) => {
-    tripleTieBetAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
-    if (!tripleTieBetAmount) {
-      tripleTieBetAmount = 0
-    }
+    tripleTieBetAmount = checkNumberWithZero(event.target.value, State.dollars)
+    tripleTieBet.value = tripleTieBetAmount
   }
 
   $id('war-auto-guess-box').onchange = (event) => {

@@ -1,6 +1,7 @@
 import { makeDeck, shuffleDeck, drawCard, evaluatePokerHand, hiCard, pokerValue, loPair, warCardValue, checkPokerHolds, removeCard, addCard } from '../card-deck.js'
 import { $id, $queryAll, suitToHtml, formatRate, formatPrice, $create } from '../ui.js'
 import State from '../state.js'
+import { checkNumber } from '../util.js'
 
 let unlocked = true
 
@@ -55,10 +56,8 @@ export const createPoker = () => {
   pokerBet = $id('poker-bet')
 
   pokerBet.onchange = (event) => {
-    betAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
-    if (!betAmount) {
-      betAmount = 1
-    }
+    betAmount = checkNumber(event.target.value, State.dollars)
+    pokerBet.value = betAmount
   }
 
   for (let i = 0; i < 5; i++) {

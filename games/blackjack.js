@@ -1,6 +1,7 @@
 import { makeDeck, shuffleDeck, drawCard, cardCountValue, evaulateBjValues, evaulateFinalBjValues, warCardValue } from '../card-deck.js'
 import { $id, $create, $queryAll, formatRate, formatPrice, suitToHtml } from '../ui.js'
 import State from '../state.js'
+import { checkNumber } from '../util.js'
 
 let unlocked = true
 export let bjState = 'ready'
@@ -10,7 +11,7 @@ let bjBet
 let betAmount = 1
 let maxBet = 1000
 let bjCountMin = 0
-let bjCountBetAmount = 0
+// let bjCountBetAmount = 0
 let bjStrategy = 'hit16'
 let bjSpy = false
 
@@ -26,7 +27,7 @@ let playerCards = []
 let count = 0
 let numDecks = 6
 
-let dealBjButton, hitBjButton, standBjButton, bjCountMinUi, bjHiCountBet
+let dealBjButton, hitBjButton, standBjButton//, bjCountMinUi, bjHiCountBet
 
 export const createBj = () => {
   dealBjButton = $id('bj-button-deal')
@@ -46,24 +47,22 @@ export const createBj = () => {
 
   bjBet = $id('bj-bet')
   bjBet.onchange = (event) => {
-    betAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
-    if (!betAmount) {
-      betAmount = 1
-    }
+    betAmount = checkNumber(event.target.value, State.dollars)
+    bjBet.value = betAmount
   }
 
-  bjHiCountBet = $id('bj-hi-count')
-  bjHiCountBet.onchange = (event) => {
-    bjCountBetAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
-    if (!bjCountBetAmount) {
-      bjCountBetAmount = 0
-    }
-  }
+  // bjHiCountBet = $id('bj-hi-count')
+  // bjHiCountBet.onchange = (event) => {
+  //   bjCountBetAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
+  //   if (!bjCountBetAmount) {
+  //     bjCountBetAmount = 0
+  //   }
+  // }
 
-  bjCountMinUi = $id('bj-count-min')
-  bjCountMinUi.onchange = (event) => {
-    bjCountMin = event.target.value
-  }
+  // bjCountMinUi = $id('bj-count-min')
+  // bjCountMinUi.onchange = (event) => {
+  //   bjCountMin = event.target.value
+  // }
 
   $id('bj-auto-guess-box').onchange = (event) => {
     bjGuessOn = event.target.checked
@@ -82,8 +81,8 @@ const lockButtons = () => {
   hitBjButton.disabled = false
   standBjButton.disabled = false
   bjBet.disabled = true
-  bjHiCountBet.disabled = true
-  bjCountMinUi.disabled = true
+  // bjHiCountBet.disabled = true
+  // bjCountMinUi.disabled = true
   bjState = 'play'
 }
 
@@ -95,8 +94,8 @@ const unlockButtons = () => {
   hitBjButton.disabled = true
   standBjButton.disabled = true
   bjBet.disabled = false
-  bjHiCountBet.disabled = false
-  bjCountMinUi.disabled = false
+  // bjHiCountBet.disabled = false
+  // bjCountMinUi.disabled = false
   bjState = 'ready'
 
   it++
@@ -196,7 +195,7 @@ export const dealBj = (isAuto) => {
 
   State.checkIsBroke()
 
-  isBettingHiCount = getTrueCount() >= bjCountMin && bjCountBetAmount > 0
+  // isBettingHiCount = getTrueCount() >= bjCountMin && bjCountBetAmount > 0
 
   State.subtractScore(getBetAmount())
 
@@ -366,15 +365,10 @@ export const updateBj = (delta) => {
     bjBet.value = maxBet
   }
 
-  // if (warBet.value * 5 > State.dollars) {
-  //     betAmount = Math.floor(State.dollars / 5)
-  //     warBet.value = Math.floor(State.dollars / 5)
+  // if (bjHiCountBet.value > State.dollars) {
+  //   bjHiCountBet.value = 0
+  //   bjCountBetAmount = 0
   // }
-
-  if (bjHiCountBet.value > State.dollars) {
-    bjHiCountBet.value = 0
-    bjCountBetAmount = 0
-  }
 
   if (bjBet.value > State.dollars) {
     betAmount = State.dollars

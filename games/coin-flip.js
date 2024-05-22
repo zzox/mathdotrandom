@@ -1,5 +1,6 @@
 import State, { checkRandom } from '../state.js'
 import { $id, $queryAll, formatPercent, formatPrice, formatRate, loseWinTie } from '../ui.js'
+import { checkNumber } from '../util.js'
 
 let headsChance = 0.5
 let betAmount = 1
@@ -21,10 +22,8 @@ export const createCoinFlip = () => {
 
   coinBet = $id('coin-bet')
   coinBet.onchange = (event) => {
-    betAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
-    if (!betAmount) {
-      betAmount = 1
-    }
+    betAmount = checkNumber(event.target.value, State.dollars)
+    coinBet.value = betAmount
   }
 
   $id('coin-auto-guess-box').onchange = (event) => {

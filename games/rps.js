@@ -1,7 +1,8 @@
 import State from '../state.js'
 import { $id, $queryAll, loseWinTie } from '../ui.js'
+import { checkNumber } from '../util.js'
 
-let locked = true
+let unlocked = true
 let betAmount = 1
 
 let resultShowTimer = 0
@@ -22,10 +23,8 @@ export const createRps = () => {
 
   rpsBet = $id('rps-bet')
   rpsBet.onchange = (event) => {
-    betAmount = parseInt(event.target.value > State.dollars ? State.dollars : event.target.value)
-    if (!betAmount) {
-      betAmount = 1
-    }
+    betAmount = checkNumber(event.target.value, State.dollars)
+    rpsBet.value = betAmount
   }
 }
 
@@ -50,7 +49,7 @@ const getOppChoice = () => {
 }
 
 export const playRps = (choice) => {
-  if (locked) {
+  if (!unlocked) {
     throw 'Locked'
   }
 
@@ -108,7 +107,7 @@ export const updateRps = (delta) => {
 }
 
 export const unlockRps = () => {
-  locked = false;
+  unlocked = true
   $id('rps').classList.remove('display-none')
   $queryAll('.rps-results').forEach((item) => item.classList.remove('display-none'))
 }
