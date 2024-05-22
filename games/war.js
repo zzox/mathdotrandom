@@ -5,9 +5,9 @@ import { checkNumber, checkNumberWithZero } from '../util.js'
 
 let unlocked = true
 
-let warBet, tripleTieBet
+let warBet//, tripleTieBet
 let betAmount = 1
-let tripleTieBetAmount = 0
+//let tripleTieBetAmount = 0
 let maxBet = 5
 
 // let resultShowTimer = 0
@@ -35,11 +35,11 @@ export const createWar = () => {
     warBet.value = betAmount
   }
 
-  tripleTieBet = $id('war-triple-tie-bet')
-  tripleTieBet.onchange = (event) => {
-    tripleTieBetAmount = checkNumberWithZero(event.target.value, State.dollars)
-    tripleTieBet.value = tripleTieBetAmount
-  }
+  // tripleTieBet = $id('war-triple-tie-bet')
+  // tripleTieBet.onchange = (event) => {
+  //   tripleTieBetAmount = checkNumberWithZero(event.target.value, State.dollars)
+  //   tripleTieBet.value = tripleTieBetAmount
+  // }
 
   $id('war-auto-guess-box').onchange = (event) => {
     warGuessOn = event.target.checked
@@ -132,13 +132,22 @@ export const playWar = (isAuto = false) => {
   }
 
   if (result === 'win') {
-    State.updateScore(betAmount * (drawNum * 2 + 1) - tripleTieBetAmount, data)
+    State.updateScore(betAmount * (drawNum * 2 + 1), data)
   } else if (result === 'lose') {
-    State.updateScore(betAmount * -(drawNum * 2 + 1) - tripleTieBetAmount, data)
+    State.updateScore(betAmount * -(drawNum * 2 + 1), data)
   } else {
     // console.warn('triple tie!!!')
-    State.updateScore(tripleTieBetAmount * 1000, data)
+    State.updateScore(0, data)
   }
+
+  // if (result === 'win') {
+  //   State.updateScore(betAmount * (drawNum * 2 + 1) - tripleTieBetAmount, data)
+  // } else if (result === 'lose') {
+  //   State.updateScore(betAmount * -(drawNum * 2 + 1) - tripleTieBetAmount, data)
+  // } else {
+  //   // console.warn('triple tie!!!')
+  //   State.updateScore(tripleTieBetAmount * 1000, data)
+  // }
 
   // resultShowTimer = 0
 }
@@ -161,12 +170,12 @@ export const updateWar = (delta) => {
   //     warBet.value = Math.floor(State.dollars / 5)
   // }
 
-  if (warBet.value * 5 + tripleTieBet.value * 5 > State.dollars) {
+  if (warBet.value * 5 /*+ tripleTieBet.value * 5*/ > State.dollars) {
     betAmount = Math.min(betAmount, Math.floor(State.dollars / 10))
     warBet.value = Math.min(betAmount, Math.floor(State.dollars / 10))
 
-    tripleTieBetAmount = Math.min(tripleTieBetAmount, Math.floor(State.dollars / 10))
-    tripleTieBet.value = Math.min(tripleTieBetAmount, Math.floor(State.dollars / 10))
+    // tripleTieBetAmount = Math.min(tripleTieBetAmount, Math.floor(State.dollars / 10))
+    // tripleTieBet.value = Math.min(tripleTieBetAmount, Math.floor(State.dollars / 10))
 
     // disable autoguess if too broke
     $id('war-auto-guess-box').checked = false
@@ -189,9 +198,9 @@ export const upgradeAutoWar = (time) => {
 export const upgradeMaxWarBet = (maxIncrease) => {
   maxBet += maxIncrease
   $id('war-bet').max = maxBet
-  $id('war-triple-tie-bet').max = maxBet
   $id('war-max').innerText = formatPrice(maxBet)
-  $id('war-triple-tie-max').innerText = formatPrice(maxBet)
+  // $id('war-triple-tie-bet').max = maxBet
+  // $id('war-triple-tie-max').innerText = formatPrice(maxBet)
 }
 
 export const upgradeWarAcePercent = (percent) => {
@@ -200,10 +209,10 @@ export const upgradeWarAcePercent = (percent) => {
   $id('war-ace-percent').innerHTML = `Ace draw: <span class="bold">${formatPercent(pullAcePercent)}</span>`
 }
 
-export const unlockTripleTie = () => {
-  $id('triple-tie').classList.remove('display-none')
-  $queryAll('.war-results-triple').forEach((item) => item.classList.remove('display-none'))
-}
+// export const unlockTripleTie = () => {
+//   $id('triple-tie').classList.remove('display-none')
+//   $queryAll('.war-results-triple').forEach((item) => item.classList.remove('display-none'))
+// }
 
 export const removeWarCard = (cardString) => {
   removeCard(cardString, deck)

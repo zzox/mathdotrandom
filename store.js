@@ -2,7 +2,7 @@ import { totalGames, totalFlips, totalWars, totalPokerGames, totalBjGames } from
 import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
-import { removeWarCard, unlockTripleTie, unlockWar, upgradeAutoWar, upgradeMaxWarBet, upgradeWarAcePercent } from './games/war.js'
+import { /*removeWarCard, unlockTripleTie,*/ unlockWar, upgradeAutoWar, upgradeMaxWarBet, upgradeWarAcePercent } from './games/war.js'
 import { time } from './main.js'
 import { addPokerCard, addPokerStrategy, bitFlip, unlockPoker, upgradeAutoPoker, upgradeLoPair, upgradeMaxPokerBet } from './games/poker.js'
 import { addBjSpy, addBjStrategy, showBjCount, upgradeAutoBj, upgradeBjAmount, removeBjDecks, unlockBj } from './games/blackjack.js'
@@ -72,11 +72,11 @@ export const checkStoreUpgrades = () => {
     showUpgrade('war-2-percent-ace')
   } else if (totalWars === 100) {
     showUpgrade('war-auto-2')
-  } else if (totalWars === 200) {
-    showUpgrade('war-triple-tie')
-  } else if (totalWars === 300) {
-    showUpgrade('war-remove-2')
-  } else if (totalWars === 400) {
+  // } else if (totalWars === 200) {
+  //   showUpgrade('war-triple-tie')
+  // } else if (totalWars === 300) {
+  //   showUpgrade('war-remove-2')
+  } else if (totalWars === 250) {
     showUpgrade('war-max-10')
   } else if (totalWars === 500) {
     showUpgrade('war-auto-4')
@@ -86,12 +86,12 @@ export const checkStoreUpgrades = () => {
     showUpgrade('war-auto-10')
   } else if (totalWars === 5000) {
     showUpgrade('war-max-25')
-  } else if (totalWars === 10000) {
-    showUpgrade('war-remove-3')
-  } else if (totalWars === 25000) {
-    showUpgrade('war-remove-4')
-  } else if (totalWars === 50000) {
-    showUpgrade('war-remove-5')
+  // } else if (totalWars === 10000) {
+  //   showUpgrade('war-remove-3')
+  // } else if (totalWars === 25000) {
+  //   showUpgrade('war-remove-4')
+  // } else if (totalWars === 50000) {
+  //   showUpgrade('war-remove-5')
   }
 
   if (totalPokerGames === 10) {
@@ -181,14 +181,14 @@ export const doUpgrade = (name) => {
     upgradeAutoFlip(100)
   } else if (name === 'unlock-war') {
     unlockWar()
-  } else if (name === 'war-triple-tie') {
-    unlockTripleTie()
+  // } else if (name === 'war-triple-tie') {
+  //   unlockTripleTie()
   } else if (name === 'war-2-percent-ace') {
     upgradeWarAcePercent(0.02)
   } else if (name === 'war-5-percent-ace') {
     upgradeWarAcePercent(0.03)
-  } else if (name === 'war-remove-2') {
-    removeWarCard('2')
+  // } else if (name === 'war-remove-2') {
+  //   removeWarCard('2')
   } else if (name === 'war-max-10') {
     upgradeMaxWarBet(5)
   } else if (name === 'war-max-25') {
@@ -298,11 +298,11 @@ let possibleUpgrades = [
   { name: 'war-auto-10', price: 1600, text: 'Ultrawar', info: 'New game of war every tenth-second' },
   { name: 'war-2-percent-ace', price: 200, text: 'Ace draw', info: '2% chance of drawing an ace' },
   { name: 'war-5-percent-ace', price: 500, text: 'Fast hands', info: '5% chance of drawing an ace' },
-  { name: 'war-triple-tie', price: 1000, text: 'Triple tie', info: 'Pays 1000 to 1 on three war ties' },
-  { name: 'war-remove-2', price: 500, text: 'No more 2s', info: 'Remove all 2s from the war deck' },
-  { name: 'war-remove-3', price: 5000, text: 'Threes Company', info: 'Remove all 3s from the war deck' },
-  { name: 'war-remove-4', price: 50000, text: 'Fours a crowd', info: 'Remove all 4s from the war deck' },
-  { name: 'war-remove-5', price: 500000, text: 'No more fives', info: 'Remove all 5s from the war deck' },
+  // { name: 'war-triple-tie', price: 1000, text: 'Triple tie', info: 'Pays 1000 to 1 on three war ties' },
+  // { name: 'war-remove-2', price: 500, text: 'No more 2s', info: 'Remove all 2s from the war deck' },
+  // { name: 'war-remove-3', price: 5000, text: 'Threes Company', info: 'Remove all 3s from the war deck' },
+  // { name: 'war-remove-4', price: 50000, text: 'Fours a crowd', info: 'Remove all 4s from the war deck' },
+  // { name: 'war-remove-5', price: 500000, text: 'No more fives', info: 'Remove all 5s from the war deck' },
   { name: 'unlock-poker', price: 1000, text: 'Poker', info: 'Game for cowboys and idiots' },
   { name: 'poker-max-200', price: 10000, text: 'Change states', info: 'Max poker bet of $200' },
   // { name: 'poker-max-500', price: 10000, text: 'Change states', info: 'Max poker bet of $200' },

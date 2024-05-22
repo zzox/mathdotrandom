@@ -3,9 +3,10 @@
 Play on [itch](https://zzox.itch.io/100)
 
 ## Versions
-0.1.0 - 05/21/24: initial release
-0.2.0 - 05/22/24: Patched negative number hack
+0.3.0 - 05/23/24: removed "War Triple-tie" option
 0.2.1 - 05/22/24: bug fix
+0.2.0 - 05/22/24: Patched negative number hack
+0.1.0 - 05/21/24: initial release
 
 ### Inspirations
 

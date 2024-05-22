@@ -45,7 +45,7 @@ let totalGamesUi,
   flipReturnUi,
   totalWarsUi,
   warWinPercentUi,
-  warTiesUi,
+  // warTiesUi,
   warReturnUi,
   totalPokerGamesUi,
   pokerReturnUi,
@@ -66,7 +66,7 @@ export const createStats = () => {
   flipReturnUi = $id('flip-return')
   totalWarsUi = $id('total-wars')
   warWinPercentUi = $id('war-win-percent')
-  warTiesUi = $id('war-triple-ties')
+  // warTiesUi = $id('war-triple-ties')
   warReturnUi = $id('war-return')
   topCashUi = $id('top-cash')
   totalPokerGamesUi = $id('total-poker-games')
@@ -119,7 +119,7 @@ export const pushStat = (val, scoreData) => {
     totalWarsUi.innerText = totalWars + ''
     warWinPercentUi.innerText = formatPercent(totalWarWins / totalWars)
     warReturnUi.innerText = formatPrice(warReturn)
-    warTiesUi.innerText = totalWarTies + ''
+    // warTiesUi.innerText = totalWarTies + ''
   }
 
   if (scoreData.game === 'poker') {
