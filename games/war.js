@@ -3,11 +3,9 @@ import { $id, $queryAll, formatPercent, formatRate, formatPrice, loseWinTie, sui
 import State, { checkRandom } from '../state.js'
 import { checkNumber, checkNumberWithZero } from '../util.js'
 
-let unlocked = true
-
 let warBet//, tripleTieBet
 let betAmount = 1
-//let tripleTieBetAmount = 0
+// let tripleTieBetAmount = 0
 let maxBet = 5
 
 let warGuessOn = false
@@ -85,11 +83,7 @@ const resetCardUi = () => {
   $queryAll('.war-column-2').forEach((item) => { item.classList.add('display-none') })
 }
 
-export const playWar = (isAuto = false) => {
-  if (!unlocked) {
-    throw 'Locked'
-  }
-
+const playWar = (isAuto = false) => {
   resetCardUi()
 
   State.checkIsBroke()
@@ -185,7 +179,7 @@ export const updateWar = (delta) => {
   //     warBet.value = Math.floor(State.dollars / 5)
   // }
 
-  if (warBet.value * 5 /*+ tripleTieBet.value * 5*/ > State.dollars) {
+  if (warBet.value * 5 /* + tripleTieBet.value * 5 */ > State.dollars) {
     betAmount = Math.min(betAmount, Math.floor(State.dollars / 10))
     warBet.value = Math.min(betAmount, Math.floor(State.dollars / 10))
 
@@ -234,7 +228,6 @@ export const removeWarCard = (cardString) => {
 }
 
 export const unlockWar = () => {
-  unlocked = true
   $id('war').classList.remove('display-none')
   $id('war-info').classList.remove('display-none')
   $queryAll('.war-results').forEach((item) => item.classList.remove('display-none'))

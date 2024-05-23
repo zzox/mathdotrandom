@@ -3,17 +3,12 @@ import { $id, $queryAll, suitToHtml, formatRate, formatPrice, $create } from '..
 import State from '../state.js'
 import { checkNumber } from '../util.js'
 
-let unlocked = true
-
 let pokerBet
 let betAmount = 1
 let maxBet = 100
 export let pokerState = 'ready' // or, 'draw'
 let cards = []
 const cardHolds = [false, false, false, false, false]
-
-// let resultShowTimer = 0
-// const resultShowTime = 10000
 
 let pokerGuessOn = false
 let pokerGuessTimer = 0
@@ -141,17 +136,14 @@ const resetPokerUi = () => {
 }
 
 const pokerDeal = (isAuto = false) => {
-  if (!unlocked) {
-    throw 'Locked'
-  }
-
   if (pokerState !== 'ready') {
     throw 'Cannot deal'
   }
 
-  // TODO: if auto, skip the ui updates as both steps happen at once
-  resetPokerUi()
-  lockPokerBetUi()
+  if (!isAuto) {
+    resetPokerUi()
+    lockPokerBetUi()
+  }
 
   shuffleDeck(deck)
 
@@ -218,13 +210,6 @@ const pokerDraw = (isAuto = false) => {
 }
 
 export const updatePoker = (delta) => {
-  // TODO: see if its better to not hide games after results are shown,
-  // seems to only make sense for coin-flip
-  // resultShowTimer += delta
-  // if (pokerState === 'ready' && resultShowTimer >= resultShowTime) {
-  //     resetPokerUi()
-  // }
-
   drawPokerButton.diabled = true
 
   if (pokerGuessOn && pokerState === 'ready') {
@@ -300,7 +285,6 @@ export const addPokerStrategy = (strategyName) => {
 }
 
 export const unlockPoker = () => {
-  unlocked = true
   $id('poker').classList.remove('display-none')
   $id('poker-info').classList.remove('display-none')
   $queryAll('.poker-results').forEach((item) => item.classList.remove('display-none'))

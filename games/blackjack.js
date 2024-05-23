@@ -3,14 +3,13 @@ import { $id, $create, $queryAll, formatRate, formatPrice, suitToHtml } from '..
 import State from '../state.js'
 import { checkNumber } from '../util.js'
 
-let unlocked = true
 export let bjState = 'ready'
-let isBettingHiCount = false
+// let isBettingHiCount = false
 
 let bjBet
 let betAmount = 1
 let maxBet = 1000
-let bjCountMin = 0
+// let bjCountMin = 0
 // let bjCountBetAmount = 0
 let bjStrategy = 'hit16'
 let bjSpy = false
@@ -86,9 +85,6 @@ const lockButtons = () => {
   bjState = 'play'
 }
 
-// TODO: delete `it`
-let it = 0
-
 const unlockButtons = () => {
   dealBjButton.disabled = false
   hitBjButton.disabled = true
@@ -98,12 +94,9 @@ const unlockButtons = () => {
   // bjCountMinUi.disabled = false
   bjState = 'ready'
 
-  it++
-
   if (deck.discarded.length > (deck.pile.length + deck.discarded.length) * 2 / 3) {
     count = 0
     shuffleDeck(deck)
-    it = 0
   }
 }
 
@@ -172,7 +165,7 @@ const updateBjUi = (hidden = true) => {
 
 const getTrueCount = () => Math.round(count / (deck.pile.length / 52))
 
-const getBetAmount = () => isBettingHiCount && bjCountBetAmount > 0 ? bjCountBetAmount : betAmount
+// const getBetAmount = () => isBettingHiCount && bjCountBetAmount > 0 ? bjCountBetAmount : betAmount
 
 const drawFromDeckWithCount = () => {
   const card = drawCard(deck)
@@ -180,11 +173,7 @@ const drawFromDeckWithCount = () => {
   return card
 }
 
-export const dealBj = (isAuto) => {
-  if (!unlocked) {
-    throw 'Locked'
-  }
-
+const dealBj = (isAuto) => {
   if (bjState !== 'ready') {
     throw 'Not ready'
   }
@@ -197,7 +186,7 @@ export const dealBj = (isAuto) => {
 
   // isBettingHiCount = getTrueCount() >= bjCountMin && bjCountBetAmount > 0
 
-  State.subtractScore(getBetAmount())
+  State.subtractScore(betAmount)
 
   dealerCards.push(drawFromDeckWithCount())
   dealerCards.push(drawFromDeckWithCount())
@@ -215,13 +204,12 @@ export const dealBj = (isAuto) => {
   } else if (dealerValues[1] === 21) {
     loseBj(true, false, isAuto)
   } else {
-    // TODO: play through auto-guesses
     updateBjUi(true)
     lockButtons()
   }
 }
 
-export const hitBj = (isAuto) => {
+const hitBj = (isAuto) => {
   playerCards.push(drawFromDeckWithCount())
 
   const playerValues = evaulateBjValues(playerCards)
@@ -236,7 +224,7 @@ export const hitBj = (isAuto) => {
   }
 }
 
-export const standBj = (isAuto) => {
+const standBj = (isAuto) => {
   drawDealerCards()
 
   const playerValue = evaulateFinalBjValues(playerCards)
@@ -279,7 +267,7 @@ const getScoreData = (result, isAuto) => {
     game: 'bj',
     wager: bet,
     isAuto,
-    isBettingHiCount,
+    // isBettingHiCount,
     result,
     playerTotal,
     dealerTotal
@@ -302,7 +290,7 @@ const winBj = (isBlackJack, isAuto) => {
 
 const loseBj = (isBlackJack, isBust, isAuto) => {
   State.updateScore(0, getScoreData('lost', isAuto))
-  updateBjUi(false) 
+  updateBjUi(false)
   unlockButtons()
   $id('bj-result').innerText = isBust ? 'Bust' : 'Lose'
 }
@@ -436,7 +424,6 @@ export const addBjSpy = () => {
 }
 
 export const unlockBj = () => {
-  unlocked = true
   $id('blackjack').classList.remove('display-none')
   $id('bjack-info').classList.remove('display-none')
   $queryAll('.bjack-results').forEach((item) => item.classList.remove('display-none'))

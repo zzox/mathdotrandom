@@ -33,7 +33,6 @@ const winGame = () => {
 
 const mainLoop = (total) => {
   const delta = total - last < MAX_DELTA ? total - last : MAX_DELTA
-  // TEST: const delta = 100
   updateUi()
   updateCoinFlip(delta)
   updateWar(delta)

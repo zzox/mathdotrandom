@@ -85,7 +85,6 @@ export const pushStat = (val, scoreData) => {
 
     flipsReturn += val
 
-    // ATTN: can we win with 0?
     if (val > 0) {
       totalFlipWins++
     }

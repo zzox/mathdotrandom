@@ -2,7 +2,7 @@ import { $create, $id, formatPrice } from './ui.js'
 
 let logBox
 let logIndex = 0
-let logItems = []
+const logItems = []
 
 // moving to 1000 causes performance issues at the highest rates
 const NUM_LOGS = 100
@@ -43,7 +43,7 @@ export const pushLog = (result, scoreData) => {
       `${scoreData.result} ${formatPrice(Math.abs(result))}`
   }
 
-  const scrollPos = logBox.scrollTop
+  // const scrollPos = logBox.scrollTop
 
   logBox.insertBefore(logItem, logBox.querySelector('p'))
 

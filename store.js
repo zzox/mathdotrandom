@@ -2,7 +2,7 @@ import { totalGames, totalFlips, totalWars, totalPokerGames, totalBjGames } from
 import { $id, $query, $create, formatPrice } from './ui.js'
 import { upgradeAutoFlip, upgradeHeadsChance, upgradeMaxCoinBet } from './games/coin-flip.js'
 import State from './state.js'
-import { /*removeWarCard, unlockTripleTie,*/ unlockWar, upgradeAutoWar, upgradeMaxWarBet, upgradeWarAcePercent } from './games/war.js'
+import { /* removeWarCard, unlockTripleTie, */ unlockWar, upgradeAutoWar, upgradeMaxWarBet, upgradeWarAcePercent } from './games/war.js'
 import { time } from './main.js'
 import { addPokerCard, addPokerStrategy, bitFlip, unlockPoker, upgradeAutoPoker, upgradeLoPair, upgradeMaxPokerBet } from './games/poker.js'
 import { addBjSpy, addBjStrategy, showBjCount, upgradeAutoBj, upgradeBjAmount, removeBjDecks, unlockBj } from './games/blackjack.js'
@@ -229,7 +229,7 @@ export const doUpgrade = (name) => {
     addPokerStrategy('flush')
   } else if (name === 'poker-strat-smart') {
     addPokerStrategy('smart')
-  } else if (name === 'poker-lo-pair')  {
+  } else if (name === 'poker-lo-pair') {
     upgradeLoPair()
   } else if (name === 'unlock-blackjack') {
     unlockBj()
@@ -340,7 +340,7 @@ let possibleUpgrades = [
   { name: 'bj-strat-spy', price: 100000, text: 'X-ray specs', info: 'See the blackjack dealers hand, Comes with strat' },
   { name: 'unlock-rps', price: 100000, text: 'Rock, Paper, Scissors', info: 'A real game. You may pay with your life.' },
   { name: 'show-stats', price: 250, text: 'Show Stats', info: 'If you\'re into that type of thing' },
-  { name: 'show-logs', price: 2500, text: 'Show Logs', info: 'May cause performance issues' },
+  { name: 'show-logs', price: 2500, text: 'Show Logs', info: 'May cause performance issues on chrome' }
 ]
 
 export const pushStoreItem = (item) => {
@@ -387,7 +387,3 @@ export const removeStoreItem = (name) => {
   }
   item.remove()
 }
-
-// TODO: remove
-window.possibleUpgrades = possibleUpgrades
-window.upgradesMade = upgradesMade

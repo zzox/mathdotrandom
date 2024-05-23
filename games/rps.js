@@ -2,7 +2,6 @@ import State from '../state.js'
 import { $id, $queryAll, loseWinTie } from '../ui.js'
 import { checkNumber } from '../util.js'
 
-let unlocked = true
 let betAmount = 1
 
 let resultShowTimer = 0
@@ -48,18 +47,14 @@ const getOppChoice = () => {
   }
 }
 
-export const playRps = (choice) => {
-  if (!unlocked) {
-    throw 'Locked'
-  }
-
+const playRps = (choice) => {
   clearRpsUi()
 
   const oppChoice = getOppChoice()
-  let data = {
+  const data = {
     game: 'rps',
     choice: rpsResultText[choice],
-    oppChoice: rpsResultText[oppChoice],
+    oppChoice: rpsResultText[oppChoice]
   }
 
   let result
@@ -84,7 +79,9 @@ export const playRps = (choice) => {
     }
   }
 
-  $queryAll('#rps-result-text').forEach(item => item.innerText = loseWinTie[result])
+  $queryAll('#rps-result-text').forEach(item => {
+    item.innerText = loseWinTie[result]
+  })
   resultShowTimer = 0
 }
 
@@ -107,7 +104,6 @@ export const updateRps = (delta) => {
 }
 
 export const unlockRps = () => {
-  unlocked = true
   $id('rps').classList.remove('display-none')
   $id('rps-info').classList.remove('display-none')
   $queryAll('.rps-results').forEach((item) => item.classList.remove('display-none'))

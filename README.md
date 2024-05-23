@@ -10,6 +10,6 @@ Play on [itch](https://zzox.itch.io/100)
 
 ### Inspirations
 
-[Universal Paperclips](https://www.decisionproblem.com/paperclips/), [Kittens Game](https://kittensgame.com/), [Balatro]https://store.steampowered.com/app/2379780/Balatro/)
+[Universal Paperclips](https://www.decisionproblem.com/paperclips/), [Kittens Game](https://kittensgame.com/), [Balatro](https://store.steampowered.com/app/2379780/Balatro/)
 
 Report bugs on itch or here in `Issues`
