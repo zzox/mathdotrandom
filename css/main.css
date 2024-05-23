@@ -28,6 +28,10 @@ legend:hover {
   cursor: default;
 }
 
+#value {
+  position: relative;
+}
+
 fieldset {
   margin: 0.5rem;
   border-style: inset;
@@ -54,6 +58,14 @@ input[type='number'] {
   /* max-width: 8rem; */
 }
 
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 .input-label {
   display: flex;
   align-items: center;
@@ -64,7 +76,7 @@ input[type='number'] {
   display: flex;
   flex-wrap: wrap;
   max-height: calc(100vh - 2rem);
-  margin: 1rem;
+  margin: 0.5rem;
   justify-content: center;
   /* needed for itch: */
   overflow-y: scroll;
@@ -79,7 +91,12 @@ input[type='number'] {
     margin: 1rem;
     align-content: flex-start;
     justify-content: flex-start;
+    /* overflow-y: scroll; */
   }
+
+  /* #value {
+    position: relative;
+  } */
 }
 
 fieldset.minimize {
@@ -105,10 +122,19 @@ fieldset.minimize > :not(legend) {
   overflow-y: scroll;
 }
 
+#store::-webkit-scrollbar {
+  display: none;
+}
+
 #store {
-  height: calc(37vh - 6rem);
-  min-height: 15rem;
+  min-height: calc(37vh - 6rem);
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#store:where(.minimize) {
+  min-height: 0rem;
 }
 
 .modal-full {
@@ -126,6 +152,8 @@ fieldset.minimize > :not(legend) {
 .modal-full > fieldset {
   background-color: white;
   position: relative;
+  overflow-y: scroll;
+  max-height: 60vh;
 }
 
 .modal-full > fieldset > button {
@@ -134,7 +162,7 @@ fieldset.minimize > :not(legend) {
   right: 1rem;
 }
 
-.log-item {}
+/* .log-item {} */
 
 .error-text {
   color: var(--error-red);
@@ -158,3 +186,11 @@ fieldset.minimize > :not(legend) {
 .hearts::after{content:"\2665";color:red}
 .diamonds::after{content:"\2666";color:red}
 .clubs::after{content:"\2663"}
+
+#info-link {
+  cursor: pointer;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  color: grey;
+}

@@ -10,9 +10,6 @@ let betAmount = 1
 //let tripleTieBetAmount = 0
 let maxBet = 5
 
-// let resultShowTimer = 0
-// const resultShowTime = 3000
-
 let warGuessOn = false
 let warGuessTimer = 0
 let warGuessTime = 1000
@@ -99,6 +96,7 @@ export const playWar = (isAuto = false) => {
 
   let result = 'tie'
   let drawNum, oppCard, playerCard
+  let numTies = 0
   for (drawNum = 0; drawNum < 3; drawNum++) {
     oppCard = drawCard(deck)
     if (checkRandom(pullAcePercent)) {
@@ -120,6 +118,8 @@ export const playWar = (isAuto = false) => {
 
     if (result !== 'tie') {
       break
+    } else {
+      numTies++
     }
   }
 
@@ -131,14 +131,18 @@ export const playWar = (isAuto = false) => {
     isAuto
   }
 
-  if (result === 'win') {
-    State.updateScore(betAmount * (drawNum * 2 + 1), data)
-  } else if (result === 'lose') {
-    State.updateScore(betAmount * -(drawNum * 2 + 1), data)
-  } else {
-    // console.warn('triple tie!!!')
-    State.updateScore(0, data)
-  }
+  // let tieResultAmount = 0
+  // if (numTies === 1) {
+  //   tieResultAmount = 11 * tieBetAmount
+  // }
+
+  // if (numTies === 2) {
+  //   tieResultAmount = 101 * tieBetAmount
+  // }
+
+  // if (numTies === 3) {
+  //   tieResultAmount = 5001 * tieBetAmount
+  // }
 
   // if (result === 'win') {
   //   State.updateScore(betAmount * (drawNum * 2 + 1) - tripleTieBetAmount, data)
@@ -149,7 +153,14 @@ export const playWar = (isAuto = false) => {
   //   State.updateScore(tripleTieBetAmount * 1000, data)
   // }
 
-  // resultShowTimer = 0
+  if (result === 'win') {
+    State.updateScore(betAmount * (drawNum * 2 + 1), data)
+  } else if (result === 'lose') {
+    State.updateScore(betAmount * -(drawNum * 2 + 1), data)
+  } else {
+    // console.warn('triple tie!!!')
+    State.updateScore(0, data)
+  }
 }
 
 export const updateWar = (delta) => {
@@ -164,6 +175,10 @@ export const updateWar = (delta) => {
   if (warBet.value > maxBet) {
     warBet.value = maxBet
   }
+
+  // if (tieBet.value > maxBet) {
+  //   tieBet.value = maxBet
+  // }
 
   // if (warBet.value * 5 > State.dollars) {
   //     betAmount = Math.floor(State.dollars / 5)
@@ -221,6 +236,7 @@ export const removeWarCard = (cardString) => {
 export const unlockWar = () => {
   unlocked = true
   $id('war').classList.remove('display-none')
+  $id('war-info').classList.remove('display-none')
   $queryAll('.war-results').forEach((item) => item.classList.remove('display-none'))
 }
 

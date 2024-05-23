@@ -22,10 +22,49 @@
       <button id="victory-x">X</button>
     </fieldset>
   </div>
+  <div id="info-modal" class="modal-full display-none">
+    <fieldset>
+      <h1>Game Info</h1>
+      <div>
+        <h3>Coin flips</h3>
+        <p>Guess the flip correctly, get double your bet.</p>
+      </div>
+      <div id="war-info" class="display-none">
+        <h3>War</h3>
+        <p>Get a higher card than your opponent, get double your bet. Second round wins pay 3 to 1 and Third round wins pay 5 to 1. The same goes for losses, so a 5x cushion is needed for bets.</p>
+        <p id="tie-info" class="display-none"></p>
+      </div>
+      <div id="poker-info" class="display-none">
+        <h3>Poker</h3>
+        <p>Use the hold checkboxes to get the best possible poker hand. Similar to video poker, payouts for different hands go by the rules outlined in "Jacks or Better" rules <a href="https://en.wikipedia.org/wiki/Video_poker#Jacks_or_Better" target="_blank">here</a>. Poker hands outlined <a href="https://en.wikipedia.org/wiki/List_of_poker_hands" target="_blank">here</a>.</p>
+      </div>
+      <div id="bjack-info" class="display-none">
+        <h3>Blackjack</h3>
+        <p>Beat the dealer and win even money. Simulates 6-deck Blackjack. Rules outlined <a href="https://en.wikipedia.org/wiki/Blackjack#Rules_of_play_at_casinos" target="_blank">here</a>, but note this version does not allow for splitting or doubling down, rules that exist in most casinos.</p>
+      </div>
+      <div id="rps-info" class="display-none">
+        <h3>Rock Paper Scissors</h3>
+        <p>Play with unlimited bets. No edge, no upgrades, pure skill.</p>
+      </div>
+      <hr>
+      <div>
+        <h3>about</h3>
+        <p>made by tyler (<a href="https://twitter.com/zzo__x" target="_blank">zzox</a>)</p>
+        <h3>inspirations</h3>
+        <ul>
+          <li><a href="https://www.decisionproblem.com/paperclips/" target="_blank">Universal Paperclips</a></li>
+          <li><a href="https://kittensgame.com/" target="_blank">Kittens Game</a></li>
+          <li><a href="https://store.steampowered.com/app/2379780/Balatro/" target="_blank">Balatro</a></li>
+        </ul>
+      </div>
+      <button id="info-x">X</button>
+    </fieldset>
+  </div>
   <div class="container">
     <fieldset id="value">
       <legend>Value</legend>
       <h1 id="score">$100</h1>
+      <a id="info-link">info</a>
     </fieldset>
     <fieldset>
       <legend>Coin flip</legend>

@@ -302,6 +302,7 @@ export const addPokerStrategy = (strategyName) => {
 export const unlockPoker = () => {
   unlocked = true
   $id('poker').classList.remove('display-none')
+  $id('poker-info').classList.remove('display-none')
   $queryAll('.poker-results').forEach((item) => item.classList.remove('display-none'))
 }
 

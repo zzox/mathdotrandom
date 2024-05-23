@@ -37,8 +37,6 @@ let rpsWins = 0
 let rpsLosses = 0
 let rpsTies = 0
 
-// PERF: pre-create items
-
 let totalGamesUi,
   totalFlipsUi,
   flipWinPercentUi,

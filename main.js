@@ -70,3 +70,7 @@ window.onload = () => {
   createUi()
   last = window.requestAnimationFrame(mainLoop)
 }
+
+window.onbeforeunload = () => {
+  return 'Are you sure you want to leave?'
+}

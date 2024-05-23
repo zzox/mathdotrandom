@@ -438,6 +438,7 @@ export const addBjSpy = () => {
 export const unlockBj = () => {
   unlocked = true
   $id('blackjack').classList.remove('display-none')
+  $id('bjack-info').classList.remove('display-none')
   $queryAll('.bjack-results').forEach((item) => item.classList.remove('display-none'))
 }
 

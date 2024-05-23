@@ -189,6 +189,12 @@ export const doUpgrade = (name) => {
     upgradeWarAcePercent(0.03)
   // } else if (name === 'war-remove-2') {
   //   removeWarCard('2')
+  // } else if (name === 'war-remove-3') {
+  //   removeWarCard('3')
+  // } else if (name === 'war-remove-4') {
+  //   removeWarCard('4')
+  // } else if (name === 'war-remove-5') {
+  //   removeWarCard('5')
   } else if (name === 'war-max-10') {
     upgradeMaxWarBet(5)
   } else if (name === 'war-max-25') {

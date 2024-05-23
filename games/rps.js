@@ -109,6 +109,7 @@ export const updateRps = (delta) => {
 export const unlockRps = () => {
   unlocked = true
   $id('rps').classList.remove('display-none')
+  $id('rps-info').classList.remove('display-none')
   $queryAll('.rps-results').forEach((item) => item.classList.remove('display-none'))
 }
 

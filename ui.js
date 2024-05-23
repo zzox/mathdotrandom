@@ -38,6 +38,11 @@ export const suitToHtml = {
 }
 
 export const createUi = () => {
+  const infoModal = $id('info-modal')
+  infoModal.querySelector('button').onclick = () => {
+    infoModal.classList.add('display-none')
+  }
+
   const gameOverModal = $id('game-over-modal')
   gameOverModal.querySelector('button').onclick = () => {
     gameOverModal.classList.add('display-none')
@@ -46,6 +51,10 @@ export const createUi = () => {
   const victoryModal = $id('victory-modal')
   victoryModal.querySelector('button').onclick = () => {
     victoryModal.classList.add('display-none')
+  }
+
+  $id('info-link').onclick = () => {
+    infoModal.classList.remove('display-none')
   }
 }
 
