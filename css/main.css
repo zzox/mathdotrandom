@@ -127,14 +127,14 @@ fieldset.minimize > :not(legend) {
 }
 
 #store {
-  min-height: calc(37vh - 6rem);
+  height: calc(37vh - 6rem);
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 #store:where(.minimize) {
-  min-height: 0rem;
+  height: 0rem;
 }
 
 .modal-full {

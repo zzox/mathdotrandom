@@ -4,13 +4,10 @@ import State from '../state.js'
 import { checkNumber } from '../util.js'
 
 export let bjState = 'ready'
-// let isBettingHiCount = false
 
 let bjBet
 let betAmount = 1
 let maxBet = 1000
-// let bjCountMin = 0
-// let bjCountBetAmount = 0
 let bjStrategy = 'hit16'
 let bjSpy = false
 
@@ -26,7 +23,7 @@ let playerCards = []
 let count = 0
 let numDecks = 6
 
-let dealBjButton, hitBjButton, standBjButton//, bjCountMinUi, bjHiCountBet
+let dealBjButton, hitBjButton, standBjButton
 
 export const createBj = () => {
   dealBjButton = $id('bj-button-deal')
@@ -165,8 +162,6 @@ const updateBjUi = (hidden = true) => {
 
 const getTrueCount = () => Math.round(count / (deck.pile.length / 52))
 
-// const getBetAmount = () => isBettingHiCount && bjCountBetAmount > 0 ? bjCountBetAmount : betAmount
-
 const drawFromDeckWithCount = () => {
   const card = drawCard(deck)
   count += cardCountValue[card[0]]
@@ -251,8 +246,6 @@ const drawDealerCards = () => {
 }
 
 const getScoreData = (result, isAuto) => {
-  const bet = getBetAmount()
-
   let playerTotal = evaulateFinalBjValues(playerCards) + ''
   let dealerTotal = evaulateFinalBjValues(dealerCards) + ''
   if (playerTotal.length === 1) {
@@ -265,9 +258,8 @@ const getScoreData = (result, isAuto) => {
 
   return {
     game: 'bj',
-    wager: bet,
+    wager: betAmount,
     isAuto,
-    // isBettingHiCount,
     result,
     playerTotal,
     dealerTotal
@@ -275,13 +267,12 @@ const getScoreData = (result, isAuto) => {
 }
 
 const winBj = (isBlackJack, isAuto) => {
-  const bet = getBetAmount()
   if (isBlackJack) {
     $id('bj-result').innerText = 'Blackjack!'
-    State.updateScore(Math.floor(bet + bet * blackjackAmount), getScoreData('win ', isAuto))
+    State.updateScore(Math.floor(betAmount + betAmount * blackjackAmount), getScoreData('win ', isAuto))
   } else {
     $id('bj-result').innerText = 'Win!'
-    State.updateScore(bet + bet, getScoreData('win ', isAuto))
+    State.updateScore(betAmount + betAmount, getScoreData('win ', isAuto))
   }
 
   updateBjUi(false)
@@ -296,7 +287,7 @@ const loseBj = (isBlackJack, isBust, isAuto) => {
 }
 
 const pushBj = (isAuto) => {
-  State.updateScore(getBetAmount(), getScoreData('push', isAuto))
+  State.updateScore(betAmount, getScoreData('push', isAuto))
   updateBjUi(false)
   unlockButtons()
   $id('bj-result').innerText = 'Push'

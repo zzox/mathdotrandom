@@ -3,6 +3,7 @@
 Play on [itch](https://zzox.itch.io/100)
 
 ## Versions
+0.4.0 - 05/24/24: Added info modal, additional fixes and cleanup
 0.3.0 - 05/23/24: removed "War Triple-tie" option
 0.2.1 - 05/22/24: bug fix
 0.2.0 - 05/22/24: Patched negative number hack

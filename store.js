@@ -337,7 +337,7 @@ let possibleUpgrades = [
   { name: 'bj-remove-one-deck-1', price: 40000, text: 'New orders', info: 'Remove a single blackjack deck' },
   { name: 'bj-remove-one-deck-2', price: 50000, text: 'Slimming down', info: 'Remove another blackjack deck' },
   { name: 'bj-remove-one-deck-3', price: 60000, text: 'Lock in', info: 'Remove yet another blackjack deck' },
-  { name: 'bj-strat-spy', price: 100000, text: 'X-ray specs', info: 'See the blackjack dealers hand, Comes with strat' },
+  { name: 'bj-strat-spy', price: 100000, text: 'X-ray specs', info: 'See the blackjack dealers hand, comes with strat' },
   { name: 'unlock-rps', price: 100000, text: 'Rock, Paper, Scissors', info: 'A real game. You may pay with your life.' },
   { name: 'show-stats', price: 250, text: 'Show Stats', info: 'If you\'re into that type of thing' },
   { name: 'show-logs', price: 2500, text: 'Show Logs', info: 'May cause performance issues on chrome' }

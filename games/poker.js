@@ -140,10 +140,10 @@ const pokerDeal = (isAuto = false) => {
     throw 'Cannot deal'
   }
 
-  if (!isAuto) {
-    resetPokerUi()
-    lockPokerBetUi()
-  }
+  // TODO: if auto, skip the ui updates as both steps happen at once
+  // NOTE: just removing these for !isAuto wont work
+  resetPokerUi()
+  lockPokerBetUi()
 
   shuffleDeck(deck)
 
